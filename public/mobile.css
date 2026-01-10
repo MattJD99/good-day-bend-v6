@@ -1,0 +1,89 @@
+/* Mobile View Overrides */
+
+/* Default Variables fallback just in case */
+:root {
+  --primary: #13ec5b;
+  --background-dark: #102216;
+}
+
+@media (max-width: 768px) {
+  /* Prevent horizontal scrolling & zoom issues */
+  html, body {
+    overflow-x: hidden;
+    width: 100%;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* Force Main container to be responsive */
+  main {
+    width: 100%;
+    max-width: 100vw;
+    padding-left: 0;
+    padding-right: 0;
+    overflow-x: hidden;
+  }
+
+  /* --- INDEX.HTML OVERRIDES --- */
+
+  /* Fix Hero Section Height */
+  /* Target the specific div by its Tailwind class if possible, or context */
+  header.relative > div.h-\[600px\] {
+    height: 60vh !important;
+    min-height: 450px !important;
+    max-height: 600px;
+  }
+  
+  /* Adjust Hero Text Size */
+  header h1 {
+    font-size: 2.5rem !important; /* Tailwind text-5xl is 3rem */
+    line-height: 1.1 !important;
+  }
+  
+  header p {
+    font-size: 1rem !important;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  /* Fix Events Section Container Padding */
+  /* Tailwind usually handles this, but forcing safety */
+  .max-w-7xl {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  /* Mini Calendar Adjustments */
+  #home-calendar-grid span {
+    width: auto !important; /* Let them flex if needed */
+  }
+
+  /* Event Cards Carousel - Ensure swipeability */
+  #featured-events-container {
+    padding-bottom: 20px;
+    /* Ensure snap works well */
+    scroll-snap-type: x mandatory;
+  }
+  
+  /* --- DAILY/EVENT DETAILS OVERRIDES --- */
+  
+  /* Adjust Content Padding */
+  article {
+    padding: 1.5rem !important; /* Reduce from p-10 */
+  }
+  
+  article h1 {
+     font-size: 2rem !important; /* Reduce from text-5xl */
+  }
+
+  /* Sidebar/Footer Forms */
+  input, textarea, button {
+    /* Prevent iOS zoom on focus for inputs < 16px */
+    font-size: 16px !important; 
+  }
+  
+  /* Modal adjustments */
+  #newsletter-modal .p-8, 
+  #form-modal .p-8 {
+    padding: 1.5rem !important;
+  }
+}

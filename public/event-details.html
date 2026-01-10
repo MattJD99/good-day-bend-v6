@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Summer Concert Series - Good Day Bend</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Material Symbols -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec5b",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#102216",
+                        "text-main": "#0d1b12",
+                        "text-secondary": "#4c9a66",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+    </style>
+    <!-- Mobile Specific Styles -->
+    <link rel="stylesheet" href="mobile.css">
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark text-text-main dark:text-[#e7f3eb] min-h-screen flex flex-col font-display selection:bg-primary selection:text-text-main">
+    <!-- Top Navigation -->
+    <nav
+        class="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-800 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex h-16 items-center justify-between">
+                <!-- Logo -->
+                <a href="/" class="flex items-center gap-2">
+                    <div class="flex size-8 items-center justify-center rounded-lg bg-primary text-slate-900">
+                        <span class="material-symbols-outlined text-[20px]">landscape</span>
+                    </div>
+                    <span class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">Good Day Bend</span>
+                </a>
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex flex-1 justify-end items-center gap-8">
+                    <div class="flex items-center gap-6">
+                        <a class="text-sm font-medium hover:text-primary transition-colors" href="/daily-updates">Daily
+                            Updates</a>
+                        <a class="text-sm font-medium hover:text-primary transition-colors"
+                            href="/featured">Featured</a>
+                        <a class="text-sm font-medium hover:text-primary transition-colors" href="/local-events">Local
+                            Events</a>
+                        <a class="text-sm font-medium hover:text-primary transition-colors"
+                            href="/calendar">Calendar</a>
+                        <a class="text-sm font-medium hover:text-primary transition-colors" href="/blog">Blog</a>
+                    </div>
+                    <button
+                        class="flex items-center justify-center rounded-lg bg-primary hover:bg-green-400 px-5 py-2 text-sm font-bold text-[#0d1b12] transition-colors">SignIn</button>
+                </div>
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="p-2 text-slate-600 dark:text-slate-300"><span
+                            class="material-symbols-outlined">menu</span></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu"
+            class="hidden md:hidden border-t border-slate-200 dark:border-slate-800 bg-background-light dark:bg-background-dark">
+            <div class="space-y-1 px-4 py-3">
+                <a href="/daily-updates"
+                    class="block rounded-lg px-3 py-2 text-base font-medium hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary transition-colors">Daily
+                    Updates</a>
+                <a href="/featured"
+                    class="block rounded-lg px-3 py-2 text-base font-medium hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary transition-colors">Featured</a>
+                <a href="/local-events"
+                    class="block rounded-lg px-3 py-2 text-base font-medium hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary transition-colors">Local
+                    Events</a>
+                <a href="/calendar"
+                    class="block rounded-lg px-3 py-2 text-base font-medium hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary transition-colors">Calendar</a>
+                <a href="/blog"
+                    class="block rounded-lg px-3 py-2 text-base font-medium hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary transition-colors">Blog</a>
+                <button
+                    class="w-full mt-4 flex items-center justify-center rounded-lg bg-primary hover:bg-green-400 px-5 py-2 text-sm font-bold text-[#0d1b12] transition-colors">
+                    Join Newsletter
+                </button>
+            </div>
+        </div>
+
+    </nav>
+
+    <!-- Main Content Wrapper -->
+    <main class="flex-1 w-full max-w-[1000px] mx-auto px-4 md:px-10 py-8 flex flex-col gap-8">
+
+        <!-- Breadcrumbs -->
+        <div class="flex items-center gap-2 text-sm text-text-secondary">
+            <a href="/featured" class="hover:text-primary transition-colors">Featured</a>
+            <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+            <span class="font-bold text-text-main dark:text-white">Summer Concert Series</span>
+        </div>
+
+        <!-- Event Hero -->
+        <div id="hero-bg"
+            class="relative w-full aspect-video md:aspect-[21/9] rounded-2xl overflow-hidden shadow-lg bg-gray-200">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+            <div class="absolute bottom-0 left-0 p-6 md:p-10 w-full">
+                <div class="flex flex-col gap-2">
+                    <span id="event-date-badge"
+                        class="bg-primary text-[#0d1b12] px-3 py-1 rounded text-xs font-bold uppercase w-fit">Upcoming</span>
+                    <h1 id="event-title" class="text-3xl md:text-5xl font-black text-white leading-tight">Loading
+                        Event...</h1>
+                    <div class="flex items-center gap-2 text-gray-200 font-medium">
+                        <span class="material-symbols-outlined text-[20px]">location_on</span>
+                        <span id="event-location" class="font-medium">Bend, OR</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+            <!-- Left Column: Details -->
+            <div class="md:col-span-2 flex flex-col gap-8">
+                <div class="flex flex-col gap-4">
+                    <h2 class="text-2xl font-bold text-text-main dark:text-white">About the Event</h2>
+                    <div id="event-description"
+                        class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed prose prose-slate dark:prose-invert">
+                        <p>Loading event details...</p>
+                    </div>
+                </div>
+
+                <!-- Gallery Placeholder (Hidden by default unless data exists) -->
+                <div id="event-gallery" class="flex flex-col gap-4 hidden">
+                    <h3 class="text-xl font-bold text-text-main dark:text-white">Gallery</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="aspect-video bg-gray-200 rounded-lg"></div>
+                        <div class="aspect-video bg-gray-200 rounded-lg"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Sidebar -->
+            <div class="md:col-span-1 flex flex-col gap-6">
+                <!-- Ticket Card -->
+                <div
+                    class="bg-white dark:bg-[#1a2e22] p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col gap-4">
+                    <div class="flex items-center justify-between pb-4 border-b border-gray-100 dark:border-gray-700">
+                        <span class="text-sm font-medium text-text-secondary">Price</span>
+                        <span id="event-price" class="text-xl font-bold text-text-main dark:text-white">Free</span>
+                    </div>
+                    <div class="flex flex-col gap-3">
+                        <div class="flex items-center gap-3 text-text-main dark:text-gray-200">
+                            <span class="material-symbols-outlined text-primary">calendar_month</span>
+                            <span id="event-date" class="font-medium">...</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-text-main dark:text-gray-200">
+                            <span class="material-symbols-outlined text-primary">schedule</span>
+                            <span id="event-time" class="font-medium">TBD</span>
+                        </div>
+                    </div>
+                    <button
+                        class="flex items-center justify-center rounded-lg bg-primary hover:bg-green-400 px-5 py-3 text-sm font-bold text-[#0d1b12] transition-colors w-full mt-2">
+                        Get Tickets
+                    </button>
+                </div>
+                <!-- Host Info -->
+                <!-- Host Info Removed -->
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Newsletter Section -->
+    <div class="w-full bg-[#0d1b12] text-white py-20 relative overflow-hidden">
+        <!-- Abstract pattern background -->
+        <div class="absolute top-0 right-0 w-1/2 h-full opacity-10 pointer-events-none"
+            style="background-image: radial-gradient(#13ec5b 1px, transparent 1px); background-size: 24px 24px;">
+        </div>
+        <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
+            <h2 class="text-3xl md:text-4xl font-black mb-4">Never Miss a Good Day</h2>
+            <p class="text-slate-400 mb-8 text-lg">Don't miss a beat! Get the weekly daily updates and a full
+                rundown of what's happening sent straight to your inbox every Sunday at 6pm.</p>
+            <form id="footer-newsletter-form" class="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
+                <input
+                    class="flex-1 h-12 px-4 rounded-lg bg-white/10 border border-white/20 text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                    placeholder="Enter your email address" type="email" required />
+                <button
+                    class="h-12 px-6 rounded-lg bg-primary hover:bg-green-400 text-[#0d1b12] font-bold transition-colors"
+                    type="submit">
+                    Subscribe
+                </button>
+            </form>
+            <!-- Inline Success Message -->
+            <div
+                class="form-success-inline hidden mt-6 p-6 bg-primary/10 border border-primary/20 rounded-xl animate-in fade-in zoom-in duration-300">
+                <div class="flex flex-col items-center">
+                    <div class="size-12 bg-primary rounded-full flex items-center justify-center text-[#0d1b12] mb-3">
+                        <span class="material-symbols-outlined font-bold">check</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">You're in!</h3>
+                    <p class="text-slate-400">Thanks for joining our local loop.</p>
+                </div>
+            </div>
+            <p class="text-xs text-slate-500 mt-4">We respect your privacy. Unsubscribe at any time.</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-[#0d1b12] border-t border-[#e7f3eb] dark:border-[#1f3b2a] mt-auto">
+        <div class="max-w-[1280px] mx-auto px-4 md:px-10 py-12 flex flex-col md:flex-row justify-between gap-10">
+            <div class="flex flex-col gap-4 max-w-xs">
+                <div class="flex items-center gap-2 text-[#0d1b12] dark:text-white">
+                    <div class="size-6 flex items-center justify-center rounded bg-primary/20 text-primary">
+                        <span class="material-symbols-outlined text-[18px]">landscape</span>
+                    </div>
+                    <span class="text-base font-bold">Good Day Bend</span>
+                </div>
+                <p class="text-sm text-[#4c9a66]">Connecting the community with the best events,
+                    businesses, and experiences in Bend, Oregon.</p>
+            </div>
+            <div class="flex flex-wrap gap-12 md:gap-20">
+                <div class="flex flex-col gap-3">
+                    <a class="text-sm text-[#4c9a66] hover:text-primary transition-colors cursor-pointer"
+                        id="footer-submit-event">Submit an Event</a>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <h4 class="text-sm font-bold text-[#0d1b12] dark:text-white uppercase tracking-wider">Community</h4>
+                    <a class="text-sm text-[#4c9a66] hover:text-primary transition-colors cursor-pointer"
+                        id="footer-partner">Partner With Us</a>
+                    <a class="text-sm text-[#4c9a66] hover:text-primary transition-colors cursor-pointer"
+                        id="footer-contact">Contact</a>
+                    <a class="text-sm text-[#4c9a66] hover:text-primary transition-colors cursor-pointer"
+                        id="footer-newsletter">Newsletter</a>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <h4 class="text-sm font-bold text-[#0d1b12] dark:text-white uppercase tracking-wider">Follow Us</h4>
+                    <a class="text-[#4c9a66] hover:text-primary transition-colors"
+                        href="https://www.instagram.com/gooddaybend/?hl=en" target="_blank">
+                        <!-- Instagram Icon (SVG) -->
+                        <svg class="size-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill-rule="evenodd"
+                                d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772 4.902 4.902 0 011.772-1.153c.636-.247 1.363-.416 2.427-.465 1.067-.047 1.407-.06 3.808-.06zm0 1.8c-2.67 0-2.977.01-4.042.059-.732.033-1.13.154-1.395.257-.354.138-.606.303-.868.566-.263.262-.428.514-.566.868-.103.265-.224.663-.257 1.394-.049 1.065-.059 1.372-.059 4.042 0 2.67.01 2.977.059 4.042.033.732.154 1.13.257 1.395.138.354.303.606.566.868.262.263.514.428.868.566.265.103.663.224 1.394.257 1.065.049 1.372.059-4.042-.059zm0 4.383a5.417 5.417 0 110 10.834 5.417 5.417 0 010-10.834zm0 1.8a3.617 3.617 0 100 7.234 3.617 3.617 0 000-7.234zm5.378-4.275a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        </div>
+    </footer>
+
+    <!-- Form Modal -->
+    <div id="form-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm modal-backdrop"></div>
+        <div
+            class="relative bg-white dark:bg-slate-900 w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300 border border-slate-200 dark:border-slate-800">
+            <div class="p-8">
+                <button
+                    class="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors modal-close-btn">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+                <div id="form-content">
+                    <!-- Form injected here via init.js -->
+                </div>
+                <div id="form-success" class="hidden flex flex-col items-center py-12 text-center">
+                    <div
+                        class="size-20 bg-primary rounded-full flex items-center justify-center text-[#0d1b12] mb-6 animate-bounce shadow-lg shadow-primary/40">
+                        <span class="material-symbols-outlined text-5xl">check</span>
+                    </div>
+                    <h3 class="text-3xl font-black text-slate-900 dark:text-white mb-2">Success!</h3>
+                    <p class="text-slate-600 dark:text-slate-400">Your message has been received.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Newsletter Modal -->
+    <div id="newsletter-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" id="newsletter-modal-close"></div>
+        <div
+            class="relative bg-white dark:bg-slate-900 w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300">
+            <div class="p-8">
+                <button id="newsletter-modal-close-btn"
+                    class="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+                <div class="flex flex-col items-center text-center">
+                    <div class="size-16 flex items-center justify-center rounded-full bg-primary/10 text-primary mb-6">
+                        <span class="material-symbols-outlined text-4xl">mail</span>
+                    </div>
+                    <h2 class="text-3xl font-black text-slate-900 dark:text-white mb-2">Join the Club</h2>
+                    <p class="text-slate-600 dark:text-slate-400 mb-8">Get the best of Bend delivered to your inbox
+                        every Thursday.</p>
+                    <form id="newsletter-form" class="w-full space-y-4">
+                        <div class="grid grid-cols-2 gap-4">
+                            <input type="text" id="nl-first-name" placeholder="First Name"
+                                class="w-full h-12 px-4 rounded-lg bg-slate-100 dark:bg-slate-800 border-transparent focus:ring-2 focus:ring-primary transition-all text-[#0d1b12] dark:text-white">
+                            <input type="text" id="nl-last-name" placeholder="Last Name"
+                                class="w-full h-12 px-4 rounded-lg bg-slate-100 dark:bg-slate-800 border-transparent focus:ring-2 focus:ring-primary transition-all text-[#0d1b12] dark:text-white">
+                        </div>
+                        <input type="email" id="nl-email" placeholder="Email Address" required
+                            class="w-full h-12 px-4 rounded-lg bg-slate-100 dark:bg-slate-800 border-transparent focus:ring-2 focus:ring-primary transition-all text-[#0d1b12] dark:text-white">
+                        <button type="submit"
+                            class="w-full h-14 bg-primary hover:bg-green-400 text-[#0d1b12] font-black rounded-lg shadow-lg shadow-primary/20 transition-all hover:scale-[1.02]">Keep
+                            Me In The Loop</button>
+                    </form>
+                    <div id="newsletter-success" class="hidden flex flex-col items-center py-8">
+                        <div
+                            class="size-20 bg-green-500 rounded-full flex items-center justify-center text-white mb-6 animate-bounce">
+                            <span class="material-symbols-outlined text-5xl">check</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-slate-900 dark:text-white">You're in!</h3>
+                        <p class="text-slate-600 dark:text-slate-400">Welcome to the inner circle.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
+    <!-- App Scripts -->
+    <script type="module" src="init.js?v=9"></script>
+</body>
+
+</html>

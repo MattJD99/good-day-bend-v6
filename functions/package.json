@@ -1,0 +1,24 @@
+{
+    "name": "good-day-bend-functions-v6",
+    "version": "1.0.0",
+    "description": "Backend functions for Good Day Bend v6 using Gemini 3 and NanoBanana Pro",
+    "main": "index.js",
+    "scripts": {
+        "start": "functions-framework --target=main",
+        "gather": "node workflows/gather.js",
+        "curate": "node workflows/curate.js",
+        "trend": "node workflows/trend_blog.js",
+        "update": "node workflows/daily_update.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "dependencies": {
+        "@google-cloud/functions-framework": "^3.3.0",
+        "@google/genai": "^1.0.0",
+        "@google/generative-ai": "^0.21.0",
+        "axios": "^1.6.0",
+        "date-fns": "^3.0.0",
+        "firebase-admin": "^11.11.1",
+        "firebase-functions": "^6.0.0",
+        "uuid": "^9.0.1"
+    }
+}

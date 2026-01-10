@@ -1,0 +1,76 @@
+{
+    "firestore": {
+        "rules": "firestore.rules"
+    },
+    "functions": [
+        {
+            "source": "functions",
+            "codebase": "default",
+            "ignore": [
+                "node_modules",
+                ".git",
+                "firebase-debug.log",
+                "firebase-debug.*.log"
+            ],
+            "runtime": "nodejs20"
+        }
+    ],
+    "hosting": {
+        "public": "public",
+        "headers": [
+            {
+                "source": "**",
+                "headers": [
+                    {
+                        "key": "Access-Control-Allow-Origin",
+                        "value": "*"
+                    }
+                ]
+            }
+        ],
+        "rewrites": [
+            {
+                "source": "/home*",
+                "destination": "/index.html"
+            },
+            {
+                "source": "/events*",
+                "destination": "/local-events.html"
+            },
+            {
+                "source": "/event-details*",
+                "destination": "/event-details.html"
+            },
+            {
+                "source": "/calendar*",
+                "destination": "/calendar.html"
+            },
+            {
+                "source": "/blog*",
+                "destination": "/blog.html"
+            },
+            {
+                "source": "/blog-post*",
+                "destination": "/blog-post.html"
+            },
+            {
+                "source": "/daily-updates*",
+                "destination": "/daily-updates.html"
+            },
+            {
+                "source": "/daily-details*",
+                "destination": "/daily-details.html"
+            },
+            {
+                "source": "/main",
+                "function": "main"
+            }
+        ],
+        "ignore": [
+            "firebase.json",
+            "**/.*",
+            "**/node_modules/**"
+        ],
+        "cleanUrls": true
+    }
+}

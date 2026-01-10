@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Daily Update Details - Good Day Bend</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200..800&amp;family=Noto+Sans:wght@300..800&amp;family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;family=Outfit:wght@100..900&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Material Symbols -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec5b",
+                        "background-light": "#f8fcf9",
+                        "background-dark": "#102216",
+                        "text-main": "#0d1b12",
+                        "text-secondary": "#4c9a66",
+                        "border-light": "#e7f3eb",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+    <!-- Mobile Specific Styles -->
+    <link rel="stylesheet" href="mobile.css">
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-text-main font-display antialiased">
+    <!-- Top Navigation -->
+    <nav
+        class="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-800 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex h-16 items-center justify-between">
+                <a href="/" class="flex items-center gap-2">
+                    <div class="flex size-8 items-center justify-center rounded-lg bg-primary text-slate-900">
+                        <span class="material-symbols-outlined text-[20px]">landscape</span>
+                    </div>
+                    <span class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">Good Day Bend</span>
+                </a>
+                <div class="hidden md:flex flex-1 justify-end items-center gap-8">
+                    <div class="flex items-center gap-6">
+                        <a class="text-sm font-medium hover:text-primary transition-colors" href="/daily-updates">Daily
+                            Updates</a>
+                        <a class="text-sm font-medium hover:text-primary transition-colors"
+                            href="/featured">Featured</a>
+                        <a class="text-sm font-medium hover:text-primary transition-colors" href="/local-events">Local
+                            Events</a>
+                        <a class="text-sm font-medium hover:text-primary transition-colors"
+                            href="/calendar">Calendar</a>
+                        <a class="text-sm font-medium hover:text-primary transition-colors" href="/blog">Blog</a>
+                    </div>
+                    <button id="newsletter-trigger"
+                        class="flex items-center justify-center rounded-lg bg-primary hover:bg-green-400 px-5 py-2 text-sm font-bold text-[#0d1b12] transition-colors">Join
+                        Newsletter</button>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="p-2 text-slate-600 dark:text-slate-300"><span
+                            class="material-symbols-outlined">menu</span></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu"
+            class="hidden md:hidden border-t border-slate-200 dark:border-slate-800 bg-background-light dark:bg-background-dark">
+            <div class="space-y-1 px-4 py-3">
+                <a href="/daily-updates"
+                    class="block rounded-lg px-3 py-2 text-base font-medium hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary transition-colors">Daily
+                    Updates</a>
+                <a href="/featured"
+                    class="block rounded-lg px-3 py-2 text-base font-medium hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary transition-colors">Featured</a>
+                <a href="/local-events"
+                    class="block rounded-lg px-3 py-2 text-base font-medium hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary transition-colors">Local
+                    Events</a>
+                <a href="/calendar"
+                    class="block rounded-lg px-3 py-2 text-base font-medium hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary transition-colors">Calendar</a>
+                <a href="/blog"
+                    class="block rounded-lg px-3 py-2 text-base font-medium hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary transition-colors">Blog</a>
+                <button id="newsletter-trigger-mobile"
+                    class="w-full mt-4 flex items-center justify-center rounded-lg bg-primary hover:bg-green-400 px-5 py-2 text-sm font-bold text-[#0d1b12] transition-colors">
+                    Join Newsletter
+                </button>
+            </div>
+        </div>
+
+    </nav>
+
+    <!-- Main Content -->
+    <main class="min-h-screen py-8" id="daily-details-container">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Back Link -->
+            <a href="/daily-updates"
+                class="inline-flex items-center text-sm font-bold text-text-secondary hover:text-primary mb-6 transition-colors">
+                <span class="material-symbols-outlined text-[18px] mr-1">arrow_back</span>
+                Back to Daily Updates
+            </a>
+
+            <div class="flex flex-col lg:flex-row gap-8">
+                <div class="flex-1 min-w-0">
+
+                    <!-- Article Content -->
+                    <article class="bg-white rounded-2xl p-6 md:p-10 shadow-sm border border-border-light">
+                        <!-- Header -->
+                        <header class="mb-8 border-b border-gray-100 pb-8">
+                            <div class="flex items-center gap-2 mb-4">
+                                <span id="daily-vibe"
+                                    class="bg-green-100 text-green-700 px-2 py-1 rounded text-xs font-bold uppercase tracking-wider">Daily
+                                    Update</span>
+                            </div>
+                            <h1 id="daily-title"
+                                class="text-3xl md:text-5xl font-black text-text-main mb-4 leading-tight">
+                                Loading Update...</h1>
+                            <div class="flex items-center gap-2 text-text-secondary">
+                                <span class="material-symbols-outlined text-[20px]">schedule</span>
+                                <span id="daily-date" class="font-medium">...</span>
+                            </div>
+                        </header>
+
+                        <!-- Featured Image -->
+                        <div id="daily-image-container"
+                            class="w-full aspect-video rounded-xl overflow-hidden mb-8 bg-gray-100">
+                            <img id="daily-image" src="" class="w-full h-full object-cover" alt="Daily Update Image" />
+                        </div>
+
+                        <!-- Body Text -->
+                        <div id="daily-content"
+                            class="prose prose-lg max-w-none text-gray-700 dark:text-gray-300 font-body leading-relaxed">
+                            <!-- Dynamic Content Will Load Here -->
+                            <div class="animate-pulse flex space-x-4">
+                                <div class="flex-1 space-y-6 py-1">
+                                    <div class="h-2 bg-slate-200 rounded"></div>
+                                    <div class="space-y-3">
+                                        <div class="grid grid-cols-3 gap-4">
+                                            <div class="h-2 bg-slate-200 rounded col-span-2"></div>
+                                            <div class="h-2 bg-slate-200 rounded col-span-1"></div>
+                                        </div>
+                                        <div class="h-2 bg-slate-200 rounded"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Share Section -->
+                        <div class="mt-8 pt-8 border-t border-gray-100 flex items-center justify-between">
+                            <span class="font-bold text-text-main">Share this update</span>
+                            <div class="flex gap-3">
+                                <button
+                                    class="size-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-primary hover:text-black transition-colors"><span
+                                        class="material-symbols-outlined text-[20px]">share</span></button>
+                                <button
+                                    class="size-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-primary hover:text-black transition-colors"><span
+                                        class="material-symbols-outlined text-[20px]">content_copy</span></button>
+                            </div>
+                        </div>
+
+                </div>
+
+                <!-- Sidebar -->
+                <aside class="w-full lg:w-[350px] space-y-8">
+                    <!-- Newsletter Card -->
+                    <div class="bg-text-main rounded-xl p-6 shadow-lg relative overflow-hidden group">
+                        <div
+                            class="absolute -right-6 -top-6 w-24 h-24 bg-primary/20 rounded-full blur-xl group-hover:bg-primary/30 transition-all">
+                        </div>
+                        <div class="relative z-10">
+                            <h3 class="text-xl font-bold text-white mb-2">Don't miss a beat.</h3>
+                            <p class="text-gray-300 text-sm mb-4">Get the daily summary of Bend's top stories delivered
+                                to your inbox every morning at 7am.</p>
+                            <form id="footer-newsletter-form" class="space-y-3">
+                                <input
+                                    class="w-full rounded-lg bg-white/10 border border-white/20 text-white placeholder:text-gray-400 focus:ring-primary focus:border-primary text-sm px-3 py-2.5"
+                                    placeholder="Your email address" type="email" required />
+                                <button type="submit"
+                                    class="w-full bg-primary hover:bg-primary/90 text-text-main font-bold rounded-lg py-2.5 text-sm transition-colors flex items-center justify-center gap-2">
+                                    Subscribe
+                                    <span class="material-symbols-outlined text-[18px]">send</span>
+                                </button>
+                            </form>
+                            <!-- Inline Success Message -->
+                            <div
+                                class="form-success-inline hidden mt-4 p-4 bg-primary/10 border border-primary/20 rounded-xl animate-in fade-in zoom-in duration-300 text-center">
+                                <div
+                                    class="size-10 bg-primary rounded-full flex items-center justify-center text-black mx-auto mb-2">
+                                    <span class="material-symbols-outlined font-bold text-sm">check</span>
+                                </div>
+                                <h3 class="text-sm font-bold text-white">Success!</h3>
+                                <p class="text-gray-400 text-xs">You're on the list.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submit Tip -->
+                    <div
+                        class="bg-[#f2f7f4] rounded-xl p-5 border border-dashed border-primary/40 text-center hover:bg-white hover:border-solid hover:border-primary transition-all cursor-pointer">
+                        <div
+                            class="size-10 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-3 text-primary">
+                            <span class="material-symbols-outlined">add_a_photo</span>
+                        </div>
+                        <h4 class="text-text-main font-bold text-sm">Have a scoop?</h4>
+                        <p class="text-text-secondary text-xs mt-1">Submit news, photos, or event tips to our editorial
+                            team.</p>
+                    </div>
+
+                    <!-- Live Map Widget -->
+                    <div
+                        class="bg-white rounded-xl overflow-hidden shadow-sm border border-border-light relative group">
+                        <div class="p-4 border-b border-border-light flex justify-between items-center bg-gray-50">
+                            <h3 class="font-bold text-text-main flex items-center gap-2 text-sm">
+                                <span class="material-symbols-outlined text-primary text-[18px]">location_on</span>
+                                Live Event Map
+                            </h3>
+                            <span
+                                class="text-[10px] font-bold bg-green-100 text-green-700 px-2 py-0.5 rounded-full">LIVE</span>
+                        </div>
+                        <div id="event-map" class="h-[300px] w-full z-0"></div>
+                        <div
+                            class="absolute bottom-3 left-3 bg-white/90 backdrop-blur px-3 py-1.5 rounded-lg shadow-sm pointer-events-none transition-opacity duration-300 group-hover:opacity-0 z-[400]">
+                            <div class="flex items-center gap-1 text-xs font-bold text-text-main">
+                                <span class="material-symbols-outlined text-[14px]">touch_app</span>
+                                Interact to explore
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <!-- Newsletter Section -->
+    <div class="w-full bg-[#0d1b12] text-white py-20 relative overflow-hidden">
+        <!-- Abstract pattern background -->
+        <div class="absolute top-0 right-0 w-1/2 h-full opacity-10 pointer-events-none"
+            style="background-image: radial-gradient(#13ec5b 1px, transparent 1px); background-size: 24px 24px;">
+        </div>
+        <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
+            <h2 class="text-3xl md:text-4xl font-black mb-4">Never miss a beat in Bend</h2>
+            <p class="text-slate-400 mb-8 text-lg">Get the weekly roundup of best events, new openings,
+                and local deals sent straight to your inbox.</p>
+            <form id="footer-newsletter-form" class="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
+                <input
+                    class="flex-1 h-12 px-4 rounded-lg bg-white/10 border border-white/20 text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                    placeholder="Enter your email address" type="email" required />
+                <button
+                    class="h-12 px-6 rounded-lg bg-primary hover:bg-green-400 text-[#0d1b12] font-bold transition-colors"
+                    type="submit">
+                    Subscribe
+                </button>
+            </form>
+            <!-- Inline Success Message -->
+            <div
+                class="form-success-inline hidden mt-6 p-6 bg-primary/10 border border-primary/20 rounded-xl animate-in fade-in zoom-in duration-300">
+                <div class="flex flex-col items-center">
+                    <div class="size-12 bg-primary rounded-full flex items-center justify-center text-[#0d1b12] mb-3">
+                        <span class="material-symbols-outlined font-bold">check</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">You're in!</h3>
+                    <p class="text-slate-400">Thanks for joining our local loop.</p>
+                </div>
+            </div>
+            <p class="text-xs text-slate-500 mt-4">We respect your privacy. Unsubscribe at any time.</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-[#0d1b12] border-t border-[#e7f3eb] dark:border-[#1f3b2a] mt-auto">
+        <div class="max-w-[1280px] mx-auto px-4 md:px-10 py-12 flex flex-col md:flex-row justify-between gap-10">
+            <div class="flex flex-col gap-4 max-w-xs">
+                <div class="flex items-center gap-2 text-[#0d1b12] dark:text-white">
+                    <div class="size-6 flex items-center justify-center rounded bg-primary/20 text-primary">
+                        <span class="material-symbols-outlined text-[18px]">landscape</span>
+                    </div>
+                    <span class="text-base font-bold">Good Day Bend</span>
+                </div>
+                <p class="text-sm text-[#4c9a66]">Connecting the community with the best events,
+                    businesses, and experiences in Bend, Oregon.</p>
+            </div>
+            <div class="flex flex-wrap gap-12 md:gap-20">
+                <div class="flex flex-col gap-3">
+                    <a class="text-sm text-[#4c9a66] hover:text-primary transition-colors cursor-pointer"
+                        id="footer-submit-event">Submit an Event</a>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <h4 class="text-sm font-bold text-[#0d1b12] dark:text-white uppercase tracking-wider">Community</h4>
+                    <a class="text-sm text-[#4c9a66] hover:text-primary transition-colors cursor-pointer"
+                        id="footer-partner">Partner With Us</a>
+                    <a class="text-sm text-[#4c9a66] hover:text-primary transition-colors cursor-pointer"
+                        id="footer-contact">Contact</a>
+                    <a class="text-sm text-[#4c9a66] hover:text-primary transition-colors cursor-pointer"
+                        id="footer-newsletter">Newsletter</a>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <h4 class="text-sm font-bold text-[#0d1b12] dark:text-white uppercase tracking-wider">Follow Us</h4>
+                    <a class="text-[#4c9a66] hover:text-primary transition-colors"
+                        href="https://www.instagram.com/gooddaybend/?hl=en" target="_blank">
+                        <!-- Instagram Icon (SVG) -->
+                        <svg class="size-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill-rule="evenodd"
+                                d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772 4.902 4.902 0 011.772-1.153c.636-.247 1.363-.416 2.427-.465 1.067-.047 1.407-.06 3.808-.06zm0 1.8c-2.67 0-2.977.01-4.042.059-.732.033-1.13.154-1.395.257-.354.138-.606.303-.868.566-.263.262-.428.514-.566.868-.103.265-.224.663-.257 1.394-.049 1.065-.059 1.372-.059 4.042 0 2.67.01 2.977.059 4.042.033.732.154 1.13.257 1.395.138.354.303.606.566.868.262.263.514.428.868.566.265.103.663.224 1.394.257 1.065.049 1.372.059-4.042-.059zm0 4.383a5.417 5.417 0 110 10.834 5.417 5.417 0 010-10.834zm0 1.8a3.617 3.617 0 100 7.234 3.617 3.617 0 000-7.234zm5.378-4.275a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        </div>
+    </footer>
+
+    <!-- Form Modal -->
+    <div id="form-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm modal-backdrop"></div>
+        <div
+            class="relative bg-white dark:bg-slate-900 w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300 border border-slate-200 dark:border-slate-800">
+            <div class="p-8">
+                <button
+                    class="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors modal-close-btn">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+                <div id="form-content">
+                    <!-- Form injected here via init.js -->
+                </div>
+                <div id="form-success" class="hidden flex flex-col items-center py-12 text-center">
+                    <div
+                        class="size-20 bg-primary rounded-full flex items-center justify-center text-[#0d1b12] mb-6 animate-bounce shadow-lg shadow-primary/40">
+                        <span class="material-symbols-outlined text-5xl">check</span>
+                    </div>
+                    <h3 class="text-3xl font-black text-slate-900 dark:text-white mb-2">Success!</h3>
+                    <p class="text-slate-600 dark:text-slate-400">Your message has been received.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Newsletter Modal -->
+    <div id="newsletter-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" id="newsletter-modal-close"></div>
+        <div
+            class="relative bg-white dark:bg-slate-900 w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300">
+            <div class="p-8">
+                <button id="newsletter-modal-close-btn"
+                    class="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+                <div class="flex flex-col items-center text-center">
+                    <div class="size-16 flex items-center justify-center rounded-full bg-primary/10 text-primary mb-6">
+                        <span class="material-symbols-outlined text-4xl">mail</span>
+                    </div>
+                    <h2 class="text-3xl font-black text-slate-900 dark:text-white mb-2">Join the Club</h2>
+                    <p class="text-slate-600 dark:text-slate-400 mb-8">Get the best of Bend delivered to your inbox हर
+                        Thursday.</p>
+                    <form id="newsletter-form" class="w-full space-y-4">
+                        <div class="grid grid-cols-2 gap-4">
+                            <input type="text" id="nl-first-name" placeholder="First Name"
+                                class="w-full h-12 px-4 rounded-lg bg-slate-100 dark:bg-slate-800 border-transparent focus:ring-2 focus:ring-primary transition-all text-[#0d1b12] dark:text-white">
+                            <input type="text" id="nl-last-name" placeholder="Last Name"
+                                class="w-full h-12 px-4 rounded-lg bg-slate-100 dark:bg-slate-800 border-transparent focus:ring-2 focus:ring-primary transition-all text-[#0d1b12] dark:text-white">
+                        </div>
+                        <input type="email" id="nl-email" placeholder="Email Address" required
+                            class="w-full h-12 px-4 rounded-lg bg-slate-100 dark:bg-slate-800 border-transparent focus:ring-2 focus:ring-primary transition-all text-[#0d1b12] dark:text-white">
+                        <button type="submit"
+                            class="w-full h-14 bg-primary hover:bg-green-400 text-[#0d1b12] font-black rounded-lg shadow-lg shadow-primary/20 transition-all hover:scale-[1.02]">Keep
+                            Me In The Loop</button>
+                    </form>
+                    <div id="newsletter-success" class="hidden flex flex-col items-center py-8">
+                        <div
+                            class="size-20 bg-green-500 rounded-full flex items-center justify-center text-white mb-6 animate-bounce">
+                            <span class="material-symbols-outlined text-5xl">check</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-slate-900 dark:text-white">You're in!</h3>
+                        <p class="text-slate-600 dark:text-slate-400">Welcome to the inner circle.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
+    <!-- App Scripts -->
+    <script type="module" src="init.js?v=9"></script>
+</body>
+
+</html>

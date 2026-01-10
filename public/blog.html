@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Good Day Bend - Blog</title>
+    <meta
+        content="Discover the latest stories, events, and hidden gems in Bend, Oregon. Your guide to Central Oregon life."
+        name="description" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec5b",
+                        "background-light": "#f8fcf9",
+                        "background-dark": "#102216",
+                        "card-light": "#ffffff",
+                        "card-dark": "#1a2e22",
+                        "text-primary-light": "#0d1b12",
+                        "text-primary-dark": "#f0fdf4",
+                        "text-secondary-light": "#4c9a66",
+                        "text-secondary-dark": "#86c69b",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+    <!-- Mobile Specific Styles -->
+    <link rel="stylesheet" href="mobile.css">
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark font-display text-text-primary-light dark:text-text-primary-dark antialiased selection:bg-primary selection:text-black">
+    <!-- Navigation -->
+    <!-- Top Navigation -->
+    <nav
+        class="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-800 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex h-16 items-center justify-between">
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center gap-2">
+                    <div class="flex size-8 items-center justify-center rounded-lg bg-primary text-slate-900">
+                        <span class="material-symbols-outlined text-[20px]">landscape</span>
+                    </div>
+                    <span class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">Good Day Bend</span>
+                </a>
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex flex-1 justify-end items-center gap-8">
+                    <div class="flex items-center gap-6">
+                        <a class="text-sm font-medium hover:text-primary transition-colors"
+                            href="daily-updates.html">Daily Updates</a>
+                        <a class="text-sm font-medium hover:text-primary transition-colors"
+                            href="featured.html">Featured</a>
+                        <a class="text-sm font-medium hover:text-primary transition-colors"
+                            href="local-events.html">Local Events</a>
+                        <a class="text-sm font-medium hover:text-primary transition-colors"
+                            href="calendar.html">Calendar</a>
+                        <a class="text-sm font-medium hover:text-primary transition-colors" href="blog.html">Blog</a>
+                    </div>
+                    <button
+                        class="flex items-center justify-center rounded-lg bg-primary hover:bg-green-400 px-5 py-2 text-sm font-bold text-[#0d1b12] transition-colors">
+                        Join Newsletter
+                    </button>
+                </div>
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="p-2 text-slate-600 dark:text-slate-300">
+                        <span class="material-symbols-outlined">menu</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu"
+            class="hidden md:hidden border-t border-slate-200 dark:border-slate-800 bg-background-light dark:bg-background-dark">
+            <div class="space-y-1 px-4 py-3">
+                <a href="daily-updates.html"
+                    class="block rounded-lg px-3 py-2 text-base font-medium hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary transition-colors">Daily
+                    Updates</a>
+                <a href="featured.html"
+                    class="block rounded-lg px-3 py-2 text-base font-medium hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary transition-colors">Featured</a>
+                <a href="local-events.html"
+                    class="block rounded-lg px-3 py-2 text-base font-medium hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary transition-colors">Local
+                    Events</a>
+                <a href="calendar.html"
+                    class="block rounded-lg px-3 py-2 text-base font-medium hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary transition-colors">Calendar</a>
+                <a href="blog.html"
+                    class="block rounded-lg px-3 py-2 text-base font-medium hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary transition-colors">Blog</a>
+                <button
+                    class="w-full mt-4 flex items-center justify-center rounded-lg bg-primary hover:bg-green-400 px-5 py-2 text-sm font-bold text-[#0d1b12] transition-colors">
+                    Join Newsletter
+                </button>
+            </div>
+        </div>
+
+    </nav>
+    <!-- Main Content -->
+    <main class="min-h-screen">
+        <!-- Hero Section -->
+        <section class="relative">
+            <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+                <div class="relative overflow-hidden rounded-2xl bg-black">
+                    <!-- Background Image -->
+                    <div class="absolute inset-0 opacity-70">
+                        <img id="blog-hero-image" alt="Panoramic view of mountains in Bend Oregon at sunset"
+                            class="h-full w-full object-cover" data-alt="Scenic mountain landscape at sunset"
+                            src="blog-hero.jpg" />
+                    </div>
+                    <!-- Gradient Overlay -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+                    <!-- Hero Content -->
+                    <div class="relative z-10 flex min-h-[500px] flex-col justify-end p-6 sm:p-12 lg:p-16">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span
+                                class="inline-flex items-center rounded-full bg-primary/20 px-2.5 py-0.5 text-xs font-bold text-primary ring-1 ring-inset ring-primary/30 backdrop-blur-sm">
+                                <span class="material-symbols-outlined text-[14px] mr-1">calendar_today</span>
+                                <span id="hero-date">Loading...</span>
+                            </span>
+                            <span
+                                class="inline-flex items-center rounded-full bg-white/10 px-2.5 py-0.5 text-xs font-medium text-white ring-1 ring-inset ring-white/20 backdrop-blur-sm">
+                                <span id="hero-weather-icon"
+                                    class="material-symbols-outlined text-[14px] mr-1">partly_cloudy_day</span>
+                                <span id="hero-weather">Loading...</span>
+                            </span>
+                        </div>
+                        <span
+                            class="mb-4 inline-flex w-fit items-center rounded-full bg-primary px-3 py-1 text-xs font-bold uppercase tracking-wider text-black">
+                            Featured Story
+                        </span>
+                        <h1 id="blog-hero-title"
+                            class="mb-4 max-w-3xl text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
+                            Bend Life &amp; Local Stories
+                        </h1>
+                        <p id="blog-hero-description" class="mb-8 max-w-2xl text-lg text-gray-200 sm:text-xl">
+                            Plan your perfect day in the high desert. We uncover the events and places that make Bend
+                            unique.
+                        </p>
+                        <div class="flex flex-wrap gap-4">
+                            <a id="featured-story-btn" href="#"
+                                class="flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-base font-bold text-black transition-transform hover:scale-105 active:scale-95">
+                                Read Featured Story
+                                <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Filter Chips -->
+        <div
+            class="sticky top-16 z-40 w-full border-b border-[#e7f3eb] bg-background-light/95 backdrop-blur-sm py-4 dark:border-white/10 dark:bg-background-dark/95">
+            <div class="mx-auto flex max-w-7xl gap-3 overflow-x-auto px-4 pb-2 sm:px-6 lg:px-8 no-scrollbar">
+                <button id="blog-filter-all"
+                    class="whitespace-nowrap rounded-lg bg-primary px-5 py-2 text-sm font-bold text-black shadow-sm ring-1 ring-inset ring-primary">
+                    All Stories
+                </button>
+                <button id="blog-filter-outdoors"
+                    class="whitespace-nowrap rounded-lg bg-white px-5 py-2 text-sm font-medium text-text-primary-light ring-1 ring-inset ring-gray-200 transition-colors hover:bg-gray-50 dark:bg-white/5 dark:text-white dark:ring-white/10 dark:hover:bg-white/10">
+                    Outdoors
+                </button>
+                <button id="blog-filter-food"
+                    class="whitespace-nowrap rounded-lg bg-white px-5 py-2 text-sm font-medium text-text-primary-light ring-1 ring-inset ring-gray-200 transition-colors hover:bg-gray-50 dark:bg-white/5 dark:text-white dark:ring-white/10 dark:hover:bg-white/10">
+                    Food &amp; Drink
+                </button>
+                <button id="blog-filter-arts"
+                    class="whitespace-nowrap rounded-lg bg-white px-5 py-2 text-sm font-medium text-text-primary-light ring-1 ring-inset ring-gray-200 transition-colors hover:bg-gray-50 dark:bg-white/5 dark:text-white dark:ring-white/10 dark:hover:bg-white/10">
+                    Arts &amp; Culture
+                </button>
+                <button id="blog-filter-community"
+                    class="whitespace-nowrap rounded-lg bg-white px-5 py-2 text-sm font-medium text-text-primary-light ring-1 ring-inset ring-gray-200 transition-colors hover:bg-gray-50 dark:bg-white/5 dark:text-white dark:ring-white/10 dark:hover:bg-white/10">
+                    Community
+                </button>
+                <button id="blog-filter-events"
+                    class="whitespace-nowrap rounded-lg bg-white px-5 py-2 text-sm font-medium text-text-primary-light ring-1 ring-inset ring-gray-200 transition-colors hover:bg-gray-50 dark:bg-white/5 dark:text-white dark:ring-white/10 dark:hover:bg-white/10">
+                    Events
+                </button>
+            </div>
+        </div>
+        <!-- Main Grid Layout -->
+        <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 gap-12 lg:grid-cols-12">
+                <!-- Blog Post Column -->
+                <div class="lg:col-span-8">
+                    <div class="mb-8 flex items-center justify-between">
+                        <h2 class="text-2xl font-bold tracking-tight">Latest Articles</h2>
+                        <span
+                            class="text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark">Showing
+                            6 of 42</span>
+                    </div>
+                    <div class="grid gap-8 sm:grid-cols-2" id="blog-container">
+                        <!-- Article Card 1 -->
+                        <article
+                            class="group card-hover flex flex-col overflow-hidden rounded-2xl bg-card-light shadow-sm dark:bg-card-dark h-full">
+                            <div class="relative aspect-[16/10] overflow-hidden">
+                                <img alt="Craft beer flight on a wooden table"
+                                    class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                    data-alt="Beer glasses on table in brewery"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUvLrFpyMfT2ZMXY_KhGZ-lFGiiBD2r7pHVvJpK2-sjNcKvQ8_syaYJv9pSNghpkAtmk0eD_eT89EV-U8_zIWTjF1RpZiSajPOrmYalmCSp8UmHHZQjjTJ0geN_p9vdIR2ROrCBB3yG_y_lHMRPvcBqN4TRim2ItWPtRX-gJ5JXt6f1aNWnsEYKsWF78Wb2niM2AVeYAMMCYykcVfznzbDowgpGCJSS87ZWcWrl-DZaYaNU3LFUzMXb85fb8-spHSrbEuoZJv6hlk" />
+                                <div
+                                    class="absolute left-4 top-4 rounded-md bg-white/90 px-3 py-1 text-xs font-bold text-black backdrop-blur-sm">
+                                    Food &amp; Drink
+                                </div>
+                            </div>
+                            <div class="flex flex-1 flex-col p-6">
+                                <div
+                                    class="mb-3 flex items-center gap-2 text-xs font-medium text-text-secondary-light dark:text-text-secondary-dark">
+                                    <span class="material-symbols-outlined text-[16px]">calendar_today</span>
+                                    <time datetime="2024-01-15">Jan 15, 2024</time>
+                                    <span class="mx-1">•</span>
+                                    <span>By Sarah Jenkins</span>
+                                </div>
+                                <h3
+                                    class="mb-3 text-xl font-bold leading-tight group-hover:text-primary transition-colors">
+                                    Top 5 Breweries to Visit this Winter
+                                </h3>
+                                <p
+                                    class="mb-4 flex-1 text-sm leading-relaxed text-text-secondary-light dark:text-gray-400">
+                                    Discover the coziest spots to grab a pint when the snow starts falling in Central
+                                    Oregon. From dark stouts to winter warmers.
+                                </p>
+                                <a class="inline-flex items-center text-sm font-bold text-primary hover:underline"
+                                    href="blog-post.html">
+                                    Read Article <span
+                                        class="material-symbols-outlined ml-1 text-[18px]">arrow_right_alt</span>
+                                </a>
+                            </div>
+                        </article>
+                        <!-- Article Card 2 -->
+                        <article
+                            class="group card-hover flex flex-col overflow-hidden rounded-2xl bg-card-light shadow-sm dark:bg-card-dark h-full">
+                            <div class="relative aspect-[16/10] overflow-hidden">
+                                <img alt="Hiker on mountain peak at sunrise"
+                                    class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                    data-alt="Person hiking on mountain trail"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_Z280qAO0FwdmOgEw0n-fhA1DjHEKqw4j3VELBp79W4qb2PH7jYJ8pI-CufSDRNuadIEEQJk9E-Pbtj8opf5Sa8AtvR9oSZAYKkmNU0LMCjAL0P5SBEKjJa108pK8w9fGccqNYTWjHplF7UE2ibmu1n2xMq5boEM29DnA-W5E5m7PaGo3ZIBc1C_DXOXTeqUEtr6sClj4hAeXUSaxWydnVLz32eV0UR9T9Qddt8sIP28FQq2mmcv0FdyJKk4SAsqzD4uqt0KYN9g" />
+                                <div
+                                    class="absolute left-4 top-4 rounded-md bg-white/90 px-3 py-1 text-xs font-bold text-black backdrop-blur-sm">
+                                    Outdoors
+                                </div>
+                            </div>
+                            <div class="flex flex-1 flex-col p-6">
+                                <div
+                                    class="mb-3 flex items-center gap-2 text-xs font-medium text-text-secondary-light dark:text-text-secondary-dark">
+                                    <span class="material-symbols-outlined text-[16px]">calendar_today</span>
+                                    <time datetime="2024-01-12">Jan 12, 2024</time>
+                                    <span class="mx-1">•</span>
+                                    <span>By Mike Ross</span>
+                                </div>
+                                <h3
+                                    class="mb-3 text-xl font-bold leading-tight group-hover:text-primary transition-colors">
+                                    Hiking Pilot Butte: A Sunrise Guide
+                                </h3>
+                                <p
+                                    class="mb-4 flex-1 text-sm leading-relaxed text-text-secondary-light dark:text-gray-400">
+                                    Everything you need to know about catching the best views of the Cascades before the
+                                    city wakes up.
+                                </p>
+                                <a class="inline-flex items-center text-sm font-bold text-primary hover:underline"
+                                    href="blog-post.html">
+                                    Read Article <span
+                                        class="material-symbols-outlined ml-1 text-[18px]">arrow_right_alt</span>
+                                </a>
+                            </div>
+                        </article>
+                        <!-- Article Card 3 -->
+                        <article
+                            class="group card-hover flex flex-col overflow-hidden rounded-2xl bg-card-light shadow-sm dark:bg-card-dark h-full">
+                            <div class="relative aspect-[16/10] overflow-hidden">
+                                <img alt="People sitting outside coffee shop in downtown"
+                                    class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                    data-alt="People enjoying coffee outdoors"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDe-KF-qSVboZ4axYf9Min9EH53lOq1JSiQkHl8sFQ5d69UIgwzYhHFmBM46ncoRfngUsEACwWnwBQ579-tdj_845ZJPYdMx49S1YAbQvBuJfn7pR2drOOgwIWQJxwhwvvz8FjSG_wcWnXMAnvp2SDXREDfsIkwr0cjFADVI9GwLcd9c4_HaFXBLOvgmHdVjzFOaRAmLCgbj7zN83rE9MUdwh3ewZ8sg8wIOgs68fjWTAKEIjpr9lfJeT3ONX4Ht-y2QciS5Hr5gYI" />
+                                <div
+                                    class="absolute left-4 top-4 rounded-md bg-white/90 px-3 py-1 text-xs font-bold text-black backdrop-blur-sm">
+                                    Community
+                                </div>
+                            </div>
+                            <div class="flex flex-1 flex-col p-6">
+                                <div
+                                    class="mb-3 flex items-center gap-2 text-xs font-medium text-text-secondary-light dark:text-text-secondary-dark">
+                                    <span class="material-symbols-outlined text-[16px]">calendar_today</span>
+                                    <time datetime="2024-01-10">Jan 10, 2024</time>
+                                    <span class="mx-1">•</span>
+                                    <span>By Team GDB</span>
+                                </div>
+                                <h3
+                                    class="mb-3 text-xl font-bold leading-tight group-hover:text-primary transition-colors">
+                                    Downtown Bend's New Art Walk
+                                </h3>
+                                <p
+                                    class="mb-4 flex-1 text-sm leading-relaxed text-text-secondary-light dark:text-gray-400">
+                                    A fresh initiative bringing local artists and businesses together for a monthly
+                                    celebration of creativity.
+                                </p>
+                                <a class="inline-flex items-center text-sm font-bold text-primary hover:underline"
+                                    href="blog-post.html">
+                                    Read Article <span
+                                        class="material-symbols-outlined ml-1 text-[18px]">arrow_right_alt</span>
+                                </a>
+                            </div>
+                        </article>
+                        <!-- Article Card 4 -->
+                        <article
+                            class="group card-hover flex flex-col overflow-hidden rounded-2xl bg-card-light shadow-sm dark:bg-card-dark h-full">
+                            <div class="relative aspect-[16/10] overflow-hidden">
+                                <img alt="Winter cabin in the woods with snow"
+                                    class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                    data-alt="Snowy cabin in the woods"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVlvms-at8mH8WkHAILJOXWE86rK9B8XrFOnUKMxK0fG7-dnSXnu8wCzKFbEPAZniiMFhoMP0x1AzG779btYcK3F6z46c4E_SxmiNqTOhg6i6nMNqSpSOB5NYwPRfuloOpH35srTB9qB5vZbo4jbNrFHvt-LaPF6njQ_KelWcWcUE1QT9KUXC1TWQ_5vvHRjuAhKdlWZStGbQS-cfucJNxozEIEnGuisYLQYLFnCj_V7Xo0akt7_xWY3OI82t03d2CZqy8FTdlsDY" />
+                                <div
+                                    class="absolute left-4 top-4 rounded-md bg-white/90 px-3 py-1 text-xs font-bold text-black backdrop-blur-sm">
+                                    Travel
+                                </div>
+                            </div>
+                            <div class="flex flex-1 flex-col p-6">
+                                <div
+                                    class="mb-3 flex items-center gap-2 text-xs font-medium text-text-secondary-light dark:text-text-secondary-dark">
+                                    <span class="material-symbols-outlined text-[16px]">calendar_today</span>
+                                    <time datetime="2024-01-08">Jan 08, 2024</time>
+                                    <span class="mx-1">•</span>
+                                    <span>By Alex Chen</span>
+                                </div>
+                                <h3
+                                    class="mb-3 text-xl font-bold leading-tight group-hover:text-primary transition-colors">
+                                    Weekend Getaways: Sisters &amp; Black Butte
+                                </h3>
+                                <p
+                                    class="mb-4 flex-1 text-sm leading-relaxed text-text-secondary-light dark:text-gray-400">
+                                    Escape the city for a weekend of relaxation and adventure just 30 minutes away.
+                                </p>
+                                <a class="inline-flex items-center text-sm font-bold text-primary hover:underline"
+                                    href="blog-post.html">
+                                    Read Article <span
+                                        class="material-symbols-outlined ml-1 text-[18px]">arrow_right_alt</span>
+                                </a>
+                            </div>
+                        </article>
+                    </div>
+                    <!-- Pagination -->
+                    <div class="mt-12 flex justify-center">
+                        <button id="load-more-blog-btn" style="display: none;"
+                            class="group flex items-center gap-2 bg-white border border-border-light text-text-primary-light px-6 py-3 rounded-xl font-bold hover:border-primary hover:text-primary hover:shadow-md transition-all dark:bg-card-dark dark:border-white/10 dark:text-white dark:hover:text-primary">
+                            <span class="material-symbols-outlined group-hover:animate-spin">refresh</span>
+                            Load More Stories
+                        </button>
+                    </div>
+                </div>
+                <!-- Sidebar Column -->
+                <aside class="space-y-8 lg:col-span-4 lg:pl-8">
+                    <!-- About Widget -->
+                    <div
+                        class="rounded-2xl bg-card-light p-6 shadow-sm ring-1 ring-gray-900/5 dark:bg-card-dark dark:ring-white/10">
+                        <div class="mb-4 flex items-center gap-2">
+                            <div class="flex size-8 items-center justify-center rounded-lg bg-primary text-slate-900">
+                                <span class="material-symbols-outlined text-[20px]">landscape</span>
+                            </div>
+                            <h3 class="text-lg font-bold">Good Day Bend</h3>
+                        </div>
+                        <p class="mb-4 text-sm text-text-secondary-light dark:text-gray-400">
+                            Celebrating the culture, community, and outdoor lifestyle of Bend, Oregon.
+                        </p>
+                        <div class="flex gap-3">
+                            <a class="flex h-8 w-8 items-center justify-center rounded-full bg-[#e7f3eb] text-[#0d1b12] transition-colors hover:bg-primary hover:text-black dark:bg-white/10 dark:text-white"
+                                href="https://www.instagram.com/gooddaybend/" target="_blank">
+                                <span class="sr-only">Instagram</span>
+                                <svg class="h-4 w-4" fill="currentColor" viewbox="0 0 24 24">
+                                    <path
+                                        d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z">
+                                    </path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Newsletter -->
+                    <div class="overflow-hidden rounded-2xl bg-[#1a2e22] text-white p-6 shadow-sm">
+                        <div class="mb-4 flex items-center gap-3">
+                            <span
+                                class="material-symbols-outlined rounded-lg bg-primary/20 p-2 text-primary">mail</span>
+                            <h3 class="text-lg font-bold">Local Updates</h3>
+                        </div>
+                        <p class="mb-4 text-sm text-gray-300">
+                            Get the best of Bend delivered to your inbox weekly. No spam, just fresh mountain air.
+                        </p>
+                        <form id="footer-newsletter-form" class="flex flex-col gap-3">
+                            <input
+                                class="w-full rounded-lg border-0 bg-white/10 px-4 py-2.5 text-sm text-white placeholder:text-gray-400 focus:ring-2 focus:ring-primary"
+                                placeholder="Your email address" type="email" required />
+                            <button
+                                class="w-full rounded-lg bg-primary px-4 py-2.5 text-sm font-bold text-black transition-colors hover:bg-white"
+                                type="submit">
+                                Subscribe
+                            </button>
+                        </form>
+                        <!-- Inline Success Message -->
+                        <div
+                            class="form-success-inline hidden mt-4 p-4 bg-primary/10 border border-primary/20 rounded-xl animate-in fade-in zoom-in duration-300">
+                            <div class="flex items-center gap-3">
+                                <div class="size-8 bg-primary rounded-full flex items-center justify-center text-black">
+                                    <span class="material-symbols-outlined font-bold text-sm">check</span>
+                                </div>
+                                <div class="text-left">
+                                    <h3 class="text-sm font-bold text-white">Got it!</h3>
+                                    <p class="text-gray-400 text-xs">You're subscribed.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Trending List -->
+                    <div
+                        class="rounded-2xl bg-card-light p-6 shadow-sm ring-1 ring-gray-900/5 dark:bg-card-dark dark:ring-white/10">
+                        <h3 class="mb-6 text-lg font-bold flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary">trending_up</span>
+                            Trending in Bend
+                        </h3>
+                        <div class="space-y-6">
+                            <a class="group flex gap-4" href="blog-post.html?id=best-brunch-spots-bend-2025">
+                                <span
+                                    class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-black">1</span>
+                                <div>
+                                    <h4
+                                        class="text-sm font-bold leading-snug group-hover:text-primary dark:text-gray-100">
+                                        Best Brunch Spots for 2025</h4>
+                                    <p class="mt-1 text-xs text-text-secondary-light dark:text-gray-500">Food &amp;
+                                        Drink</p>
+                                </div>
+                            </a>
+                            <a class="group flex gap-4" href="blog-post.html?id=perfect-weekend-bend-guide">
+                                <span
+                                    class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gray-100 text-xs font-bold text-gray-500 group-hover:bg-primary group-hover:text-black dark:bg-white/10 dark:group-hover:bg-primary">2</span>
+                                <div>
+                                    <h4
+                                        class="text-sm font-bold leading-snug group-hover:text-primary dark:text-gray-100">
+                                        Perfect Weekend in Bend Guide</h4>
+                                    <p class="mt-1 text-xs text-text-secondary-light dark:text-gray-500">Travel</p>
+                                </div>
+                            </a>
+                            <a class="group flex gap-4" href="blog-post.html?id=top-10-restaurants-bend">
+                                <span
+                                    class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gray-100 text-xs font-bold text-gray-500 group-hover:bg-primary group-hover:text-black dark:bg-white/10 dark:group-hover:bg-primary">3</span>
+                                <div>
+                                    <h4
+                                        class="text-sm font-bold leading-snug group-hover:text-primary dark:text-gray-100">
+                                        Top 10 Restaurants in Bend</h4>
+                                    <p class="mt-1 text-xs text-text-secondary-light dark:text-gray-500">Food &amp;
+                                        Drink</p>
+                                </div>
+                            </a>
+                            <a class="group flex gap-4" href="blog-post.html?id=best-outdoor-activities-bend">
+                                <span
+                                    class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gray-100 text-xs font-bold text-gray-500 group-hover:bg-primary group-hover:text-black dark:bg-white/10 dark:group-hover:bg-primary">4</span>
+                                <div>
+                                    <h4
+                                        class="text-sm font-bold leading-snug group-hover:text-primary dark:text-gray-100">
+                                        Best Outdoor Activities in Bend</h4>
+                                    <p class="mt-1 text-xs text-text-secondary-light dark:text-gray-500">Outdoors</p>
+                                </div>
+                            </a>
+                            <a class="group flex gap-4" href="blog-post.html?id=hidden-gem-local-shops-bend">
+                                <span
+                                    class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gray-100 text-xs font-bold text-gray-500 group-hover:bg-primary group-hover:text-black dark:bg-white/10 dark:group-hover:bg-primary">5</span>
+                                <div>
+                                    <h4
+                                        class="text-sm font-bold leading-snug group-hover:text-primary dark:text-gray-100">
+                                        Hidden Gems: Best Local Shops</h4>
+                                    <p class="mt-1 text-xs text-text-secondary-light dark:text-gray-500">Community</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <!-- Newsletter Section -->
+    <div class="w-full bg-[#0d1b12] text-white py-20 relative overflow-hidden">
+        <!-- Abstract pattern background -->
+        <div class="absolute top-0 right-0 w-1/2 h-full opacity-10 pointer-events-none"
+            style="background-image: radial-gradient(#13ec5b 1px, transparent 1px); background-size: 24px 24px;">
+        </div>
+        <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
+            <h2 class="text-3xl md:text-4xl font-black mb-4">Never Miss a Good Day</h2>
+            <p class="text-slate-400 mb-8 text-lg">Don't miss a beat! Get the weekly daily updates and a full
+                rundown of what's happening sent straight to your inbox.</p>
+            <form id="footer-newsletter-form" class="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
+                <input
+                    class="flex-1 h-12 px-4 rounded-lg bg-white/10 border border-white/20 text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                    placeholder="Enter your email address" type="email" required />
+                <button
+                    class="h-12 px-6 rounded-lg bg-primary hover:bg-green-400 text-[#0d1b12] font-bold transition-colors"
+                    type="submit">
+                    Subscribe
+                </button>
+            </form>
+            <!-- Inline Success Message -->
+            <div
+                class="form-success-inline hidden mt-6 p-6 bg-primary/10 border border-primary/20 rounded-xl animate-in fade-in zoom-in duration-300">
+                <div class="flex flex-col items-center">
+                    <div class="size-12 bg-primary rounded-full flex items-center justify-center text-[#0d1b12] mb-3">
+                        <span class="material-symbols-outlined font-bold">check</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">You're in!</h3>
+                    <p class="text-slate-400">Thanks for joining our local loop.</p>
+                </div>
+            </div>
+            <p class="text-xs text-slate-500 mt-4">We respect your privacy. Unsubscribe at any time.</p>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-[#0d1b12] border-t border-[#e7f3eb] dark:border-[#1f3b2a] mt-auto">
+        <div class="max-w-[1280px] mx-auto px-4 md:px-10 py-12 flex flex-col md:flex-row justify-between gap-10">
+            <div class="flex flex-col gap-4 max-w-xs">
+                <div class="flex items-center gap-2 text-[#0d1b12] dark:text-white">
+                    <div class="size-6 flex items-center justify-center rounded bg-primary/20 text-primary">
+                        <span class="material-symbols-outlined text-[18px]">landscape</span>
+                    </div>
+                    <span class="text-base font-bold">Good Day Bend</span>
+                </div>
+                <p class="text-sm text-[#4c9a66]">Connecting the community with the best events,
+                    businesses, and experiences in Bend, Oregon.</p>
+            </div>
+            <div class="flex flex-wrap gap-12 md:gap-20">
+                <div class="flex flex-col gap-3">
+                    <h4 class="text-sm font-bold text-[#0d1b12] dark:text-white uppercase tracking-wider">Discover</h4>
+                    <a class="text-sm text-[#4c9a66] hover:text-primary transition-colors" href="calendar.html">Events
+                        Calendar</a>
+                    <a class="text-sm text-[#4c9a66] hover:text-primary transition-colors" href="featured.html">Featured
+                        Events</a>
+                    <a class="text-sm text-[#4c9a66] hover:text-primary transition-colors"
+                        href="daily-updates.html">Daily Updates</a>
+                    <a class="text-sm text-[#4c9a66] hover:text-primary transition-colors" href="blog.html">Blog &amp;
+                        Stories</a>
+                    <a class="text-sm text-[#4c9a66] hover:text-primary transition-colors cursor-pointer"
+                        id="footer-submit-event">Submit an Event</a>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <h4 class="text-sm font-bold text-[#0d1b12] dark:text-white uppercase tracking-wider">Community</h4>
+                    <a class="text-sm text-[#4c9a66] hover:text-primary transition-colors cursor-pointer"
+                        id="footer-partner">Partner With Us</a>
+                    <a class="text-sm text-[#4c9a66] hover:text-primary transition-colors cursor-pointer"
+                        id="footer-contact">Contact</a>
+                    <a class="text-sm text-[#4c9a66] hover:text-primary transition-colors cursor-pointer"
+                        id="footer-newsletter">Newsletter</a>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <h4 class="text-sm font-bold text-[#0d1b12] dark:text-white uppercase tracking-wider">Follow Us</h4>
+                    <a class="text-[#4c9a66] hover:text-primary transition-colors"
+                        href="https://www.instagram.com/gooddaybend/?hl=en" target="_blank">
+                        <!-- Instagram Icon (SVG) -->
+                        <svg class="size-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill-rule="evenodd"
+                                d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772 4.902 4.902 0 011.772-1.153c.636-.247 1.363-.416 2.427-.465 1.067-.047 1.407-.06 3.808-.06zm0 1.8c-2.67 0-2.977.01-4.042.059-.732.033-1.13.154-1.395.257-.354.138-.606.303-.868.566-.263.262-.428.514-.566.868-.103.265-.224.663-.257 1.394-.049 1.065-.059 1.372-.059 4.042 0 2.67.01 2.977.059 4.042.033.732.154 1.13.257 1.395.138.354.303.606.566.868.262.263.514.428.868.566.265.103.663.224 1.394.257 1.065.049 1.372.059-4.042-.059zm0 4.383a5.417 5.417 0 110 10.834 5.417 5.417 0 010-10.834zm0 1.8a3.617 3.617 0 100 7.234 3.617 3.617 0 000-7.234zm5.378-4.275a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="bg-[#f8fcf9] dark:bg-[#0a160e] py-4 px-4 text-center">
+            <p class="text-xs text-[#4c9a66]">© 2025 Good Day Bend. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Form Modal (Shared for Footer Links) -->
+    <div id="form-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm modal-backdrop"></div>
+        <div
+            class="relative bg-white dark:bg-slate-900 w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300 border border-slate-200 dark:border-slate-800">
+            <div class="p-8">
+                <button
+                    class="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors modal-close-btn">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+                <div id="form-content">
+                    <!-- Form injected here via init.js -->
+                </div>
+                <!-- Standardized Success View for Form Modal -->
+                <div id="form-success" class="hidden flex flex-col items-center py-12 text-center">
+                    <div
+                        class="size-20 bg-primary rounded-full flex items-center justify-center text-[#0d1b12] mb-6 animate-bounce shadow-lg shadow-primary/40">
+                        <span class="material-symbols-outlined text-5xl">check</span>
+                    </div>
+                    <h3 class="text-3xl font-black text-slate-900 dark:text-white mb-2">Success!</h3>
+                    <p class="text-slate-600 dark:text-slate-400">Your message has been received. We'll be in touch
+                        soon.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Newsletter Modal -->
+    <div id="newsletter-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" id="newsletter-modal-close"></div>
+        <div
+            class="relative bg-white dark:bg-slate-900 w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300">
+            <div class="p-8">
+                <button id="newsletter-modal-close-btn"
+                    class="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+                <div class="flex flex-col items-center text-center">
+                    <div class="size-16 flex items-center justify-center rounded-full bg-primary/10 text-primary mb-6">
+                        <span class="material-symbols-outlined text-4xl">mail</span>
+                    </div>
+                    <h2 class="text-3xl font-black text-slate-900 dark:text-white mb-2">Join the Club</h2>
+                    <p class="text-slate-600 dark:text-slate-400 mb-8">Get the best of Bend delivered to your inbox
+                        every Thursday. No fluff, just local favorites.</p>
+                    <form id="newsletter-form" class="w-full space-y-4">
+                        <div class="grid grid-cols-2 gap-4">
+                            <input type="text" id="nl-first-name" placeholder="First Name"
+                                class="w-full h-12 px-4 rounded-lg bg-slate-100 dark:bg-slate-800 border-transparent focus:ring-2 focus:ring-primary transition-all text-[#0d1b12] dark:text-white">
+                            <input type="text" id="nl-last-name" placeholder="Last Name"
+                                class="w-full h-12 px-4 rounded-lg bg-slate-100 dark:bg-slate-800 border-transparent focus:ring-2 focus:ring-primary transition-all text-[#0d1b12] dark:text-white">
+                        </div>
+                        <input type="email" id="nl-email" placeholder="Email Address" required
+                            class="w-full h-12 px-4 rounded-lg bg-slate-100 dark:bg-slate-800 border-transparent focus:ring-2 focus:ring-primary transition-all text-[#0d1b12] dark:text-white">
+                        <button type="submit"
+                            class="w-full h-14 bg-primary hover:bg-green-400 text-[#0d1b12] font-black rounded-lg shadow-lg shadow-primary/20 transition-all hover:scale-[1.02]">Keep
+                            Me In The Loop</button>
+                    </form>
+                    <div id="newsletter-success" class="hidden flex flex-col items-center py-8">
+                        <div
+                            class="size-20 bg-green-500 rounded-full flex items-center justify-center text-white mb-6 animate-bounce">
+                            <span class="material-symbols-outlined text-5xl">check</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-slate-900 dark:text-white">You're in!</h3>
+                        <p class="text-slate-600 dark:text-slate-400">Welcome to the inner circle.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Firebase SDKs -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
+
+    <!-- App Scripts -->
+    <script type="module" src="init.js?v=9"></script>
+</body>
+
+</html>

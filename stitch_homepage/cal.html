@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Events Calendar - Good Day Bend</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec5b",
+                        "primary-hover": "#0fd451",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#102216",
+                        "text-dark": "#0d1b12",
+                        "text-muted": "#4c9a66",
+                        "border-light": "#e7f3eb",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "0.75rem", "xl": "1rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-text-dark font-display antialiased">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Header -->
+<header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-border-light bg-background-light/95 backdrop-blur-md px-6 py-3 lg:px-10">
+<div class="flex items-center gap-8">
+<a class="flex items-center gap-4 text-text-dark group" href="#">
+<div class="size-8 text-primary transition-transform group-hover:scale-110">
+<svg class="w-full h-full" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<g>
+<path clip-rule="evenodd" d="M24 0.757355L47.2426 24L24 47.2426L0.757355 24L24 0.757355ZM21 35.7574V12.2426L9.24264 24L21 35.7574Z" fill="currentColor" fill-rule="evenodd"></path>
+</g>
+</svg>
+</div>
+<h2 class="text-text-dark text-xl font-bold leading-tight tracking-tight hidden sm:block">Good Day Bend</h2>
+</a>
+<label class="hidden md:flex flex-col min-w-40 !h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full border border-border-light bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-all">
+<div class="text-text-muted flex items-center justify-center pl-3">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg bg-transparent border-none text-text-dark placeholder:text-text-muted px-3 text-sm focus:ring-0" placeholder="Search events..." value=""/>
+</div>
+</label>
+</div>
+<div class="flex flex-1 justify-end gap-4 lg:gap-8 items-center">
+<nav class="hidden lg:flex items-center gap-6">
+<a class="text-text-dark hover:text-primary text-sm font-medium transition-colors" href="#">Events</a>
+<a class="text-text-dark hover:text-primary text-sm font-medium transition-colors" href="#">Businesses</a>
+<a class="text-text-dark hover:text-primary text-sm font-medium transition-colors" href="#">About</a>
+</nav>
+<button class="flex items-center justify-center rounded-lg h-10 px-5 bg-primary hover:bg-primary-hover text-text-dark text-sm font-bold shadow-sm transition-all active:scale-95">
+<span class="truncate">Submit Event</span>
+</button>
+<button class="lg:hidden p-2 text-text-dark">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow">
+<!-- Hero / Title Section -->
+<section class="relative w-full h-[240px] md:h-[320px] bg-cover bg-center flex items-center justify-center" data-alt="Scenic view of Bend Oregon mountains and river at sunset" style='background-image: linear-gradient(rgba(16, 34, 22, 0.4), rgba(16, 34, 22, 0.7)), url("https://lh3.googleusercontent.com/aida-public/AB6AXuBQv63BdV9iIGkFhKY33CO1F075sb1HpkXcRziYoqqR0OEWP4fIvAMPRq21LZmvatLl7-ogOk0NZmrurlcVS1kFp6MdIEIjq7O1Zk1ARsbx5c7TLx_gbQjgmgdjyuoMjLrDDcLZmzRzxwnG8mVD8JQu2vS8s713bdSTNMiVvc7sO3S3kxL0uykp07DYsuarUPjVj7p_czs3Z07mWrN-14jMZaam1DIJQ2KPrhwSEMg9tnESB3d7RWiO5vPHgaEsCET4mx9AnVDloAQ");'>
+<div class="text-center px-4 max-w-3xl">
+<h1 class="text-white text-3xl md:text-5xl font-black tracking-tight mb-3 drop-shadow-lg">Local Events in Bend</h1>
+<p class="text-white/90 text-sm md:text-lg font-medium drop-shadow-md">Find concerts, festivals, workshops, and community gatherings happening near you.</p>
+</div>
+</section>
+<div class="layout-container px-4 md:px-6 lg:px-10 py-8 lg:py-12 max-w-[1440px] mx-auto">
+<div class="flex flex-col lg:flex-row gap-8">
+<!-- Filters Sidebar -->
+<aside class="w-full lg:w-72 flex-shrink-0 space-y-8">
+<!-- Search Mobile Only -->
+<div class="md:hidden">
+<div class="flex w-full items-stretch rounded-lg h-12 border border-border-light bg-white">
+<div class="text-text-muted flex items-center justify-center pl-3">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="flex w-full flex-1 rounded-lg bg-transparent border-none text-text-dark placeholder:text-text-muted px-3 text-sm focus:ring-0" placeholder="Search events..."/>
+</div>
+</div>
+<!-- Date Filter -->
+<div class="bg-white p-5 rounded-xl border border-border-light shadow-sm">
+<h3 class="text-text-dark font-bold text-lg mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">calendar_month</span> Date
+                            </h3>
+<div class="space-y-2">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input checked="" class="size-4 text-primary focus:ring-primary border-gray-300" name="date" type="radio"/>
+<span class="text-sm font-medium text-gray-700 group-hover:text-primary transition-colors">Any Date</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="size-4 text-primary focus:ring-primary border-gray-300" name="date" type="radio"/>
+<span class="text-sm font-medium text-gray-700 group-hover:text-primary transition-colors">Today</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="size-4 text-primary focus:ring-primary border-gray-300" name="date" type="radio"/>
+<span class="text-sm font-medium text-gray-700 group-hover:text-primary transition-colors">This Weekend</span>
+</label>
+<div class="pt-2">
+<input class="w-full rounded-lg border-border-light text-sm text-gray-600 focus:border-primary focus:ring-primary" type="date"/>
+</div>
+</div>
+</div>
+<!-- Categories Filter -->
+<div class="bg-white p-5 rounded-xl border border-border-light shadow-sm">
+<h3 class="text-text-dark font-bold text-lg mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">category</span> Categories
+                            </h3>
+<div class="flex flex-wrap gap-2">
+<button class="px-3 py-1.5 rounded-full text-xs font-bold bg-primary text-text-dark border border-primary transition-all">All</button>
+<button class="px-3 py-1.5 rounded-full text-xs font-bold bg-white text-gray-600 border border-border-light hover:border-primary hover:text-primary transition-all">Music</button>
+<button class="px-3 py-1.5 rounded-full text-xs font-bold bg-white text-gray-600 border border-border-light hover:border-primary hover:text-primary transition-all">Food &amp; Drink</button>
+<button class="px-3 py-1.5 rounded-full text-xs font-bold bg-white text-gray-600 border border-border-light hover:border-primary hover:text-primary transition-all">Outdoors</button>
+<button class="px-3 py-1.5 rounded-full text-xs font-bold bg-white text-gray-600 border border-border-light hover:border-primary hover:text-primary transition-all">Family</button>
+<button class="px-3 py-1.5 rounded-full text-xs font-bold bg-white text-gray-600 border border-border-light hover:border-primary hover:text-primary transition-all">Arts</button>
+<button class="px-3 py-1.5 rounded-full text-xs font-bold bg-white text-gray-600 border border-border-light hover:border-primary hover:text-primary transition-all">Sports</button>
+</div>
+</div>
+<!-- Neighborhood Filter -->
+<div class="bg-white p-5 rounded-xl border border-border-light shadow-sm">
+<h3 class="text-text-dark font-bold text-lg mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">map</span> Location
+                            </h3>
+<div class="space-y-2">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="rounded text-primary focus:ring-primary border-gray-300" type="checkbox"/>
+<span class="text-sm font-medium text-gray-700 group-hover:text-primary transition-colors">Downtown</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="rounded text-primary focus:ring-primary border-gray-300" type="checkbox"/>
+<span class="text-sm font-medium text-gray-700 group-hover:text-primary transition-colors">Old Mill District</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="rounded text-primary focus:ring-primary border-gray-300" type="checkbox"/>
+<span class="text-sm font-medium text-gray-700 group-hover:text-primary transition-colors">Westside</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="rounded text-primary focus:ring-primary border-gray-300" type="checkbox"/>
+<span class="text-sm font-medium text-gray-700 group-hover:text-primary transition-colors">Eastside</span>
+</label>
+</div>
+</div>
+</aside>
+<!-- Event Grid -->
+<section class="flex-1">
+<div class="flex items-center justify-between mb-6">
+<h2 class="text-2xl font-bold text-text-dark">Upcoming Events</h2>
+<div class="flex items-center gap-2">
+<span class="text-sm text-text-muted hidden sm:block">Sort by:</span>
+<select class="form-select bg-transparent border-none text-sm font-bold text-text-dark focus:ring-0 cursor-pointer pr-8">
+<option>Date (Soonest)</option>
+<option>Popularity</option>
+<option>A-Z</option>
+</select>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+<!-- Event Card 1 -->
+<article class="group bg-white rounded-xl overflow-hidden border border-border-light hover:shadow-lg hover:border-primary/50 transition-all duration-300 flex flex-col h-full">
+<div class="relative h-48 overflow-hidden">
+<div class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-1 text-center shadow-sm z-10 border border-border-light">
+<div class="text-xs font-bold text-primary uppercase tracking-wide">JUL</div>
+<div class="text-xl font-black text-text-dark leading-none">14</div>
+</div>
+<img alt="Crowd enjoying an outdoor concert at sunset in a park" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" loading="lazy" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAF3Sk3UCyJ--rOgrqHeyAd7_ba6FtkF7cmYTcbHrtxP8yl-OXBxmFDmCPrMQE8yAaQuHGU3xOu34GyA54rp9Z8FIS7y2HRR1D3ItyaV5IOhGKoBUSPRgqZgZScCzhyH36V4NoKO-l5uvXoqd0xBEjPmMOTZu5wcjVA1a5DL6tmyshc-n9YJZFjbIk4KOumbUqCoFbHKHDlBenAMMlX3Nj1hnl6YHCxArO4dI1zS2I8HgpVRkzzqcNPe8iueVnoghxqhUywOUM_pu4"/>
+<div class="absolute top-3 right-3 bg-black/60 backdrop-blur-md rounded-full px-3 py-1 z-10">
+<span class="text-xs font-bold text-white uppercase tracking-wide">Music</span>
+</div>
+</div>
+<div class="p-5 flex flex-col flex-1">
+<h3 class="text-lg font-bold text-text-dark mb-2 leading-tight group-hover:text-primary transition-colors">Munch &amp; Music at Drake Park</h3>
+<div class="flex flex-col gap-2 mb-4 text-sm text-text-muted">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+<span>5:30 PM - 9:00 PM</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<span>Drake Park, Downtown</span>
+</div>
+</div>
+<div class="mt-auto pt-4 border-t border-border-light flex items-center justify-between">
+<span class="text-sm font-bold text-text-dark">Free Entry</span>
+<button class="text-primary hover:text-primary-hover font-bold text-sm flex items-center gap-1 transition-colors">
+                                            View Details <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Event Card 2 -->
+<article class="group bg-white rounded-xl overflow-hidden border border-border-light hover:shadow-lg hover:border-primary/50 transition-all duration-300 flex flex-col h-full">
+<div class="relative h-48 overflow-hidden">
+<div class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-1 text-center shadow-sm z-10 border border-border-light">
+<div class="text-xs font-bold text-primary uppercase tracking-wide">JUL</div>
+<div class="text-xl font-black text-text-dark leading-none">15</div>
+</div>
+<img alt="Assorted craft beer glasses on a wooden table" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" loading="lazy" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBeuXn9BcV15zCHGriRhRP9kcGg53sXceWr2ky7_omHwS0U34zkddUM8-XWMTFgFGAM_wwYqZwt_g3vRiw_Cy77Hb22-jCA33yDVFsQTjUcB1BBvo-EmcbrC_lOSpPrLpJpyxtu_4xQwf7Zv6b--bMcdmbzQhZEI9qf_CcOntyvnP6ezowStdc7PdlMhAf7CkZ8K2vlWSkyRuizj8R_-j7Dg0bORj5bPMfucCx81DS5ZnCHxQPLflqKbFALMY_GMkWIIA_2Gh_drMY"/>
+<div class="absolute top-3 right-3 bg-black/60 backdrop-blur-md rounded-full px-3 py-1 z-10">
+<span class="text-xs font-bold text-white uppercase tracking-wide">Food &amp; Drink</span>
+</div>
+</div>
+<div class="p-5 flex flex-col flex-1">
+<h3 class="text-lg font-bold text-text-dark mb-2 leading-tight group-hover:text-primary transition-colors">Bend Ale Trail Challenge</h3>
+<div class="flex flex-col gap-2 mb-4 text-sm text-text-muted">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+<span>All Day Event</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<span>Various Locations</span>
+</div>
+</div>
+<div class="mt-auto pt-4 border-t border-border-light flex items-center justify-between">
+<span class="text-sm font-bold text-text-dark">$15.00</span>
+<button class="text-primary hover:text-primary-hover font-bold text-sm flex items-center gap-1 transition-colors">
+                                            View Details <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Event Card 3 -->
+<article class="group bg-white rounded-xl overflow-hidden border border-border-light hover:shadow-lg hover:border-primary/50 transition-all duration-300 flex flex-col h-full">
+<div class="relative h-48 overflow-hidden">
+<div class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-1 text-center shadow-sm z-10 border border-border-light">
+<div class="text-xs font-bold text-primary uppercase tracking-wide">JUL</div>
+<div class="text-xl font-black text-text-dark leading-none">18</div>
+</div>
+<img alt="Hikers looking at a scenic mountain landscape" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" loading="lazy" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVShWcd8KZyXYrRibmxtoQmRLOj2RAkQJkLrGExI23IQo0x8-7a4p0A8RRQwyX-pF74ydOBo_xUQblvbZise0Wq72a2pMEKCLJ-0vAdBtbFirxH10D-RyYwwvdP7egRfiNBVC8A9fQr4GoTev19jEkbkXgPnonwr7T1xFds4eHMPLwYkxx9TCDKahhdrCBfg_hP_RuoVk6PhjzY9ohv6wHey5uRBJ3HVSZsqgTAmyfwzOWVz0aAHSJw6QrTKCHi5LbyZ9lEpzzqSs"/>
+<div class="absolute top-3 right-3 bg-black/60 backdrop-blur-md rounded-full px-3 py-1 z-10">
+<span class="text-xs font-bold text-white uppercase tracking-wide">Outdoors</span>
+</div>
+</div>
+<div class="p-5 flex flex-col flex-1">
+<h3 class="text-lg font-bold text-text-dark mb-2 leading-tight group-hover:text-primary transition-colors">Sunset Hike at Pilot Butte</h3>
+<div class="flex flex-col gap-2 mb-4 text-sm text-text-muted">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+<span>7:00 PM - 8:30 PM</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<span>Pilot Butte State Park</span>
+</div>
+</div>
+<div class="mt-auto pt-4 border-t border-border-light flex items-center justify-between">
+<span class="text-sm font-bold text-text-dark">Free Entry</span>
+<button class="text-primary hover:text-primary-hover font-bold text-sm flex items-center gap-1 transition-colors">
+                                            View Details <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Event Card 4 -->
+<article class="group bg-white rounded-xl overflow-hidden border border-border-light hover:shadow-lg hover:border-primary/50 transition-all duration-300 flex flex-col h-full">
+<div class="relative h-48 overflow-hidden">
+<div class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-1 text-center shadow-sm z-10 border border-border-light">
+<div class="text-xs font-bold text-primary uppercase tracking-wide">JUL</div>
+<div class="text-xl font-black text-text-dark leading-none">20</div>
+</div>
+<img alt="Live rock band performing on stage with lights" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" loading="lazy" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXxB43aYuDqyI_dgnPcLCwyVxTVtRxdm4khBii49tKMRLodIVoZgfQ49GTVtPClpoLPisV4EnNQMwZedukbPKrb2NaR-Gc1FwvX5o4zCb61oBArR--PUzE654FA1H3-QK04GwjB3Rmdi1P82NTUMUezq2NzAsccTLaVzaDlmuRcqOZ6U6qA6vZd9FIov8wkdkKJ79rtrQTWVm9DREuVB606ew4eOmPtN_z7U6CM60rQKWCfUXb75KPAYc4wjke0qe8lAA8rs1KCqo"/>
+<div class="absolute top-3 right-3 bg-black/60 backdrop-blur-md rounded-full px-3 py-1 z-10">
+<span class="text-xs font-bold text-white uppercase tracking-wide">Music</span>
+</div>
+</div>
+<div class="p-5 flex flex-col flex-1">
+<h3 class="text-lg font-bold text-text-dark mb-2 leading-tight group-hover:text-primary transition-colors">Hayden Homes Amphitheater: Summer Tour</h3>
+<div class="flex flex-col gap-2 mb-4 text-sm text-text-muted">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+<span>6:00 PM - 11:00 PM</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<span>Old Mill District</span>
+</div>
+</div>
+<div class="mt-auto pt-4 border-t border-border-light flex items-center justify-between">
+<span class="text-sm font-bold text-text-dark">From $45.00</span>
+<button class="text-primary hover:text-primary-hover font-bold text-sm flex items-center gap-1 transition-colors">
+                                            View Details <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Event Card 5 -->
+<article class="group bg-white rounded-xl overflow-hidden border border-border-light hover:shadow-lg hover:border-primary/50 transition-all duration-300 flex flex-col h-full">
+<div class="relative h-48 overflow-hidden">
+<div class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-1 text-center shadow-sm z-10 border border-border-light">
+<div class="text-xs font-bold text-primary uppercase tracking-wide">JUL</div>
+<div class="text-xl font-black text-text-dark leading-none">22</div>
+</div>
+<img alt="People shopping at an outdoor farmers market" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" loading="lazy" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAw9AZP5A8WPl-HjbdFmCs2QKeZgn6v2ruSlsQpXshbNFwRlAXNxLrOyjT0jQl4xHBKFu3XLJrzI36Rjcmz5hTrNLfbViP92LSwoYqVQ2iH7JuhWAQES-9RVP9nKxwccnXf2wUZvPaJe3Oivo_WU5NUcnGcezT5NSRDjEknpFYAiQug2MxGchpjoftTWV0m6DatsiIT5HBiJv4qHwUorkuibcCbK7G4QPmXl_eVTc2p9o8ofIR2MPnn1SL9ajjGXvfxdc9fzzOq6wI"/>
+<div class="absolute top-3 right-3 bg-black/60 backdrop-blur-md rounded-full px-3 py-1 z-10">
+<span class="text-xs font-bold text-white uppercase tracking-wide">Community</span>
+</div>
+</div>
+<div class="p-5 flex flex-col flex-1">
+<h3 class="text-lg font-bold text-text-dark mb-2 leading-tight group-hover:text-primary transition-colors">Bend Farmers Market</h3>
+<div class="flex flex-col gap-2 mb-4 text-sm text-text-muted">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+<span>11:00 AM - 3:00 PM</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<span>Brooks Alley, Downtown</span>
+</div>
+</div>
+<div class="mt-auto pt-4 border-t border-border-light flex items-center justify-between">
+<span class="text-sm font-bold text-text-dark">Free Entry</span>
+<button class="text-primary hover:text-primary-hover font-bold text-sm flex items-center gap-1 transition-colors">
+                                            View Details <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Event Card 6 -->
+<article class="group bg-white rounded-xl overflow-hidden border border-border-light hover:shadow-lg hover:border-primary/50 transition-all duration-300 flex flex-col h-full">
+<div class="relative h-48 overflow-hidden">
+<div class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-1 text-center shadow-sm z-10 border border-border-light">
+<div class="text-xs font-bold text-primary uppercase tracking-wide">JUL</div>
+<div class="text-xl font-black text-text-dark leading-none">24</div>
+</div>
+<img alt="Art gallery exhibition with paintings on wall" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" loading="lazy" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdJB67C1dA9EtJpZTuSNGw6_-12k4gyLT7Wrqa5kROp8oMosYklE3vxyp-KJKlNAmoj7AF2HCkYMV3qr17cM88W6bgPK6vX5Doo2idlkHIg3Mm6Jeq8vAxY4MyjzY35Miis-GNNbps82uHD0MQPp4HCC3SDIOxIR9QbTYFgUUVfzq_OSpS8xiEfv5Wm6mJRw0eqTqU4mUIFwZuCnehMcU2jyaMREpK3rby0k7Nk8k_xSTNgqmviXSxnnqj59gnwclIBTUpIsH_k1w"/>
+<div class="absolute top-3 right-3 bg-black/60 backdrop-blur-md rounded-full px-3 py-1 z-10">
+<span class="text-xs font-bold text-white uppercase tracking-wide">Arts</span>
+</div>
+</div>
+<div class="p-5 flex flex-col flex-1">
+<h3 class="text-lg font-bold text-text-dark mb-2 leading-tight group-hover:text-primary transition-colors">First Friday Art Walk</h3>
+<div class="flex flex-col gap-2 mb-4 text-sm text-text-muted">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+<span>5:00 PM - 9:00 PM</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<span>Downtown Bend</span>
+</div>
+</div>
+<div class="mt-auto pt-4 border-t border-border-light flex items-center justify-between">
+<span class="text-sm font-bold text-text-dark">Free Entry</span>
+<button class="text-primary hover:text-primary-hover font-bold text-sm flex items-center gap-1 transition-colors">
+                                            View Details <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</article>
+</div>
+<!-- Pagination -->
+<div class="mt-12 flex justify-center">
+<button class="group flex items-center gap-2 bg-white border border-border-light text-text-dark px-6 py-3 rounded-xl font-bold hover:border-primary hover:text-primary hover:shadow-md transition-all">
+<span class="material-symbols-outlined group-hover:animate-spin">refresh</span>
+                                Load More Events
+                            </button>
+</div>
+</section>
+</div>
+</div>
+<!-- CTA Section -->
+<section class="py-16 bg-white border-t border-border-light">
+<div class="layout-container max-w-[960px] mx-auto px-6 text-center">
+<div class="flex flex-col gap-4 items-center">
+<div class="size-12 rounded-full bg-primary/20 flex items-center justify-center text-primary mb-2">
+<span class="material-symbols-outlined text-3xl">mark_email_unread</span>
+</div>
+<h2 class="text-3xl font-black text-text-dark tracking-tight">Stay in the loop</h2>
+<p class="text-text-muted text-lg max-w-lg">Don't miss out on what's happening. Subscribe to our Bend newsletter for weekly updates on the best events.</p>
+<div class="w-full max-w-md mt-4">
+<div class="flex w-full items-stretch rounded-lg h-12 border border-border-light bg-[#f8fcf9] p-1 focus-within:ring-2 focus-within:ring-primary focus-within:border-transparent transition-all">
+<input class="flex-1 bg-transparent border-none text-text-dark placeholder:text-text-muted px-4 text-sm focus:ring-0" placeholder="Enter your email address" type="email"/>
+<button class="rounded-lg bg-primary hover:bg-primary-hover text-text-dark font-bold px-6 text-sm transition-colors">
+                                    Subscribe
+                                </button>
+</div>
+<p class="text-xs text-text-muted mt-3">We respect your privacy. Unsubscribe at any time.</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-[#f8fcf9] border-t border-border-light pt-12 pb-8">
+<div class="layout-container px-6 md:px-10 lg:px-20 max-w-[1440px] mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+<div class="col-span-1 md:col-span-1">
+<div class="flex items-center gap-3 mb-4">
+<div class="size-6 text-primary">
+<svg class="w-full h-full" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<g>
+<path clip-rule="evenodd" d="M24 0.757355L47.2426 24L24 47.2426L0.757355 24L24 0.757355ZM21 35.7574V12.2426L9.24264 24L21 35.7574Z" fill="currentColor" fill-rule="evenodd"></path>
+</g>
+</svg>
+</div>
+<span class="text-lg font-bold text-text-dark">Good Day Bend</span>
+</div>
+<p class="text-sm text-text-muted mb-4 leading-relaxed">Your go-to guide for exploring the best local events, businesses, and community gatherings in Bend, Oregon.</p>
+</div>
+<div>
+<h4 class="font-bold text-text-dark mb-4">Discover</h4>
+<ul class="space-y-2">
+<li><a class="text-sm text-text-muted hover:text-primary transition-colors" href="#">Upcoming Events</a></li>
+<li><a class="text-sm text-text-muted hover:text-primary transition-colors" href="#">Local Businesses</a></li>
+<li><a class="text-sm text-text-muted hover:text-primary transition-colors" href="#">Featured Venues</a></li>
+<li><a class="text-sm text-text-muted hover:text-primary transition-colors" href="#">Neighborhoods</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-text-dark mb-4">Community</h4>
+<ul class="space-y-2">
+<li><a class="text-sm text-text-muted hover:text-primary transition-colors" href="#">Submit an Event</a></li>
+<li><a class="text-sm text-text-muted hover:text-primary transition-colors" href="#">Partner with Us</a></li>
+<li><a class="text-sm text-text-muted hover:text-primary transition-colors" href="#">About Us</a></li>
+<li><a class="text-sm text-text-muted hover:text-primary transition-colors" href="#">Contact Support</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-text-dark mb-4">Follow Us</h4>
+<div class="flex gap-4">
+<a class="size-10 rounded-full bg-white border border-border-light flex items-center justify-center text-text-muted hover:text-primary hover:border-primary transition-all" href="#">
+<i class="fa-brands fa-instagram"></i> <!-- Using material symbols for generic social icons as per instruction to use material symbols where possible, though brands usually need fontawesome. Will use material symbols approximation or generic svgs for strict compliance -->
+<svg aria-hidden="true" class="size-5" fill="currentColor" viewbox="0 0 24 24">
+<path clip-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772 4.902 4.902 0 011.772-1.153c.636-.247 1.363-.416 2.427-.465 1.067-.047 1.407-.06 3.808-.06zm0 1.8c-2.67 0-2.977.01-4.042.059-.732.033-1.13.154-1.395.257-.354.138-.606.303-.868.566-.263.262-.428.514-.566.868-.103.265-.224.663-.257 1.394-.049 1.065-.059 1.372-.059 4.042 0 2.67.01 2.977.059 4.042.033.732.154 1.13.257 1.395.138.354.303.606.566.868.262.263.514.428.868.566.265.103.663.224 1.394.257 1.065.049 1.372.059 4.042.059 2.67 0 2.977-.01 4.042-.059.732-.033 1.13-.154 1.395-.257.354-.138.606-.303.868-.566.262-.263.428-.514.566-.868.103-.265.224-.663.257-1.394.049-1.065.059-1.372.059-4.042 0-2.67-.01-2.977-.059-4.042-.033-.732-.154-1.13-.257-1.395-.138-.354-.303-.606-.566-.868-.263-.262-.514-.428-.868-.566-.265-.103-.663-.224-1.394-.257-1.065-.049-1.372-.059-4.042-.059zm0 4.383a5.417 5.417 0 110 10.834 5.417 5.417 0 010-10.834zm0 1.8a3.617 3.617 0 100 7.234 3.617 3.617 0 000-7.234zm5.378-4.275a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" fill-rule="evenodd"></path>
+</svg>
+</a>
+<a class="size-10 rounded-full bg-white border border-border-light flex items-center justify-center text-text-muted hover:text-primary hover:border-primary transition-all" href="#">
+<svg aria-hidden="true" class="size-5" fill="currentColor" viewbox="0 0 24 24">
+<path clip-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" fill-rule="evenodd"></path>
+</svg>
+</a>
+<a class="size-10 rounded-full bg-white border border-border-light flex items-center justify-center text-text-muted hover:text-primary hover:border-primary transition-all" href="#">
+<svg aria-hidden="true" class="size-5" fill="currentColor" viewbox="0 0 24 24">
+<path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path>
+</svg>
+</a>
+</div>
+</div>
+</div>
+<div class="border-t border-border-light pt-8 flex flex-wrap gap-4 items-center justify-between">
+<p class="text-sm text-text-muted">© 2025 Good Day Bend. All rights reserved.</p>
+<div class="flex gap-6">
+<a class="text-sm text-text-muted hover:text-primary" href="#">Privacy Policy</a>
+<a class="text-sm text-text-muted hover:text-primary" href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+</body></html>

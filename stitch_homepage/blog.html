@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Good Day Bend - Blog</title>
+<meta content="Discover the latest stories, events, and hidden gems in Bend, Oregon. Your guide to Central Oregon life." name="description"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#13ec5b",
+              "background-light": "#f8fcf9",
+              "background-dark": "#102216",
+              "card-light": "#ffffff",
+              "card-dark": "#1a2e22",
+              "text-primary-light": "#0d1b12",
+              "text-primary-dark": "#f0fdf4",
+              "text-secondary-light": "#4c9a66",
+              "text-secondary-dark": "#86c69b",
+            },
+            fontFamily: {
+              "display": ["Plus Jakarta Sans", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-primary-light dark:text-text-primary-dark antialiased selection:bg-primary selection:text-black">
+<!-- Navigation -->
+<nav class="sticky top-0 z-50 border-b border-[#e7f3eb] bg-background-light/95 backdrop-blur-sm dark:border-white/10 dark:bg-background-dark/95">
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+<div class="flex h-16 items-center justify-between">
+<!-- Logo -->
+<div class="flex items-center gap-2">
+<div class="text-primary size-8">
+<svg class="h-8 w-8" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M24 0.757355L47.2426 24L24 47.2426L0.757355 24L24 0.757355ZM21 35.7574V12.2426L9.24264 24L21 35.7574Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<span class="text-xl font-bold tracking-tight text-text-primary-light dark:text-white">Good Day Bend</span>
+</div>
+<!-- Desktop Menu -->
+<div class="hidden md:flex items-center gap-8">
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Home</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Events</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Directory</a>
+<a class="text-sm font-bold text-primary" href="#">Blog</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Contact</a>
+</div>
+<!-- Search & Actions -->
+<div class="hidden md:flex items-center gap-4">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-text-secondary-light dark:text-text-secondary-dark pointer-events-none group-focus-within:text-primary">search</span>
+<input class="h-10 w-64 rounded-lg border-none bg-[#e7f3eb] pl-10 pr-4 text-sm outline-none ring-0 focus:ring-2 focus:ring-primary/50 dark:bg-white/10 dark:text-white placeholder:text-text-secondary-light/70 transition-all" placeholder="Search stories..." type="text"/>
+</div>
+</div>
+<!-- Mobile Menu Button -->
+<div class="flex md:hidden">
+<button class="text-text-primary-light hover:text-primary dark:text-white" type="button">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="min-h-screen">
+<!-- Hero Section -->
+<section class="relative">
+<div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+<div class="relative overflow-hidden rounded-2xl bg-black">
+<!-- Background Image -->
+<div class="absolute inset-0 opacity-70">
+<img alt="Panoramic view of mountains in Bend Oregon at sunset" class="h-full w-full object-cover" data-alt="Scenic mountain landscape at sunset" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGCcicgg6eJg_1h8Lfq_KMbuBXsO-c2_F7axJpSKD8_y-jpyCHqYkdqUijnBA6cEFPF1TWWRoxBxKHwwtClFrrfO-wWw6nFdwnvX6AF-m69heoQINjZqLpB8puCt9d_qSS45wBwqpIEE2PijjpQ5L_gyVpeLqhuAO6l_d9v8ec6tvekvk8Pz7F6pEC7-kypxbs7PnNqsbnxvV7bY1g2hLFpk7qkO3uRmFoopef0RR93QUXz-T_MWASgs9EtHLsZTgS6N_0fhpQ_u4"/>
+</div>
+<!-- Gradient Overlay -->
+<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+<!-- Hero Content -->
+<div class="relative z-10 flex min-h-[500px] flex-col justify-end p-6 sm:p-12 lg:p-16">
+<span class="mb-4 inline-flex w-fit items-center rounded-full bg-primary px-3 py-1 text-xs font-bold uppercase tracking-wider text-black">
+                            Featured Story
+                        </span>
+<h1 class="mb-4 max-w-3xl text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
+                            Bend Life &amp; Local Stories
+                        </h1>
+<p class="mb-8 max-w-2xl text-lg text-gray-200 sm:text-xl">
+                            Your definitive guide to the best events, local businesses, and hidden gems scattered across Central Oregon's high desert.
+                        </p>
+<div class="flex flex-wrap gap-4">
+<button class="flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-base font-bold text-black transition-transform hover:scale-105 active:scale-95">
+                                Read Featured Story
+                                <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Filter Chips -->
+<div class="sticky top-16 z-40 w-full border-b border-[#e7f3eb] bg-background-light/95 backdrop-blur-sm py-4 dark:border-white/10 dark:bg-background-dark/95">
+<div class="mx-auto flex max-w-7xl gap-3 overflow-x-auto px-4 pb-2 sm:px-6 lg:px-8 no-scrollbar">
+<button class="whitespace-nowrap rounded-lg bg-primary px-5 py-2 text-sm font-bold text-black shadow-sm ring-1 ring-inset ring-primary">
+                    All Stories
+                </button>
+<button class="whitespace-nowrap rounded-lg bg-white px-5 py-2 text-sm font-medium text-text-primary-light ring-1 ring-inset ring-gray-200 transition-colors hover:bg-gray-50 dark:bg-white/5 dark:text-white dark:ring-white/10 dark:hover:bg-white/10">
+                    Outdoors
+                </button>
+<button class="whitespace-nowrap rounded-lg bg-white px-5 py-2 text-sm font-medium text-text-primary-light ring-1 ring-inset ring-gray-200 transition-colors hover:bg-gray-50 dark:bg-white/5 dark:text-white dark:ring-white/10 dark:hover:bg-white/10">
+                    Food &amp; Drink
+                </button>
+<button class="whitespace-nowrap rounded-lg bg-white px-5 py-2 text-sm font-medium text-text-primary-light ring-1 ring-inset ring-gray-200 transition-colors hover:bg-gray-50 dark:bg-white/5 dark:text-white dark:ring-white/10 dark:hover:bg-white/10">
+                    Arts &amp; Culture
+                </button>
+<button class="whitespace-nowrap rounded-lg bg-white px-5 py-2 text-sm font-medium text-text-primary-light ring-1 ring-inset ring-gray-200 transition-colors hover:bg-gray-50 dark:bg-white/5 dark:text-white dark:ring-white/10 dark:hover:bg-white/10">
+                    Community
+                </button>
+<button class="whitespace-nowrap rounded-lg bg-white px-5 py-2 text-sm font-medium text-text-primary-light ring-1 ring-inset ring-gray-200 transition-colors hover:bg-gray-50 dark:bg-white/5 dark:text-white dark:ring-white/10 dark:hover:bg-white/10">
+                    Events
+                </button>
+</div>
+</div>
+<!-- Main Grid Layout -->
+<div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+<div class="grid grid-cols-1 gap-12 lg:grid-cols-12">
+<!-- Blog Post Column -->
+<div class="lg:col-span-8">
+<div class="mb-8 flex items-center justify-between">
+<h2 class="text-2xl font-bold tracking-tight">Latest Articles</h2>
+<span class="text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark">Showing 6 of 42</span>
+</div>
+<div class="grid gap-8 sm:grid-cols-2">
+<!-- Article Card 1 -->
+<article class="group card-hover flex flex-col overflow-hidden rounded-2xl bg-card-light shadow-sm dark:bg-card-dark h-full">
+<div class="relative aspect-[16/10] overflow-hidden">
+<img alt="Craft beer flight on a wooden table" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Beer glasses on table in brewery" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUvLrFpyMfT2ZMXY_KhGZ-lFGiiBD2r7pHVvJpK2-sjNcKvQ8_syaYJv9pSNghpkAtmk0eD_eT89EV-U8_zIWTjF1RpZiSajPOrmYalmCSp8UmHHZQjjTJ0geN_p9vdIR2ROrCBB3yG_y_lHMRPvcBqN4TRim2ItWPtRX-gJ5JXt6f1aNWnsEYKsWF78Wb2niM2AVeYAMMCYykcVfznzbDowgpGCJSS87ZWcWrl-DZaYaNU3LFUzMXb85fb8-spHSrbEuoZJv6hlk"/>
+<div class="absolute left-4 top-4 rounded-md bg-white/90 px-3 py-1 text-xs font-bold text-black backdrop-blur-sm">
+                                    Food &amp; Drink
+                                </div>
+</div>
+<div class="flex flex-1 flex-col p-6">
+<div class="mb-3 flex items-center gap-2 text-xs font-medium text-text-secondary-light dark:text-text-secondary-dark">
+<span class="material-symbols-outlined text-[16px]">calendar_today</span>
+<time datetime="2024-01-15">Jan 15, 2024</time>
+<span class="mx-1">•</span>
+<span>By Sarah Jenkins</span>
+</div>
+<h3 class="mb-3 text-xl font-bold leading-tight group-hover:text-primary transition-colors">
+                                    Top 5 Breweries to Visit this Winter
+                                </h3>
+<p class="mb-4 flex-1 text-sm leading-relaxed text-text-secondary-light dark:text-gray-400">
+                                    Discover the coziest spots to grab a pint when the snow starts falling in Central Oregon. From dark stouts to winter warmers.
+                                </p>
+<a class="inline-flex items-center text-sm font-bold text-primary hover:underline" href="#">
+                                    Read Article <span class="material-symbols-outlined ml-1 text-[18px]">arrow_right_alt</span>
+</a>
+</div>
+</article>
+<!-- Article Card 2 -->
+<article class="group card-hover flex flex-col overflow-hidden rounded-2xl bg-card-light shadow-sm dark:bg-card-dark h-full">
+<div class="relative aspect-[16/10] overflow-hidden">
+<img alt="Hiker on mountain peak at sunrise" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Person hiking on mountain trail" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_Z280qAO0FwdmOgEw0n-fhA1DjHEKqw4j3VELBp79W4qb2PH7jYJ8pI-CufSDRNuadIEEQJk9E-Pbtj8opf5Sa8AtvR9oSZAYKkmNU0LMCjAL0P5SBEKjJa108pK8w9fGccqNYTWjHplF7UE2ibmu1n2xMq5boEM29DnA-W5E5m7PaGo3ZIBc1C_DXOXTeqUEtr6sClj4hAeXUSaxWydnVLz32eV0UR9T9Qddt8sIP28FQq2mmcv0FdyJKk4SAsqzD4uqt0KYN9g"/>
+<div class="absolute left-4 top-4 rounded-md bg-white/90 px-3 py-1 text-xs font-bold text-black backdrop-blur-sm">
+                                    Outdoors
+                                </div>
+</div>
+<div class="flex flex-1 flex-col p-6">
+<div class="mb-3 flex items-center gap-2 text-xs font-medium text-text-secondary-light dark:text-text-secondary-dark">
+<span class="material-symbols-outlined text-[16px]">calendar_today</span>
+<time datetime="2024-01-12">Jan 12, 2024</time>
+<span class="mx-1">•</span>
+<span>By Mike Ross</span>
+</div>
+<h3 class="mb-3 text-xl font-bold leading-tight group-hover:text-primary transition-colors">
+                                    Hiking Pilot Butte: A Sunrise Guide
+                                </h3>
+<p class="mb-4 flex-1 text-sm leading-relaxed text-text-secondary-light dark:text-gray-400">
+                                    Everything you need to know about catching the best views of the Cascades before the city wakes up.
+                                </p>
+<a class="inline-flex items-center text-sm font-bold text-primary hover:underline" href="#">
+                                    Read Article <span class="material-symbols-outlined ml-1 text-[18px]">arrow_right_alt</span>
+</a>
+</div>
+</article>
+<!-- Article Card 3 -->
+<article class="group card-hover flex flex-col overflow-hidden rounded-2xl bg-card-light shadow-sm dark:bg-card-dark h-full">
+<div class="relative aspect-[16/10] overflow-hidden">
+<img alt="People sitting outside coffee shop in downtown" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="People enjoying coffee outdoors" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDe-KF-qSVboZ4axYf9Min9EH53lOq1JSiQkHl8sFQ5d69UIgwzYhHFmBM46ncoRfngUsEACwWnwBQ579-tdj_845ZJPYdMx49S1YAbQvBuJfn7pR2drOOgwIWQJxwhwvvz8FjSG_wcWnXMAnvp2SDXREDfsIkwr0cjFADVI9GwLcd9c4_HaFXBLOvgmHdVjzFOaRAmLCgbj7zN83rE9MUdwh3ewZ8sg8wIOgs68fjWTAKEIjpr9lfJeT3ONX4Ht-y2QciS5Hr5gYI"/>
+<div class="absolute left-4 top-4 rounded-md bg-white/90 px-3 py-1 text-xs font-bold text-black backdrop-blur-sm">
+                                    Community
+                                </div>
+</div>
+<div class="flex flex-1 flex-col p-6">
+<div class="mb-3 flex items-center gap-2 text-xs font-medium text-text-secondary-light dark:text-text-secondary-dark">
+<span class="material-symbols-outlined text-[16px]">calendar_today</span>
+<time datetime="2024-01-10">Jan 10, 2024</time>
+<span class="mx-1">•</span>
+<span>By Team GDB</span>
+</div>
+<h3 class="mb-3 text-xl font-bold leading-tight group-hover:text-primary transition-colors">
+                                    Downtown Bend's New Art Walk
+                                </h3>
+<p class="mb-4 flex-1 text-sm leading-relaxed text-text-secondary-light dark:text-gray-400">
+                                    A fresh initiative bringing local artists and businesses together for a monthly celebration of creativity.
+                                </p>
+<a class="inline-flex items-center text-sm font-bold text-primary hover:underline" href="#">
+                                    Read Article <span class="material-symbols-outlined ml-1 text-[18px]">arrow_right_alt</span>
+</a>
+</div>
+</article>
+<!-- Article Card 4 -->
+<article class="group card-hover flex flex-col overflow-hidden rounded-2xl bg-card-light shadow-sm dark:bg-card-dark h-full">
+<div class="relative aspect-[16/10] overflow-hidden">
+<img alt="Winter cabin in the woods with snow" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Snowy cabin in the woods" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVlvms-at8mH8WkHAILJOXWE86rK9B8XrFOnUKMxK0fG7-dnSXnu8wCzKFbEPAZniiMFhoMP0x1AzG779btYcK3F6z46c4E_SxmiNqTOhg6i6nMNqSpSOB5NYwPRfuloOpH35srTB9qB5vZbo4jbNrFHvt-LaPF6njQ_KelWcWcUE1QT9KUXC1TWQ_5vvHRjuAhKdlWZStGbQS-cfucJNxozEIEnGuisYLQYLFnCj_V7Xo0akt7_xWY3OI82t03d2CZqy8FTdlsDY"/>
+<div class="absolute left-4 top-4 rounded-md bg-white/90 px-3 py-1 text-xs font-bold text-black backdrop-blur-sm">
+                                    Travel
+                                </div>
+</div>
+<div class="flex flex-1 flex-col p-6">
+<div class="mb-3 flex items-center gap-2 text-xs font-medium text-text-secondary-light dark:text-text-secondary-dark">
+<span class="material-symbols-outlined text-[16px]">calendar_today</span>
+<time datetime="2024-01-08">Jan 08, 2024</time>
+<span class="mx-1">•</span>
+<span>By Alex Chen</span>
+</div>
+<h3 class="mb-3 text-xl font-bold leading-tight group-hover:text-primary transition-colors">
+                                    Weekend Getaways: Sisters &amp; Black Butte
+                                </h3>
+<p class="mb-4 flex-1 text-sm leading-relaxed text-text-secondary-light dark:text-gray-400">
+                                    Escape the city for a weekend of relaxation and adventure just 30 minutes away.
+                                </p>
+<a class="inline-flex items-center text-sm font-bold text-primary hover:underline" href="#">
+                                    Read Article <span class="material-symbols-outlined ml-1 text-[18px]">arrow_right_alt</span>
+</a>
+</div>
+</article>
+</div>
+<!-- Pagination -->
+<div class="mt-12 flex justify-center">
+<button class="flex min-w-[160px] items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white px-6 py-3 text-sm font-bold text-text-primary-light shadow-sm transition-all hover:bg-gray-50 active:scale-95 dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:bg-white/10">
+                            Load More Stories
+                            <span class="material-symbols-outlined text-[20px]">expand_more</span>
+</button>
+</div>
+</div>
+<!-- Sidebar Column -->
+<aside class="space-y-8 lg:col-span-4 lg:pl-8">
+<!-- About Widget -->
+<div class="rounded-2xl bg-card-light p-6 shadow-sm ring-1 ring-gray-900/5 dark:bg-card-dark dark:ring-white/10">
+<div class="mb-4 flex items-center gap-2">
+<div class="text-primary size-6">
+<svg class="h-6 w-6" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M24 0.757355L47.2426 24L24 47.2426L0.757355 24L24 0.757355ZM21 35.7574V12.2426L9.24264 24L21 35.7574Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h3 class="text-lg font-bold">Good Day Bend</h3>
+</div>
+<p class="mb-4 text-sm text-text-secondary-light dark:text-gray-400">
+                            Celebrating the culture, community, and outdoor lifestyle of Bend, Oregon.
+                        </p>
+<div class="flex gap-3">
+<a class="flex h-8 w-8 items-center justify-center rounded-full bg-[#e7f3eb] text-[#0d1b12] transition-colors hover:bg-primary hover:text-black dark:bg-white/10 dark:text-white" href="#">
+<span class="sr-only">Instagram</span>
+<svg class="h-4 w-4" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path></svg>
+</a>
+<a class="flex h-8 w-8 items-center justify-center rounded-full bg-[#e7f3eb] text-[#0d1b12] transition-colors hover:bg-primary hover:text-black dark:bg-white/10 dark:text-white" href="#">
+<span class="sr-only">Twitter</span>
+<svg class="h-4 w-4" fill="currentColor" viewbox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"></path></svg>
+</a>
+</div>
+</div>
+<!-- Newsletter -->
+<div class="overflow-hidden rounded-2xl bg-[#1a2e22] text-white p-6 shadow-sm">
+<div class="mb-4 flex items-center gap-3">
+<span class="material-symbols-outlined rounded-lg bg-primary/20 p-2 text-primary">mail</span>
+<h3 class="text-lg font-bold">Local Updates</h3>
+</div>
+<p class="mb-4 text-sm text-gray-300">
+                            Get the best of Bend delivered to your inbox weekly. No spam, just fresh mountain air.
+                        </p>
+<form class="flex flex-col gap-3">
+<input class="w-full rounded-lg border-0 bg-white/10 px-4 py-2.5 text-sm text-white placeholder:text-gray-400 focus:ring-2 focus:ring-primary" placeholder="Your email address" type="email"/>
+<button class="w-full rounded-lg bg-primary px-4 py-2.5 text-sm font-bold text-black transition-colors hover:bg-white" type="submit">
+                                Subscribe
+                            </button>
+</form>
+</div>
+<!-- Trending List -->
+<div class="rounded-2xl bg-card-light p-6 shadow-sm ring-1 ring-gray-900/5 dark:bg-card-dark dark:ring-white/10">
+<h3 class="mb-6 text-lg font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">trending_up</span>
+                            Trending in Bend
+                        </h3>
+<div class="space-y-6">
+<a class="group flex gap-4" href="#">
+<span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gray-100 text-xs font-bold text-gray-500 group-hover:bg-primary group-hover:text-black dark:bg-white/10 dark:group-hover:bg-primary">1</span>
+<div>
+<h4 class="text-sm font-bold leading-snug group-hover:text-primary dark:text-gray-100">Best Brunch Spots for 2025</h4>
+<p class="mt-1 text-xs text-text-secondary-light dark:text-gray-500">Food &amp; Drink</p>
+</div>
+</a>
+<a class="group flex gap-4" href="#">
+<span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gray-100 text-xs font-bold text-gray-500 group-hover:bg-primary group-hover:text-black dark:bg-white/10 dark:group-hover:bg-primary">2</span>
+<div>
+<h4 class="text-sm font-bold leading-snug group-hover:text-primary dark:text-gray-100">Winter Festival Schedule Announced</h4>
+<p class="mt-1 text-xs text-text-secondary-light dark:text-gray-500">Events</p>
+</div>
+</a>
+<a class="group flex gap-4" href="#">
+<span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gray-100 text-xs font-bold text-gray-500 group-hover:bg-primary group-hover:text-black dark:bg-white/10 dark:group-hover:bg-primary">3</span>
+<div>
+<h4 class="text-sm font-bold leading-snug group-hover:text-primary dark:text-gray-100">New Trail System Opens at Shevlin</h4>
+<p class="mt-1 text-xs text-text-secondary-light dark:text-gray-500">Outdoors</p>
+</div>
+</a>
+<a class="group flex gap-4" href="#">
+<span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gray-100 text-xs font-bold text-gray-500 group-hover:bg-primary group-hover:text-black dark:bg-white/10 dark:group-hover:bg-primary">4</span>
+<div>
+<h4 class="text-sm font-bold leading-snug group-hover:text-primary dark:text-gray-100">Local Artist Showcase: First Friday</h4>
+<p class="mt-1 text-xs text-text-secondary-light dark:text-gray-500">Arts</p>
+</div>
+</a>
+</div>
+</div>
+</aside>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="border-t border-[#e7f3eb] bg-white pt-16 pb-8 dark:border-white/10 dark:bg-[#15281e]">
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+<div class="grid grid-cols-2 gap-8 md:grid-cols-4 lg:grid-cols-5">
+<div class="col-span-2 lg:col-span-2">
+<div class="mb-4 flex items-center gap-2">
+<div class="text-primary size-6">
+<svg class="h-6 w-6" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M24 0.757355L47.2426 24L24 47.2426L0.757355 24L24 0.757355ZM21 35.7574V12.2426L9.24264 24L21 35.7574Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<span class="text-lg font-bold tracking-tight text-text-primary-light dark:text-white">Good Day Bend</span>
+</div>
+<p class="mb-6 max-w-xs text-sm text-text-secondary-light dark:text-gray-400">
+                        Connecting locals and visitors to the vibrant heart of Central Oregon.
+                    </p>
+</div>
+<div>
+<h4 class="mb-4 text-sm font-bold text-text-primary-light dark:text-white">Explore</h4>
+<ul class="space-y-3 text-sm text-text-secondary-light dark:text-gray-400">
+<li><a class="hover:text-primary" href="#">Events Calendar</a></li>
+<li><a class="hover:text-primary" href="#">Local Directory</a></li>
+<li><a class="hover:text-primary" href="#">Blog &amp; Stories</a></li>
+<li><a class="hover:text-primary" href="#">Neighborhoods</a></li>
+</ul>
+</div>
+<div>
+<h4 class="mb-4 text-sm font-bold text-text-primary-light dark:text-white">Categories</h4>
+<ul class="space-y-3 text-sm text-text-secondary-light dark:text-gray-400">
+<li><a class="hover:text-primary" href="#">Food &amp; Drink</a></li>
+<li><a class="hover:text-primary" href="#">Outdoors</a></li>
+<li><a class="hover:text-primary" href="#">Arts &amp; Culture</a></li>
+<li><a class="hover:text-primary" href="#">Family Fun</a></li>
+</ul>
+</div>
+<div>
+<h4 class="mb-4 text-sm font-bold text-text-primary-light dark:text-white">Company</h4>
+<ul class="space-y-3 text-sm text-text-secondary-light dark:text-gray-400">
+<li><a class="hover:text-primary" href="#">About Us</a></li>
+<li><a class="hover:text-primary" href="#">Contact</a></li>
+<li><a class="hover:text-primary" href="#">Advertise</a></li>
+<li><a class="hover:text-primary" href="#">Privacy Policy</a></li>
+</ul>
+</div>
+</div>
+<div class="mt-12 border-t border-gray-100 pt-8 dark:border-white/5">
+<div class="flex flex-col items-center justify-between gap-4 md:flex-row">
+<p class="text-xs text-gray-500 dark:text-gray-500">© 2025 Good Day Bend. Made with love in Bend, OR.</p>
+<div class="flex gap-6">
+<a class="text-xs font-medium text-gray-500 hover:text-primary dark:text-gray-400" href="#">Terms</a>
+<a class="text-xs font-medium text-gray-500 hover:text-primary dark:text-gray-400" href="#">Privacy</a>
+<a class="text-xs font-medium text-gray-500 hover:text-primary dark:text-gray-400" href="#">Sitemap</a>
+</div>
+</div>
+</div>
+</div>
+</footer>
+</body></html>
