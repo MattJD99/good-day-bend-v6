@@ -1,20 +1,27 @@
 <!DOCTYPE html>
 
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Featured Events &amp; Businesses - Good Day Bend</title>
-<!-- Google Fonts -->
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
-<!-- Material Symbols -->
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<!-- Tailwind CSS -->
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<!-- Theme Configuration -->
-<script id="tailwind-config">
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Featured Events &amp; Businesses - Good Day Bend</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Material Symbols -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Theme Configuration -->
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -29,355 +36,459 @@
                     fontFamily: {
                         "display": ["Plus Jakarta Sans", "sans-serif"]
                     },
-                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
                 },
             },
         }
     </script>
-<style>
+    <style>
         /* Custom styles for smooth scrolling and base settings */
         html {
             scroll-behavior: smooth;
         }
+
         body {
             font-family: "Plus Jakarta Sans", "Noto Sans", sans-serif;
         }
+
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
             vertical-align: middle;
         }
+
         /* Filled icon style */
         .icon-filled {
             font-variation-settings: 'FILL' 1;
         }
     </style>
 </head>
-<body class="bg-background-light dark:bg-background-dark text-text-main dark:text-[#e7f3eb] min-h-screen flex flex-col font-display selection:bg-primary selection:text-text-main">
-<!-- Sticky Navigation Bar -->
-<nav class="sticky top-0 z-50 w-full bg-[#f8fcf9] dark:bg-[#102216] border-b border-[#e7f3eb] dark:border-[#1f3b2a]">
-<div class="px-4 md:px-10 py-3 max-w-[1280px] mx-auto flex items-center justify-between whitespace-nowrap">
-<div class="flex items-center gap-4 text-text-main dark:text-white">
-<div class="size-8 flex items-center justify-center rounded bg-primary/20 text-primary">
-<span class="material-symbols-outlined">landscape</span>
-</div>
-<h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">Good Day Bend</h2>
-</div>
-<!-- Desktop Menu -->
-<div class="hidden lg:flex flex-1 justify-end gap-8 items-center">
-<div class="flex items-center gap-9">
-<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Home</a>
-<a class="text-sm font-medium hover:text-primary transition-colors text-primary" href="#">Events</a>
-<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Eat &amp; Drink</a>
-<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Outdoors</a>
-</div>
-<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary hover:bg-[#0fd651] transition-colors text-[#0d1b12] text-sm font-bold shadow-sm">
-<span class="mr-2 material-symbols-outlined text-[20px]">add</span>
-<span class="truncate">Add Your Listing</span>
-</button>
-</div>
-<!-- Mobile Menu Icon -->
-<div class="lg:hidden flex items-center">
-<button class="text-text-main dark:text-white p-2">
-<span class="material-symbols-outlined">menu</span>
-</button>
-</div>
-</div>
-</nav>
-<!-- Main Content Wrapper -->
-<main class="flex-1 w-full max-w-[1280px] mx-auto px-4 md:px-10 py-8 flex flex-col gap-12">
-<!-- Hero Section -->
-<section class="flex flex-col gap-4 py-8 md:py-12 items-center text-center max-w-[800px] mx-auto">
-<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary-dark border border-primary/20 text-xs font-bold uppercase tracking-wide text-[#0d1b12] dark:text-[#13ec5b]">
-<span class="w-2 h-2 rounded-full bg-primary"></span>
+
+<body
+    class="bg-background-light dark:bg-background-dark text-text-main dark:text-[#e7f3eb] min-h-screen flex flex-col font-display selection:bg-primary selection:text-text-main">
+    <!-- Sticky Navigation Bar -->
+    <nav
+        class="sticky top-0 z-50 w-full bg-[#f8fcf9] dark:bg-[#102216] border-b border-[#e7f3eb] dark:border-[#1f3b2a]">
+        <div class="px-4 md:px-10 py-3 max-w-[1280px] mx-auto flex items-center justify-between whitespace-nowrap">
+            <div class="flex items-center gap-4 text-text-main dark:text-white">
+                <div class="size-8 flex items-center justify-center rounded bg-primary/20 text-primary">
+                    <span class="material-symbols-outlined">landscape</span>
+                </div>
+                <h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">Good Day Bend</h2>
+            </div>
+            <!-- Desktop Menu -->
+            <div class="hidden lg:flex flex-1 justify-end gap-8 items-center">
+                <div class="flex items-center gap-9">
+                    <a class="text-sm font-medium hover:text-primary transition-colors" href="#">Home</a>
+                    <a class="text-sm font-medium hover:text-primary transition-colors text-primary" href="#">Events</a>
+                    <a class="text-sm font-medium hover:text-primary transition-colors" href="#">Eat &amp; Drink</a>
+                    <a class="text-sm font-medium hover:text-primary transition-colors" href="#">Outdoors</a>
+                </div>
+                <button
+                    class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary hover:bg-[#0fd651] transition-colors text-[#0d1b12] text-sm font-bold shadow-sm">
+                    <span class="mr-2 material-symbols-outlined text-[20px]">add</span>
+                    <span class="truncate">Add Your Listing</span>
+                </button>
+            </div>
+            <!-- Mobile Menu Icon -->
+            <div class="lg:hidden flex items-center">
+                <button class="text-text-main dark:text-white p-2">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+    <!-- Main Content Wrapper -->
+    <main class="flex-1 w-full max-w-[1280px] mx-auto px-4 md:px-10 py-8 flex flex-col gap-12">
+        <!-- Hero Section -->
+        <section class="flex flex-col gap-4 py-8 md:py-12 items-center text-center max-w-[800px] mx-auto">
+            <div
+                class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary-dark border border-primary/20 text-xs font-bold uppercase tracking-wide text-[#0d1b12] dark:text-[#13ec5b]">
+                <span class="w-2 h-2 rounded-full bg-primary"></span>
                 Top Picks This Week
             </div>
-<h1 class="text-[#0d1b12] dark:text-white text-4xl md:text-5xl lg:text-6xl font-black leading-tight tracking-[-0.033em]">
-                The Best of Bend: <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-[#13ec5b] to-[#0b8e36]">Featured Highlights</span>
-</h1>
-<p class="text-text-secondary dark:text-[#9abfaa] text-lg md:text-xl font-normal leading-normal max-w-[600px]">
+            <h1
+                class="text-[#0d1b12] dark:text-white text-4xl md:text-5xl lg:text-6xl font-black leading-tight tracking-[-0.033em]">
+                The Best of Bend: <br /><span
+                    class="text-transparent bg-clip-text bg-gradient-to-r from-[#13ec5b] to-[#0b8e36]">Featured
+                    Highlights</span>
+            </h1>
+            <p
+                class="text-text-secondary dark:text-[#9abfaa] text-lg md:text-xl font-normal leading-normal max-w-[600px]">
                 Discover the premier events and top-rated local businesses making waves in our community right now.
             </p>
-</section>
-<!-- Section 1: Upcoming Featured Events -->
-<section>
-<div class="flex items-center justify-between mb-6 border-b border-[#e7f3eb] dark:border-[#1f3b2a] pb-4">
-<h2 class="text-[#0d1b12] dark:text-white text-2xl md:text-[28px] font-bold tracking-[-0.015em] flex items-center gap-2">
-<span class="material-symbols-outlined text-primary">event</span>
+        </section>
+        <!-- Section 1: Upcoming Featured Events -->
+        <section>
+            <div class="flex items-center justify-between mb-6 border-b border-[#e7f3eb] dark:border-[#1f3b2a] pb-4">
+                <h2
+                    class="text-[#0d1b12] dark:text-white text-2xl md:text-[28px] font-bold tracking-[-0.015em] flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary">event</span>
                     Upcoming Featured Events
                 </h2>
-<a class="hidden md:flex items-center gap-1 text-sm font-bold text-text-secondary hover:text-primary transition-colors" href="#">
+                <a class="hidden md:flex items-center gap-1 text-sm font-bold text-text-secondary hover:text-primary transition-colors"
+                    href="#">
                     View All Events <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
-</a>
-</div>
-<!-- Grid Container -->
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-<!-- Event Card 1 -->
-<article class="group flex flex-col rounded-xl bg-white dark:bg-[#1a2e22] shadow-[0_2px_8px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.12)] transition-all duration-300 overflow-hidden border border-transparent hover:border-primary/30">
-<div class="relative w-full aspect-video overflow-hidden">
-<div class="absolute top-3 left-3 bg-white/90 dark:bg-[#0d1b12]/90 backdrop-blur-sm rounded-lg px-3 py-1.5 flex flex-col items-center shadow-sm z-10 border border-black/5">
-<span class="text-xs font-bold text-text-secondary uppercase">Aug</span>
-<span class="text-xl font-black text-[#0d1b12] dark:text-white leading-none">12</span>
-</div>
-<div class="w-full h-full bg-center bg-cover transition-transform duration-700 group-hover:scale-105" data-alt="Crowd enjoying an outdoor concert at sunset with stage lights" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCBXBfTuJ2rVwCVW0AXPbOoILCybUyBRqJXvwBcXHBwKtLHj4HVXgRYFQzT5m0vN-ax43t99NGm_6PidMKzTvwo7ZD5JIq93CzmPtNWOx6Plf1VPO46PFedQw282fKcOiA5LCxivqVFwdF1YEvu-38Q1HkUwgHGbbTiP71eUhWCkq5L4WTRIt5Yh9Mlbsx95rCimzzBBkZW5Yezh4Aqz7tX6Mjw5KQB4x_JKf0tNOhUSaOVm1qXnGYmPX3fUY5X7TQ0tqIVz32p510");'>
-</div>
-<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60"></div>
-</div>
-<div class="flex flex-col flex-1 p-5 gap-3">
-<div class="flex flex-col gap-1">
-<h3 class="text-[#0d1b12] dark:text-white text-xl font-bold leading-tight group-hover:text-primary transition-colors">Summer Concert Series</h3>
-<div class="flex items-center gap-1 text-text-secondary dark:text-[#9abfaa] text-sm font-medium">
-<span class="material-symbols-outlined text-[18px]">location_on</span>
+                </a>
+            </div>
+            <!-- Grid Container -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Event Card 1 -->
+                <article
+                    class="group flex flex-col rounded-xl bg-white dark:bg-[#1a2e22] shadow-[0_2px_8px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.12)] transition-all duration-300 overflow-hidden border border-transparent hover:border-primary/30">
+                    <div class="relative w-full aspect-video overflow-hidden">
+                        <div
+                            class="absolute top-3 left-3 bg-white/90 dark:bg-[#0d1b12]/90 backdrop-blur-sm rounded-lg px-3 py-1.5 flex flex-col items-center shadow-sm z-10 border border-black/5">
+                            <span class="text-xs font-bold text-text-secondary uppercase">Aug</span>
+                            <span class="text-xl font-black text-[#0d1b12] dark:text-white leading-none">12</span>
+                        </div>
+                        <div class="w-full h-full bg-center bg-cover transition-transform duration-700 group-hover:scale-105"
+                            data-alt="Crowd enjoying an outdoor concert at sunset with stage lights"
+                            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCBXBfTuJ2rVwCVW0AXPbOoILCybUyBRqJXvwBcXHBwKtLHj4HVXgRYFQzT5m0vN-ax43t99NGm_6PidMKzTvwo7ZD5JIq93CzmPtNWOx6Plf1VPO46PFedQw282fKcOiA5LCxivqVFwdF1YEvu-38Q1HkUwgHGbbTiP71eUhWCkq5L4WTRIt5Yh9Mlbsx95rCimzzBBkZW5Yezh4Aqz7tX6Mjw5KQB4x_JKf0tNOhUSaOVm1qXnGYmPX3fUY5X7TQ0tqIVz32p510");'>
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60"></div>
+                    </div>
+                    <div class="flex flex-col flex-1 p-5 gap-3">
+                        <div class="flex flex-col gap-1">
+                            <h3
+                                class="text-[#0d1b12] dark:text-white text-xl font-bold leading-tight group-hover:text-primary transition-colors">
+                                Summer Concert Series</h3>
+                            <div
+                                class="flex items-center gap-1 text-text-secondary dark:text-[#9abfaa] text-sm font-medium">
+                                <span class="material-symbols-outlined text-[18px]">location_on</span>
                                 Haynes Amphitheater
                             </div>
-</div>
-<p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">Experience local bands and food trucks under the stars at the newly renovated amphitheater.</p>
-<div class="mt-auto pt-4 flex items-center justify-between border-t border-gray-100 dark:border-gray-800">
-<span class="text-sm font-medium text-text-main dark:text-white flex items-center gap-1">
-<span class="material-symbols-outlined text-[18px]">schedule</span> 7:00 PM
+                        </div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">Experience local bands and food
+                            trucks under the stars at the newly renovated amphitheater.</p>
+                        <div
+                            class="mt-auto pt-4 flex items-center justify-between border-t border-gray-100 dark:border-gray-800">
+                            <span class="text-sm font-medium text-text-main dark:text-white flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[18px]">schedule</span> 7:00 PM
                             </span>
-<button class="flex items-center justify-center rounded-lg h-9 px-4 bg-primary text-[#0d1b12] text-sm font-bold hover:bg-[#0fd651] transition-colors">
+                            <button
+                                class="flex items-center justify-center rounded-lg h-9 px-4 bg-primary text-[#0d1b12] text-sm font-bold hover:bg-[#0fd651] transition-colors">
                                 Get Tickets
                             </button>
-</div>
-</div>
-</article>
-<!-- Event Card 2 -->
-<article class="group flex flex-col rounded-xl bg-white dark:bg-[#1a2e22] shadow-[0_2px_8px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.12)] transition-all duration-300 overflow-hidden border border-transparent hover:border-primary/30">
-<div class="relative w-full aspect-video overflow-hidden">
-<div class="absolute top-3 left-3 bg-white/90 dark:bg-[#0d1b12]/90 backdrop-blur-sm rounded-lg px-3 py-1.5 flex flex-col items-center shadow-sm z-10 border border-black/5">
-<span class="text-xs font-bold text-text-secondary uppercase">Aug</span>
-<span class="text-xl font-black text-[#0d1b12] dark:text-white leading-none">15</span>
-</div>
-<div class="w-full h-full bg-center bg-cover transition-transform duration-700 group-hover:scale-105" data-alt="Runners participating in a relay race holding beer glasses" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCAY9I0te_3wcVHtyp4D7z9qQ8tasnLHoGTYXTBpKS35hUBbE273EFRfEJc60BMsXVcda3s99Vgq9XzWf5czBbWkYHHSA4rhY8BHrX_DstHZp9nNtXUktqA99R5DX_hMUcWulCGwEfyKtVG0PPi1YJ9wavR_wUwg7vxGnrbScO5lbhixvLkczwxaetMbJLEwaK7Gy5ZE_Huz67oomWPdD5reXEvvUVAz2kmvSWTK96Db6O-qsnwKua0_ROG_PmjVzmI_zzleYF8c2Y");'>
-</div>
-<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60"></div>
-</div>
-<div class="flex flex-col flex-1 p-5 gap-3">
-<div class="flex flex-col gap-1">
-<h3 class="text-[#0d1b12] dark:text-white text-xl font-bold leading-tight group-hover:text-primary transition-colors">Bend Beer Chase</h3>
-<div class="flex items-center gap-1 text-text-secondary dark:text-[#9abfaa] text-sm font-medium">
-<span class="material-symbols-outlined text-[18px]">location_on</span>
+                        </div>
+                    </div>
+                </article>
+                <!-- Event Card 2 -->
+                <article
+                    class="group flex flex-col rounded-xl bg-white dark:bg-[#1a2e22] shadow-[0_2px_8px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.12)] transition-all duration-300 overflow-hidden border border-transparent hover:border-primary/30">
+                    <div class="relative w-full aspect-video overflow-hidden">
+                        <div
+                            class="absolute top-3 left-3 bg-white/90 dark:bg-[#0d1b12]/90 backdrop-blur-sm rounded-lg px-3 py-1.5 flex flex-col items-center shadow-sm z-10 border border-black/5">
+                            <span class="text-xs font-bold text-text-secondary uppercase">Aug</span>
+                            <span class="text-xl font-black text-[#0d1b12] dark:text-white leading-none">15</span>
+                        </div>
+                        <div class="w-full h-full bg-center bg-cover transition-transform duration-700 group-hover:scale-105"
+                            data-alt="Runners participating in a relay race holding beer glasses"
+                            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCAY9I0te_3wcVHtyp4D7z9qQ8tasnLHoGTYXTBpKS35hUBbE273EFRfEJc60BMsXVcda3s99Vgq9XzWf5czBbWkYHHSA4rhY8BHrX_DstHZp9nNtXUktqA99R5DX_hMUcWulCGwEfyKtVG0PPi1YJ9wavR_wUwg7vxGnrbScO5lbhixvLkczwxaetMbJLEwaK7Gy5ZE_Huz67oomWPdD5reXEvvUVAz2kmvSWTK96Db6O-qsnwKua0_ROG_PmjVzmI_zzleYF8c2Y");'>
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60"></div>
+                    </div>
+                    <div class="flex flex-col flex-1 p-5 gap-3">
+                        <div class="flex flex-col gap-1">
+                            <h3
+                                class="text-[#0d1b12] dark:text-white text-xl font-bold leading-tight group-hover:text-primary transition-colors">
+                                Bend Beer Chase</h3>
+                            <div
+                                class="flex items-center gap-1 text-text-secondary dark:text-[#9abfaa] text-sm font-medium">
+                                <span class="material-symbols-outlined text-[18px]">location_on</span>
                                 Downtown Bend
                             </div>
-</div>
-<p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">A unique relay race celebrating local craft breweries. 50 miles, 12 legs, and one big party.</p>
-<div class="mt-auto pt-4 flex items-center justify-between border-t border-gray-100 dark:border-gray-800">
-<span class="text-sm font-medium text-text-main dark:text-white flex items-center gap-1">
-<span class="material-symbols-outlined text-[18px]">schedule</span> 10:00 AM
+                        </div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">A unique relay race celebrating
+                            local craft breweries. 50 miles, 12 legs, and one big party.</p>
+                        <div
+                            class="mt-auto pt-4 flex items-center justify-between border-t border-gray-100 dark:border-gray-800">
+                            <span class="text-sm font-medium text-text-main dark:text-white flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[18px]">schedule</span> 10:00 AM
                             </span>
-<button class="flex items-center justify-center rounded-lg h-9 px-4 bg-primary text-[#0d1b12] text-sm font-bold hover:bg-[#0fd651] transition-colors">
+                            <button
+                                class="flex items-center justify-center rounded-lg h-9 px-4 bg-primary text-[#0d1b12] text-sm font-bold hover:bg-[#0fd651] transition-colors">
                                 Register Now
                             </button>
-</div>
-</div>
-</article>
-<!-- Event Card 3 -->
-<article class="group flex flex-col rounded-xl bg-white dark:bg-[#1a2e22] shadow-[0_2px_8px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.12)] transition-all duration-300 overflow-hidden border border-transparent hover:border-primary/30">
-<div class="relative w-full aspect-video overflow-hidden">
-<div class="absolute top-3 left-3 bg-white/90 dark:bg-[#0d1b12]/90 backdrop-blur-sm rounded-lg px-3 py-1.5 flex flex-col items-center shadow-sm z-10 border border-black/5">
-<span class="text-xs font-bold text-text-secondary uppercase">Aug</span>
-<span class="text-xl font-black text-[#0d1b12] dark:text-white leading-none">18</span>
-</div>
-<div class="w-full h-full bg-center bg-cover transition-transform duration-700 group-hover:scale-105" data-alt="Art pieces displayed on street stands during a sunny day" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCDqT-vAc8jEJfRjnO7aQx8ZKfKKpKy-IRrt0eJfWct5WazeoxEvlQRq4n-jW4J1JYKbB-0A_wvLyPi8SPlx7_hOXRyzgmCjh5aeCV8y2tY_Y9bGA8wggznYqweq99Hj2LwtjBTigV3k7iqj6HIhEM0PSoigQINOqj0E_xvW-GVyeIGJkGbHrMfkjpEoaVjtUg-TlEQPScf10wfLnqsFCCD8Yq_g7FI0_9XiymcgLwuUaJ7ER_pBMzZ97ooIcZhFnz-WphirbL7Ql0");'>
-</div>
-<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60"></div>
-</div>
-<div class="flex flex-col flex-1 p-5 gap-3">
-<div class="flex flex-col gap-1">
-<h3 class="text-[#0d1b12] dark:text-white text-xl font-bold leading-tight group-hover:text-primary transition-colors">Downtown Art Walk</h3>
-<div class="flex items-center gap-1 text-text-secondary dark:text-[#9abfaa] text-sm font-medium">
-<span class="material-symbols-outlined text-[18px]">location_on</span>
+                        </div>
+                    </div>
+                </article>
+                <!-- Event Card 3 -->
+                <article
+                    class="group flex flex-col rounded-xl bg-white dark:bg-[#1a2e22] shadow-[0_2px_8px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.12)] transition-all duration-300 overflow-hidden border border-transparent hover:border-primary/30">
+                    <div class="relative w-full aspect-video overflow-hidden">
+                        <div
+                            class="absolute top-3 left-3 bg-white/90 dark:bg-[#0d1b12]/90 backdrop-blur-sm rounded-lg px-3 py-1.5 flex flex-col items-center shadow-sm z-10 border border-black/5">
+                            <span class="text-xs font-bold text-text-secondary uppercase">Aug</span>
+                            <span class="text-xl font-black text-[#0d1b12] dark:text-white leading-none">18</span>
+                        </div>
+                        <div class="w-full h-full bg-center bg-cover transition-transform duration-700 group-hover:scale-105"
+                            data-alt="Art pieces displayed on street stands during a sunny day"
+                            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCDqT-vAc8jEJfRjnO7aQx8ZKfKKpKy-IRrt0eJfWct5WazeoxEvlQRq4n-jW4J1JYKbB-0A_wvLyPi8SPlx7_hOXRyzgmCjh5aeCV8y2tY_Y9bGA8wggznYqweq99Hj2LwtjBTigV3k7iqj6HIhEM0PSoigQINOqj0E_xvW-GVyeIGJkGbHrMfkjpEoaVjtUg-TlEQPScf10wfLnqsFCCD8Yq_g7FI0_9XiymcgLwuUaJ7ER_pBMzZ97ooIcZhFnz-WphirbL7Ql0");'>
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60"></div>
+                    </div>
+                    <div class="flex flex-col flex-1 p-5 gap-3">
+                        <div class="flex flex-col gap-1">
+                            <h3
+                                class="text-[#0d1b12] dark:text-white text-xl font-bold leading-tight group-hover:text-primary transition-colors">
+                                Downtown Art Walk</h3>
+                            <div
+                                class="flex items-center gap-1 text-text-secondary dark:text-[#9abfaa] text-sm font-medium">
+                                <span class="material-symbols-outlined text-[18px]">location_on</span>
                                 Franklin Ave
                             </div>
-</div>
-<p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">Explore galleries, meet local artists, and enjoy wine tastings throughout the district.</p>
-<div class="mt-auto pt-4 flex items-center justify-between border-t border-gray-100 dark:border-gray-800">
-<span class="text-sm font-medium text-text-main dark:text-white flex items-center gap-1">
-<span class="material-symbols-outlined text-[18px]">schedule</span> 5:00 PM
+                        </div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">Explore galleries, meet local
+                            artists, and enjoy wine tastings throughout the district.</p>
+                        <div
+                            class="mt-auto pt-4 flex items-center justify-between border-t border-gray-100 dark:border-gray-800">
+                            <span class="text-sm font-medium text-text-main dark:text-white flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[18px]">schedule</span> 5:00 PM
                             </span>
-<button class="flex items-center justify-center rounded-lg h-9 px-4 bg-primary text-[#0d1b12] text-sm font-bold hover:bg-[#0fd651] transition-colors">
+                            <button
+                                class="flex items-center justify-center rounded-lg h-9 px-4 bg-primary text-[#0d1b12] text-sm font-bold hover:bg-[#0fd651] transition-colors">
                                 Learn More
                             </button>
-</div>
-</div>
-</article>
-</div>
-</section>
-<!-- Section 2: Local Business Spotlight -->
-<section>
-<div class="flex items-center justify-between mb-6 border-b border-[#e7f3eb] dark:border-[#1f3b2a] pb-4">
-<h2 class="text-[#0d1b12] dark:text-white text-2xl md:text-[28px] font-bold tracking-[-0.015em] flex items-center gap-2">
-<span class="material-symbols-outlined text-primary">storefront</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+        <!-- Section 2: Local Business Spotlight -->
+        <section>
+            <div class="flex items-center justify-between mb-6 border-b border-[#e7f3eb] dark:border-[#1f3b2a] pb-4">
+                <h2
+                    class="text-[#0d1b12] dark:text-white text-2xl md:text-[28px] font-bold tracking-[-0.015em] flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary">storefront</span>
                     Local Business Spotlight
                 </h2>
-<a class="hidden md:flex items-center gap-1 text-sm font-bold text-text-secondary hover:text-primary transition-colors" href="#">
+                <a class="hidden md:flex items-center gap-1 text-sm font-bold text-text-secondary hover:text-primary transition-colors"
+                    href="#">
                     Browse Directory <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
-</a>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-<!-- Business Card 1 -->
-<article class="group relative flex flex-col rounded-xl overflow-hidden bg-white dark:bg-[#1a2e22] shadow-[0_2px_8px_rgba(0,0,0,0.06)] hover:shadow-[0_12px_32px_rgba(0,0,0,0.1)] transition-all hover:-translate-y-1">
-<div class="h-32 bg-gray-200 w-full bg-cover bg-center" data-alt="Interior of a rustic coffee shop with motorcycles" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC0r3c3vw3WtuQ2BaRc-jhv1QangneGtAJTx6LqvJPtEGAwGlW46myo1pBQkoc5o90rMlUDbB2BuSrJ5mqjn5DUsi3p3-P3u6W9eVhDkuht5fNC2lalz4DnALqi4RzP2XlWDs1zpJQhGFAkCILJPg-zmbnqQIO0yB5cpe7eyeefpZdL-QAxPGoGv8PS3qNOXhLtVyXMKYtgQnDTGrhJNYj5v7Xzs1RhkmVmzQLCjuQXMsr3MAwDtjYhZy54GXS1XYK744GP0RVIwoI");'>
-</div>
-<div class="px-4 pb-5 pt-10 relative flex flex-col gap-2">
-<div class="absolute -top-8 left-4 size-16 rounded-lg border-4 border-white dark:border-[#1a2e22] bg-white shadow-sm overflow-hidden flex items-center justify-center">
-<img class="w-full h-full object-cover" data-alt="Coffee bean logo icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBm-jf2sYYSbawhWSFKI2KBEf4oYUt2ba1rrD_iH5kADC6_1BQwG6wmj2blkT0e_w1qmASkGtvskCrtiVDRzdyw8xHVGstGakW24RBzXDcwsXTrGsA76IpQZ1xVbAJK2ZsXKZiDTQvsslzwxZWlrBYBFo2xN8Sda6uOYmKQ39FkPLdOPEl_HTAazKBiezJTfOD-z3TMjcSyVLhoqmTgun7I-Foc-i6oANh1Ys1x4LGm8NiH3pKC3aHlQt0K08ThZwLAqHLEQwdFCyc"/>
-</div>
-<div class="flex justify-between items-start">
-<div>
-<span class="text-xs font-bold text-primary uppercase tracking-wider">Coffee &amp; Retail</span>
-<h3 class="text-[#0d1b12] dark:text-white text-lg font-bold leading-tight mt-1">Spoken Moto</h3>
-</div>
-<div class="flex items-center gap-0.5 bg-green-50 dark:bg-green-900/30 px-1.5 py-0.5 rounded text-xs font-bold text-green-700 dark:text-green-400">
-                                4.9 <span class="material-symbols-outlined text-[12px] icon-filled">star</span>
-</div>
-</div>
-<p class="text-sm text-gray-500 dark:text-gray-400 line-clamp-2">Coffee, motorcycles, and beer. A community hub for enthusiasts.</p>
-<div class="mt-2 flex items-center justify-between">
-<span class="text-xs font-medium text-green-600 dark:text-green-400 flex items-center gap-1">
-<span class="material-symbols-outlined text-[14px]">check_circle</span> Open Now
+                </a>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+                <!-- Business Card 1 -->
+                <article
+                    class="group relative flex flex-col rounded-xl overflow-hidden bg-white dark:bg-[#1a2e22] shadow-[0_2px_8px_rgba(0,0,0,0.06)] hover:shadow-[0_12px_32px_rgba(0,0,0,0.1)] transition-all hover:-translate-y-1">
+                    <div class="h-32 bg-gray-200 w-full bg-cover bg-center"
+                        data-alt="Professional photography studio with camera equipment"
+                        style='background-image: url("https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=600&h=400&fit=crop");'>
+                    </div>
+                    <div class="px-4 pb-5 pt-10 relative flex flex-col gap-2">
+                        <div
+                            class="absolute -top-8 left-4 size-16 rounded-lg border-4 border-white dark:border-[#1a2e22] bg-white shadow-sm overflow-hidden flex items-center justify-center">
+                            <span class="material-symbols-outlined text-[32px] text-primary">photo_camera</span>
+                        </div>
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <span class="text-xs font-bold text-primary uppercase tracking-wider">Photography</span>
+                                <h3 class="text-[#0d1b12] dark:text-white text-lg font-bold leading-tight mt-1">Kim
+                                    Wilson Photography</h3>
+                            </div>
+                            <div
+                                class="flex items-center gap-0.5 bg-green-50 dark:bg-green-900/30 px-1.5 py-0.5 rounded text-xs font-bold text-green-700 dark:text-green-400">
+                                5.0 <span class="material-symbols-outlined text-[12px] icon-filled">star</span>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 line-clamp-2">Professional photography
+                            capturing life's beautiful moments in Central Oregon.</p>
+                        <div class="mt-2 flex items-center justify-between">
+                            <span
+                                class="text-xs font-medium text-green-600 dark:text-green-400 flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[14px]">check_circle</span> Available
                             </span>
-<a class="text-xs font-bold text-[#0d1b12] dark:text-white underline decoration-primary decoration-2 underline-offset-2 hover:text-primary transition-colors" href="#">Visit Profile</a>
-</div>
-</div>
-</article>
-<!-- Business Card 2 -->
-<article class="group relative flex flex-col rounded-xl overflow-hidden bg-white dark:bg-[#1a2e22] shadow-[0_2px_8px_rgba(0,0,0,0.06)] hover:shadow-[0_12px_32px_rgba(0,0,0,0.1)] transition-all hover:-translate-y-1">
-<div class="h-32 bg-gray-200 w-full bg-cover bg-center" data-alt="Outdoor dining patio near a river with people eating" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB2KhliKNk2aU9Qo2E4x26Bo4d631yV0IHYwGkIbAtZEFAy-aRolIsLV09w5WE5Hj_Bfc0px3VH6Fx-4L_pAwvLl5FLNb5BA3E7twKATkQZ_sfCF7FteB6qY-gRr3ImThL68IjAT_miZMaesZX78TJCKiKSPndouFivE4WQf8T3VG-AQ4v4QMcB7BFYOXuJR5FMboP54CC05VRi_A1GXe6LRxm_7UqxO-a_A7BWeVPjKvwgc_6iprDKnhI36g_moFvqAV8WfK9EF2k");'>
-</div>
-<div class="px-4 pb-5 pt-10 relative flex flex-col gap-2">
-<div class="absolute -top-8 left-4 size-16 rounded-lg border-4 border-white dark:border-[#1a2e22] bg-white shadow-sm overflow-hidden flex items-center justify-center">
-<img class="w-full h-full object-cover" data-alt="Restaurant plate logo icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBj3mO6nCPz5rkFRxwWLdaU97-151u9HlD8Xj_QL-YoUoZulVI6awHrX40OrRemNMMdOGh_SwAmiXfm3P2cG8OrXXLVlRgssIeSYke-RajTA4X1e22KBRNenQdy_Ui7mj4S7Sgmdwt5CmMpTx96PtZ2gScHZTLV_fqPEm2wwrlSIzXArY8d2cUV5ULT6x9OJ7C0BIUmYe6ng6sSUZ0zVTnb63L1Oi27vLzYu4yXTbF1Bl_q1YeSM5oMD70tXmLhqmLSiiEUVTrP1gY"/>
-</div>
-<div class="flex justify-between items-start">
-<div>
-<span class="text-xs font-bold text-primary uppercase tracking-wider">Dining</span>
-<h3 class="text-[#0d1b12] dark:text-white text-lg font-bold leading-tight mt-1">Pine Tavern</h3>
-</div>
-<div class="flex items-center gap-0.5 bg-green-50 dark:bg-green-900/30 px-1.5 py-0.5 rounded text-xs font-bold text-green-700 dark:text-green-400">
+                            <a class="text-xs font-bold text-[#0d1b12] dark:text-white underline decoration-primary decoration-2 underline-offset-2 hover:text-primary transition-colors"
+                                href="https://kimwilson.photography" target="_blank">Visit Website</a>
+                        </div>
+                    </div>
+                </article>
+                <!-- Business Card 2 -->
+                <article
+                    class="group relative flex flex-col rounded-xl overflow-hidden bg-white dark:bg-[#1a2e22] shadow-[0_2px_8px_rgba(0,0,0,0.06)] hover:shadow-[0_12px_32px_rgba(0,0,0,0.1)] transition-all hover:-translate-y-1">
+                    <div class="h-32 bg-gray-200 w-full bg-cover bg-center"
+                        data-alt="Outdoor dining patio near a river with people eating"
+                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB2KhliKNk2aU9Qo2E4x26Bo4d631yV0IHYwGkIbAtZEFAy-aRolIsLV09w5WE5Hj_Bfc0px3VH6Fx-4L_pAwvLl5FLNb5BA3E7twKATkQZ_sfCF7FteB6qY-gRr3ImThL68IjAT_miZMaesZX78TJCKiKSPndouFivE4WQf8T3VG-AQ4v4QMcB7BFYOXuJR5FMboP54CC05VRi_A1GXe6LRxm_7UqxO-a_A7BWeVPjKvwgc_6iprDKnhI36g_moFvqAV8WfK9EF2k");'>
+                    </div>
+                    <div class="px-4 pb-5 pt-10 relative flex flex-col gap-2">
+                        <div
+                            class="absolute -top-8 left-4 size-16 rounded-lg border-4 border-white dark:border-[#1a2e22] bg-white shadow-sm overflow-hidden flex items-center justify-center">
+                            <img class="w-full h-full object-cover" data-alt="Restaurant plate logo icon"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBj3mO6nCPz5rkFRxwWLdaU97-151u9HlD8Xj_QL-YoUoZulVI6awHrX40OrRemNMMdOGh_SwAmiXfm3P2cG8OrXXLVlRgssIeSYke-RajTA4X1e22KBRNenQdy_Ui7mj4S7Sgmdwt5CmMpTx96PtZ2gScHZTLV_fqPEm2wwrlSIzXArY8d2cUV5ULT6x9OJ7C0BIUmYe6ng6sSUZ0zVTnb63L1Oi27vLzYu4yXTbF1Bl_q1YeSM5oMD70tXmLhqmLSiiEUVTrP1gY" />
+                        </div>
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <span class="text-xs font-bold text-primary uppercase tracking-wider">Dining</span>
+                                <h3 class="text-[#0d1b12] dark:text-white text-lg font-bold leading-tight mt-1">Pine
+                                    Tavern</h3>
+                            </div>
+                            <div
+                                class="flex items-center gap-0.5 bg-green-50 dark:bg-green-900/30 px-1.5 py-0.5 rounded text-xs font-bold text-green-700 dark:text-green-400">
                                 4.7 <span class="material-symbols-outlined text-[12px] icon-filled">star</span>
-</div>
-</div>
-<p class="text-sm text-gray-500 dark:text-gray-400 line-clamp-2">Historic restaurant famous for its scones and river views.</p>
-<div class="mt-2 flex items-center justify-between">
-<span class="text-xs font-medium text-green-600 dark:text-green-400 flex items-center gap-1">
-<span class="material-symbols-outlined text-[14px]">check_circle</span> Open Now
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 line-clamp-2">Historic restaurant famous for
+                            its scones and river views.</p>
+                        <div class="mt-2 flex items-center justify-between">
+                            <span
+                                class="text-xs font-medium text-green-600 dark:text-green-400 flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[14px]">check_circle</span> Open Now
                             </span>
-<a class="text-xs font-bold text-[#0d1b12] dark:text-white underline decoration-primary decoration-2 underline-offset-2 hover:text-primary transition-colors" href="#">Visit Profile</a>
-</div>
-</div>
-</article>
-<!-- Business Card 3 -->
-<article class="group relative flex flex-col rounded-xl overflow-hidden bg-white dark:bg-[#1a2e22] shadow-[0_2px_8px_rgba(0,0,0,0.06)] hover:shadow-[0_12px_32px_rgba(0,0,0,0.1)] transition-all hover:-translate-y-1">
-<div class="h-32 bg-gray-200 w-full bg-cover bg-center" data-alt="Modern grocery store aisle with fresh produce" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAPW8cPr4bqKlzng9AGdQSTNhU61obrZR6wdWIbMVIQTuNewYlaeqQdbk-QxRQxOPQ251c-cJtrNkAreiF8fbvFSLpELOaCeC0N37CUXxVvb_mzZYokK1Jnsqh4sVzA-3GcCFnl6nVJlTE9CjBIrj8VLYDnVYbXtpiyMofyJ4pz4oeyGszjPqr8L2txifvV417zGQXPkDeaVnF6C6SREmV0kc3CDnWRa7zRIOZz4pZQIcH67o_SkTQp4MV7i30fOkwdkNTT1amscLU");'>
-</div>
-<div class="px-4 pb-5 pt-10 relative flex flex-col gap-2">
-<div class="absolute -top-8 left-4 size-16 rounded-lg border-4 border-white dark:border-[#1a2e22] bg-white shadow-sm overflow-hidden flex items-center justify-center">
-<img class="w-full h-full object-cover" data-alt="Grocery bag logo icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHHDAKFlK63HxACfQ5u0_1oNN5M7swAyToimhrCp9IEgB6VaLTBVDACkGMMtGfytxyT_vtJ4gte_LmIZTQPDfi5Z-9JFTWc3fVGkqGV_TBClFSWO-RqPIcMSMRBqyPvZTzPO511x24cxjF8gnGkHqaTaZSf-YjSV99Z8Pmd6fHNSCydQyirK4iSieUYexDGEBsuEwAI-0kn86rZGIMBopNS3toQ98GTpAYM1q7kkQvriKFrQYO-9Voz7nN3uo_lJZBpUahkQHZ8js"/>
-</div>
-<div class="flex justify-between items-start">
-<div>
-<span class="text-xs font-bold text-primary uppercase tracking-wider">Market</span>
-<h3 class="text-[#0d1b12] dark:text-white text-lg font-bold leading-tight mt-1">Newport Market</h3>
-</div>
-<div class="flex items-center gap-0.5 bg-green-50 dark:bg-green-900/30 px-1.5 py-0.5 rounded text-xs font-bold text-green-700 dark:text-green-400">
+                            <a class="text-xs font-bold text-[#0d1b12] dark:text-white underline decoration-primary decoration-2 underline-offset-2 hover:text-primary transition-colors"
+                                href="#">Visit Profile</a>
+                        </div>
+                    </div>
+                </article>
+                <!-- Business Card 3 -->
+                <article
+                    class="group relative flex flex-col rounded-xl overflow-hidden bg-white dark:bg-[#1a2e22] shadow-[0_2px_8px_rgba(0,0,0,0.06)] hover:shadow-[0_12px_32px_rgba(0,0,0,0.1)] transition-all hover:-translate-y-1">
+                    <div class="h-32 bg-gray-200 w-full bg-cover bg-center"
+                        data-alt="Modern grocery store aisle with fresh produce"
+                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAPW8cPr4bqKlzng9AGdQSTNhU61obrZR6wdWIbMVIQTuNewYlaeqQdbk-QxRQxOPQ251c-cJtrNkAreiF8fbvFSLpELOaCeC0N37CUXxVvb_mzZYokK1Jnsqh4sVzA-3GcCFnl6nVJlTE9CjBIrj8VLYDnVYbXtpiyMofyJ4pz4oeyGszjPqr8L2txifvV417zGQXPkDeaVnF6C6SREmV0kc3CDnWRa7zRIOZz4pZQIcH67o_SkTQp4MV7i30fOkwdkNTT1amscLU");'>
+                    </div>
+                    <div class="px-4 pb-5 pt-10 relative flex flex-col gap-2">
+                        <div
+                            class="absolute -top-8 left-4 size-16 rounded-lg border-4 border-white dark:border-[#1a2e22] bg-white shadow-sm overflow-hidden flex items-center justify-center">
+                            <img class="w-full h-full object-cover" data-alt="Grocery bag logo icon"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHHDAKFlK63HxACfQ5u0_1oNN5M7swAyToimhrCp9IEgB6VaLTBVDACkGMMtGfytxyT_vtJ4gte_LmIZTQPDfi5Z-9JFTWc3fVGkqGV_TBClFSWO-RqPIcMSMRBqyPvZTzPO511x24cxjF8gnGkHqaTaZSf-YjSV99Z8Pmd6fHNSCydQyirK4iSieUYexDGEBsuEwAI-0kn86rZGIMBopNS3toQ98GTpAYM1q7kkQvriKFrQYO-9Voz7nN3uo_lJZBpUahkQHZ8js" />
+                        </div>
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <span class="text-xs font-bold text-primary uppercase tracking-wider">Market</span>
+                                <h3 class="text-[#0d1b12] dark:text-white text-lg font-bold leading-tight mt-1">Newport
+                                    Market</h3>
+                            </div>
+                            <div
+                                class="flex items-center gap-0.5 bg-green-50 dark:bg-green-900/30 px-1.5 py-0.5 rounded text-xs font-bold text-green-700 dark:text-green-400">
                                 4.8 <span class="material-symbols-outlined text-[12px] icon-filled">star</span>
-</div>
-</div>
-<p class="text-sm text-gray-500 dark:text-gray-400 line-clamp-2">Your local choice for organic produce and specialty foods.</p>
-<div class="mt-2 flex items-center justify-between">
-<span class="text-xs font-medium text-green-600 dark:text-green-400 flex items-center gap-1">
-<span class="material-symbols-outlined text-[14px]">check_circle</span> Open Now
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 line-clamp-2">Your local choice for organic
+                            produce and specialty foods.</p>
+                        <div class="mt-2 flex items-center justify-between">
+                            <span
+                                class="text-xs font-medium text-green-600 dark:text-green-400 flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[14px]">check_circle</span> Open Now
                             </span>
-<a class="text-xs font-bold text-[#0d1b12] dark:text-white underline decoration-primary decoration-2 underline-offset-2 hover:text-primary transition-colors" href="#">Visit Profile</a>
-</div>
-</div>
-</article>
-<!-- Business Card 4 -->
-<article class="group relative flex flex-col rounded-xl overflow-hidden bg-white dark:bg-[#1a2e22] shadow-[0_2px_8px_rgba(0,0,0,0.06)] hover:shadow-[0_12px_32px_rgba(0,0,0,0.1)] transition-all hover:-translate-y-1">
-<div class="h-32 bg-gray-200 w-full bg-cover bg-center" data-alt="Person putting on hiking boots outdoors" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuChKLS1T3xKV-QrSPT2GZnnca8OJwN1ydCgZtqC2T7FgSSbWI6i1e1BsU5d7yYb-CxKYoIAAOyKlzY6PSz5gX9W7el7vMYzGRH2XHUWUFoanTN-Huo6kSbjIf0tHVmkM5-2LU-On-9OCkzOnC2zFsyXafNWTNIHFBq5goHmQKrNDV1PKO6IASzd4JMNEWGIuR9Se6yZziJDLDvFO5OODLveHu9tVoA596gm7QnLlF6lepnWQJtBwyfDYRNtRSA-I2TQTsb7juSYEXM");'>
-</div>
-<div class="px-4 pb-5 pt-10 relative flex flex-col gap-2">
-<div class="absolute -top-8 left-4 size-16 rounded-lg border-4 border-white dark:border-[#1a2e22] bg-white shadow-sm overflow-hidden flex items-center justify-center">
-<img class="w-full h-full object-cover" data-alt="Mountain peak logo icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCObliZbfgM62UE7aw0y2seb1Ue6f1djjyrpu6-Mn0gkRGG6oQajGCtA0d0AahCdMzDtMadNjIocKoGyQkWKlA6rce6gI85tXweRfFNDWiSmKMeWELvlCYDAgXscAJKo025W4BFxkvk8AC8wAS23YdVmRMHYs0OdTvoFaJPYNcgTLmhwRjZXvPZ5e_Ub87x00KBJEQhHJEbNj2rA2sD9Fq7WMdkqidxQY3uLshApBd1J8R8pzIFanC4IiJ51BSKyNfN8wcwpts0g3U"/>
-</div>
-<div class="flex justify-between items-start">
-<div>
-<span class="text-xs font-bold text-primary uppercase tracking-wider">Outdoors</span>
-<h3 class="text-[#0d1b12] dark:text-white text-lg font-bold leading-tight mt-1">Mountain Supply</h3>
-</div>
-<div class="flex items-center gap-0.5 bg-green-50 dark:bg-green-900/30 px-1.5 py-0.5 rounded text-xs font-bold text-green-700 dark:text-green-400">
+                            <a class="text-xs font-bold text-[#0d1b12] dark:text-white underline decoration-primary decoration-2 underline-offset-2 hover:text-primary transition-colors"
+                                href="#">Visit Profile</a>
+                        </div>
+                    </div>
+                </article>
+                <!-- Business Card 4 -->
+                <article
+                    class="group relative flex flex-col rounded-xl overflow-hidden bg-white dark:bg-[#1a2e22] shadow-[0_2px_8px_rgba(0,0,0,0.06)] hover:shadow-[0_12px_32px_rgba(0,0,0,0.1)] transition-all hover:-translate-y-1">
+                    <div class="h-32 bg-gray-200 w-full bg-cover bg-center"
+                        data-alt="Person putting on hiking boots outdoors"
+                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuChKLS1T3xKV-QrSPT2GZnnca8OJwN1ydCgZtqC2T7FgSSbWI6i1e1BsU5d7yYb-CxKYoIAAOyKlzY6PSz5gX9W7el7vMYzGRH2XHUWUFoanTN-Huo6kSbjIf0tHVmkM5-2LU-On-9OCkzOnC2zFsyXafNWTNIHFBq5goHmQKrNDV1PKO6IASzd4JMNEWGIuR9Se6yZziJDLDvFO5OODLveHu9tVoA596gm7QnLlF6lepnWQJtBwyfDYRNtRSA-I2TQTsb7juSYEXM");'>
+                    </div>
+                    <div class="px-4 pb-5 pt-10 relative flex flex-col gap-2">
+                        <div
+                            class="absolute -top-8 left-4 size-16 rounded-lg border-4 border-white dark:border-[#1a2e22] bg-white shadow-sm overflow-hidden flex items-center justify-center">
+                            <img class="w-full h-full object-cover" data-alt="Mountain peak logo icon"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCObliZbfgM62UE7aw0y2seb1Ue6f1djjyrpu6-Mn0gkRGG6oQajGCtA0d0AahCdMzDtMadNjIocKoGyQkWKlA6rce6gI85tXweRfFNDWiSmKMeWELvlCYDAgXscAJKo025W4BFxkvk8AC8wAS23YdVmRMHYs0OdTvoFaJPYNcgTLmhwRjZXvPZ5e_Ub87x00KBJEQhHJEbNj2rA2sD9Fq7WMdkqidxQY3uLshApBd1J8R8pzIFanC4IiJ51BSKyNfN8wcwpts0g3U" />
+                        </div>
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <span class="text-xs font-bold text-primary uppercase tracking-wider">Outdoors</span>
+                                <h3 class="text-[#0d1b12] dark:text-white text-lg font-bold leading-tight mt-1">Mountain
+                                    Supply</h3>
+                            </div>
+                            <div
+                                class="flex items-center gap-0.5 bg-green-50 dark:bg-green-900/30 px-1.5 py-0.5 rounded text-xs font-bold text-green-700 dark:text-green-400">
                                 4.9 <span class="material-symbols-outlined text-[12px] icon-filled">star</span>
-</div>
-</div>
-<p class="text-sm text-gray-500 dark:text-gray-400 line-clamp-2">Premium gear for climbing, hiking, and skiing adventures.</p>
-<div class="mt-2 flex items-center justify-between">
-<span class="text-xs font-medium text-orange-600 dark:text-orange-400 flex items-center gap-1">
-<span class="material-symbols-outlined text-[14px]">schedule</span> Closes 6PM
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 line-clamp-2">Premium gear for climbing,
+                            hiking, and skiing adventures.</p>
+                        <div class="mt-2 flex items-center justify-between">
+                            <span
+                                class="text-xs font-medium text-orange-600 dark:text-orange-400 flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[14px]">schedule</span> Closes 6PM
                             </span>
-<a class="text-xs font-bold text-[#0d1b12] dark:text-white underline decoration-primary decoration-2 underline-offset-2 hover:text-primary transition-colors" href="#">Visit Profile</a>
-</div>
-</div>
-</article>
-</div>
-</section>
-<!-- Newsletter Section -->
-<section class="rounded-2xl bg-[#0d1b12] text-white p-8 md:p-12 relative overflow-hidden">
-<!-- Abstract bg pattern -->
-<div class="absolute top-0 right-0 w-1/2 h-full opacity-10" style="background: radial-gradient(circle at center, #13ec5b 0%, transparent 70%);"></div>
-<div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
-<div class="flex flex-col gap-3 max-w-lg text-center md:text-left">
-<h3 class="text-2xl md:text-3xl font-bold">Never miss a beat in Bend</h3>
-<p class="text-gray-300 text-sm md:text-base">Get the weekly roundup of best events, new openings, and local deals sent straight to your inbox.</p>
-</div>
-<div class="flex w-full md:w-auto flex-col sm:flex-row gap-3">
-<input class="rounded-lg border-0 bg-white/10 px-4 py-3 text-white placeholder-gray-400 focus:ring-2 focus:ring-primary w-full md:w-80" placeholder="Your email address" type="email"/>
-<button class="whitespace-nowrap rounded-lg bg-primary px-6 py-3 text-sm font-bold text-[#0d1b12] hover:bg-[#0fd651] transition-colors">
+                            <a class="text-xs font-bold text-[#0d1b12] dark:text-white underline decoration-primary decoration-2 underline-offset-2 hover:text-primary transition-colors"
+                                href="#">Visit Profile</a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+        <!-- Newsletter Section -->
+        <section class="rounded-2xl bg-[#0d1b12] text-white p-8 md:p-12 relative overflow-hidden">
+            <!-- Abstract bg pattern -->
+            <div class="absolute top-0 right-0 w-1/2 h-full opacity-10"
+                style="background: radial-gradient(circle at center, #13ec5b 0%, transparent 70%);"></div>
+            <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+                <div class="flex flex-col gap-3 max-w-lg text-center md:text-left">
+                    <h3 class="text-2xl md:text-3xl font-bold">Never miss a beat in Bend</h3>
+                    <p class="text-gray-300 text-sm md:text-base">Get the weekly roundup of best events, new openings,
+                        and local deals sent straight to your inbox.</p>
+                </div>
+                <div class="flex w-full md:w-auto flex-col sm:flex-row gap-3">
+                    <input
+                        class="rounded-lg border-0 bg-white/10 px-4 py-3 text-white placeholder-gray-400 focus:ring-2 focus:ring-primary w-full md:w-80"
+                        placeholder="Your email address" type="email" />
+                    <button
+                        class="whitespace-nowrap rounded-lg bg-primary px-6 py-3 text-sm font-bold text-[#0d1b12] hover:bg-[#0fd651] transition-colors">
                         Sign Up
                     </button>
-</div>
-</div>
-</section>
-</main>
-<!-- Footer -->
-<footer class="bg-white dark:bg-[#0d1b12] border-t border-[#e7f3eb] dark:border-[#1f3b2a] mt-auto">
-<div class="max-w-[1280px] mx-auto px-4 md:px-10 py-12 flex flex-col md:flex-row justify-between gap-10">
-<div class="flex flex-col gap-4 max-w-xs">
-<div class="flex items-center gap-2 text-text-main dark:text-white">
-<div class="size-6 flex items-center justify-center rounded bg-primary/20 text-primary">
-<span class="material-symbols-outlined text-[18px]">landscape</span>
-</div>
-<span class="text-base font-bold">Good Day Bend</span>
-</div>
-<p class="text-sm text-gray-500 dark:text-gray-400">Connecting the community with the best events, businesses, and experiences in Bend, Oregon.</p>
-<div class="flex gap-4 mt-2">
-<a class="text-gray-400 hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">thumb_up</span></a>
-<a class="text-gray-400 hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">photo_camera</span></a>
-</div>
-</div>
-<div class="flex flex-wrap gap-12 md:gap-20">
-<div class="flex flex-col gap-3">
-<h4 class="text-sm font-bold text-text-main dark:text-white uppercase tracking-wider">Discover</h4>
-<a class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary transition-colors" href="#">Events Calendar</a>
-<a class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary transition-colors" href="#">Eat &amp; Drink</a>
-<a class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary transition-colors" href="#">Outdoors</a>
-</div>
-<div class="flex flex-col gap-3">
-<h4 class="text-sm font-bold text-text-main dark:text-white uppercase tracking-wider">Business</h4>
-<a class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary transition-colors" href="#">Add Listing</a>
-<a class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary transition-colors" href="#">Advertising</a>
-<a class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary transition-colors" href="#">Business Login</a>
-</div>
-<div class="flex flex-col gap-3">
-<h4 class="text-sm font-bold text-text-main dark:text-white uppercase tracking-wider">Company</h4>
-<a class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary transition-colors" href="#">About Us</a>
-<a class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary transition-colors" href="#">Contact</a>
-<a class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary transition-colors" href="#">Privacy Policy</a>
-</div>
-</div>
-</div>
-<div class="bg-[#f8fcf9] dark:bg-[#0a160e] py-4 px-4 text-center">
-<p class="text-xs text-gray-400">© 2025 Good Day Bend. All rights reserved.</p>
-</div>
-</footer>
-</body></html>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-[#0d1b12] border-t border-[#e7f3eb] dark:border-[#1f3b2a] mt-auto">
+        <div class="max-w-[1280px] mx-auto px-4 md:px-10 py-12 flex flex-col md:flex-row justify-between gap-10">
+            <div class="flex flex-col gap-4 max-w-xs">
+                <div class="flex items-center gap-2 text-text-main dark:text-white">
+                    <div class="size-6 flex items-center justify-center rounded bg-primary/20 text-primary">
+                        <span class="material-symbols-outlined text-[18px]">landscape</span>
+                    </div>
+                    <span class="text-base font-bold">Good Day Bend</span>
+                </div>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Connecting the community with the best events,
+                    businesses, and experiences in Bend, Oregon.</p>
+                <div class="flex gap-4 mt-2">
+                    <a class="text-gray-400 hover:text-primary transition-colors" href="#"><span
+                            class="material-symbols-outlined">thumb_up</span></a>
+                    <a class="text-gray-400 hover:text-primary transition-colors" href="#"><span
+                            class="material-symbols-outlined">photo_camera</span></a>
+                </div>
+            </div>
+            <div class="flex flex-wrap gap-12 md:gap-20">
+                <div class="flex flex-col gap-3">
+                    <h4 class="text-sm font-bold text-text-main dark:text-white uppercase tracking-wider">Discover</h4>
+                    <a class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary transition-colors"
+                        href="#">Events Calendar</a>
+                    <a class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary transition-colors"
+                        href="#">Eat &amp; Drink</a>
+                    <a class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary transition-colors"
+                        href="#">Outdoors</a>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <h4 class="text-sm font-bold text-text-main dark:text-white uppercase tracking-wider">Business</h4>
+                    <a class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary transition-colors"
+                        href="#">Add Listing</a>
+                    <a class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary transition-colors"
+                        href="#">Advertising</a>
+                    <a class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary transition-colors"
+                        href="#">Business Login</a>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <h4 class="text-sm font-bold text-text-main dark:text-white uppercase tracking-wider">Company</h4>
+                    <a class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary transition-colors"
+                        href="#">About Us</a>
+                    <a class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary transition-colors"
+                        href="#">Contact</a>
+                    <a class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary transition-colors"
+                        href="#">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+        <div class="bg-[#f8fcf9] dark:bg-[#0a160e] py-4 px-4 text-center">
+            <p class="text-xs text-gray-400">© 2025 Good Day Bend. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+
+</html>

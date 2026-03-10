@@ -4,15 +4,18 @@
  * REFINEMENT: "Massive" Typography + SEO/AEO Backlink Injection + Social Media Draft.
  */
 
-const { getSegmentedModel } = require('../lib/gemini');
+const { getSegmentedModel, generateWithFallback } = require('../lib/gemini');
 const { generateImage, generateImageWithInspiration } = require('../lib/imageGen');
 const { db, admin } = require('../lib/firebase');
 const ghl = require('../lib/ghl');
 const CONFIG = require('../config');
 const runTrendBlogV6 = require('../workflows/trend_blog_v6');
+const { getBrandContext } = require('../lib/contextCache');
 
-// Initialize Segmented Model for Daily Updates
-const modelReasoning = getSegmentedModel('DAILY_UPDATE', CONFIG.MODEL_REASONING);
+// Initialize Segmented Models with Gemini 3 Thinking Levels
+const modelStrategy = getSegmentedModel('DAILY_STRATEGY');
+const modelWriter = getSegmentedModel('DAILY_WRITER');
+const modelSocial = getSegmentedModel('DAILY_SOCIAL');
 
 // Helper to get today's date in proper format
 const getTodayStr = () => new Date().toLocaleDateString("en-US", { dateStyle: 'full' });
@@ -50,6 +53,22 @@ async function runPublisherV6(targetDateInput) {
         return;
     }
 
+    // DEDUP GUARD: Check if we already generated a daily update today
+    try {
+        const existingDrafts = await db.collection('drafts')
+            .where('publishDate', '==', isoDate)
+            .where('type', '==', 'daily_update')
+            .limit(1)
+            .get();
+
+        if (!existingDrafts.empty) {
+            console.log(`⚠️ DEDUP: Daily update draft already exists for ${isoDate}. Skipping to prevent duplicate.`);
+            return "Duplicate prevented - draft already exists for today.";
+        }
+    } catch (e) {
+        console.warn("Dedup check failed, proceeding cautiously:", e.message);
+    }
+
     // 2. FETCH REAL DATA (From V5 - Trustworthy)
     console.log(`📥 Fetching events for ${isoDate}...`);
     const snapshot = await db.collection(CONFIG.FIREBASE_COLLECTION_EVENTS)
@@ -65,10 +84,38 @@ async function runPublisherV6(targetDateInput) {
     snapshot.forEach(doc => events.push(doc.data()));
     console.log(`✅ Found ${events.length} real events.`);
 
+    // 2b. FETCH FEATURED UPCOMING (Next 3 Days)
+    console.log("🌟 Fetching Featured Upcoming Events...");
+    const featuredEvents = [];
+    try {
+        const tomorrow = new Date(targetDate);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        const threeDaysOut = new Date(targetDate);
+        threeDaysOut.setDate(threeDaysOut.getDate() + 3);
+
+        const featuredSnap = await db.collection(CONFIG.FIREBASE_COLLECTION_EVENTS)
+            .where('eventDate', '>=', tomorrow.toISOString().split('T')[0])
+            .where('eventDate', '<=', threeDaysOut.toISOString().split('T')[0])
+            .get();
+
+        featuredSnap.forEach(doc => {
+            const data = doc.data();
+            // Check for various featured flags
+            if (data.isFeatured || data.isSponsored || data.featured) {
+                featuredEvents.push(data);
+            }
+        });
+        console.log(`✨ Found ${featuredEvents.length} featured upcoming events.`);
+    } catch (e) {
+        console.warn("⚠️ Failed to fetch featured events:", e.message);
+    }
+
     // 3. STRATEGY (Analyze the Data)
     console.log("🧠 Node 2: Strategist Analyzing...");
     const strategyPrompt = `
     Analyze these ${events.length} events in Bend, OR for today: ${JSON.stringify(events)}
+    
+    AND these UPCOMING FEATURED EVENTS (Must be mentioned/teased): ${JSON.stringify(featuredEvents)}
     
     1. Identify the "Vibe of the Day". Be specific and creative (e.g., "Indie Beats & Brews", "Artsy Afternoon").
     2. Pick the Top 3 "Headliner" events based on appeal.
@@ -79,7 +126,7 @@ async function runPublisherV6(targetDateInput) {
 
     let strategyData = {};
     try {
-        const strategyResult = await modelReasoning.generateContent(strategyPrompt);
+        const strategyResult = await generateWithFallback(modelStrategy, strategyPrompt);
         const jsonStr = strategyResult.response.text().replace(/```json/g, '').replace(/```/g, '').trim();
         strategyData = JSON.parse(jsonStr);
     } catch (e) {
@@ -87,8 +134,7 @@ async function runPublisherV6(targetDateInput) {
         strategyData = { vibe: "Good Day Bend", headliners: events.slice(0, 3).map(e => e.title), metrics: { FamilyFriendly: 3 } };
     }
     // 4. IMAGE SELECTION (Real Headliners > AI)
-    console.log("⏳ Waiting 15s to respect API Quota...");
-    await sleep(15000);
+    // NOTE: Sleep removed - Gemini 3 thinking levels use separate quota buckets
 
     console.log("🎨 Node 4: Selecting Hero Image...");
     const fallbackImages = CONFIG.FALLBACK_IMAGES || ["https://via.placeholder.com/800x450"];
@@ -146,32 +192,16 @@ async function runPublisherV6(targetDateInput) {
     console.log(`🖼️ Final Banner URL: ${bannerUrl} (Source: ${imageSource})`);
 
     // 5. WRITER (The "Visual Stylist" - V4/V3 Style + MASSIVE FONTS + SEO)
-    console.log("⏳ Waiting 15s to respect API Quota...");
-    await sleep(15000);
-
+    // NOTE: Sleep removed - Gemini 3 thinking levels use separate quota buckets
     console.log("✍️ Node 3: Writing Styled Article (with Reflexion)...");
 
-    // A. RECALL MEMORY (Self-Learning)
+    // A. RECALL MEMORY (Using Cached Brand Context)
     let memoryContext = "";
     try {
-        const memorySnapshot = await db.collection('knowledge_base')
-            .where('rating', '>=', 4)
-            .orderBy('rating', 'desc')
-            .limit(2)
-            .get();
-
-        if (!memorySnapshot.empty) {
-            console.log("🧠 Recalling past successes...");
-            const memories = [];
-            memorySnapshot.forEach(doc => memories.push(doc.data().rawHTML.substring(0, 500) + "..."));
-            memoryContext = `
-            LEARNING FROM SUCCESS:
-            Here are snippets from past articles the user RATED HIGHLY (5/5). Emulate this tone:
-            ${memories.join("\n---\n")}
-            `;
-        }
+        memoryContext = await getBrandContext();
+        console.log("📦 Using cached brand context for consistency");
     } catch (memErr) {
-        console.warn("⚠️ Memory Recall failed (likely logging first run):", memErr.message);
+        console.warn("⚠️ Brand context cache failed:", memErr.message);
     }
 
     // Trusted Sources for SEO
@@ -186,6 +216,7 @@ async function runPublisherV6(targetDateInput) {
     - Vibe: ${strategyData.vibe}
     - Events: ${JSON.stringify(events)}
     - Headliners: ${JSON.stringify(strategyData.headliners)}
+    - Featured Upcoming: ${JSON.stringify(featuredEvents)}
     
     ${memoryContext}
 
@@ -217,6 +248,14 @@ async function runPublisherV6(targetDateInput) {
           <li>...</li>
        </ul>
 
+    4. **Looking Ahead (Featured)**:
+       If there are featured upcoming events, create a special "Don't Miss" section.
+       <div style="background:#eef2ff; border-left:4px solid #6366f1; padding:15px; margin-top:20px;">
+          <h4 style="margin:0; color:#312e81;">Coming Up: [Event Name]</h4>
+          <p style="font-family: 'Outfit', sans-serif; font-size: 1.1rem; margin:5px 0 0 0;">[Short teaser] - [Date]</p>
+          <a href="[Link]" style="font-size:1rem; color: #6366f1; font-weight: bold;">Grab Tickets &rarr;</a>
+       </div>
+
     SEO & AEO MASTERY (The Secret Sauce):
     1.  **Semantic Search**: Use natural language to describe venue locations (e.g. "Located in the heart of the Old Mill District").
     2.  **Trusted Backlinks**: You MUST include references to these local authorities naturally: ${sourceLinks}.
@@ -228,7 +267,7 @@ async function runPublisherV6(targetDateInput) {
 
     let htmlContent = "";
     try {
-        const writerResult = await modelReasoning.generateContent(writerPrompt);
+        const writerResult = await generateWithFallback(modelWriter, writerPrompt);
         htmlContent = writerResult.response.text().replace(/```html/g, '').replace(/```/g, '').trim();
     } catch (e) {
         console.error("❌ Writer failed:", e);
@@ -236,8 +275,7 @@ async function runPublisherV6(targetDateInput) {
     }
 
     // 6. WRITER: SOCIAL MEDIA DRAFT (Restored from V4)
-    console.log("⏳ Waiting 15s to respect API Quota...");
-    await sleep(15000);
+    // NOTE: Sleep removed - Gemini 3 thinking levels use separate quota buckets
 
     console.log("📱 Node 3b: Creating Social Media Snippets...");
     const socialPrompt = `
@@ -251,10 +289,31 @@ async function runPublisherV6(targetDateInput) {
 
     let socialContent = "";
     try {
-        const socialResult = await modelReasoning.generateContent(socialPrompt);
+        const socialResult = await generateWithFallback(modelSocial, socialPrompt);
         socialContent = socialResult.response.text().trim();
     } catch (e) {
         socialContent = "Check out the latest update on Good Day Bend! #inBend";
+    }
+
+    // 6b. WRITER: SMS BROADCAST TEXT (Separate from Social)
+    console.log("📲 Node 3c: Creating SMS Broadcast Text...");
+    const smsPrompt = `
+    Based on this article vibe: "${strategyData.vibe}"
+    And these top events: ${strategyData.headliners.join(', ')}
+    
+    Write a short SMS broadcast message (160 chars max).
+    - Start with an emoji
+    - Be punchy and direct
+    - Include "gooddaybend.com" as the link
+    - No hashtags (this is SMS, not social)
+    `;
+
+    let smsContent = "";
+    try {
+        const smsResult = await generateWithFallback(modelSocial, smsPrompt);
+        smsContent = smsResult.response.text().trim();
+    } catch (e) {
+        smsContent = `☕ Good morning Bend! Today's vibe: ${strategyData.vibe}. See what's happening: gooddaybend.com`;
     }
 
     // 7. UPLOAD DRAFT & APPROVAL WORKFLOW
@@ -412,12 +471,78 @@ async function runPublisherV6(targetDateInput) {
     console.log(`✅ Blog Draft: ${blogUrl}`);
     console.log(`✅ Social Draft: ${socialUrl}`);
 
+    // A.3 SMS Draft HTML (Separate approval flow with GHL workflow trigger)
+    const smsDraftHtml = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>SMS Draft: ${blogTitle}</title>
+            <script src="https://cdn.tailwindcss.com"></script>
+            <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+            <style>body { font-family: 'Inter', sans-serif; background-color: #F8FAFC; }</style>
+        </head>
+        <body class="bg-slate-50 relative pb-40">
+            <!-- Status Header -->
+            <div class="bg-[#0d1b12] text-[#13ec5b] px-6 py-4 text-sm font-bold tracking-widest uppercase flex justify-between items-center sticky top-0 z-40 shadow-md">
+                <span>Good Day Bend // SMS Draft</span>
+                <span>${getTodayStr()}</span>
+            </div>
+
+            <div class="max-w-2xl mx-auto pt-16 px-6">
+                <h1 class="text-3xl font-bold text-[#0d1b12] mb-8">📲 SMS Broadcast Preview</h1>
+                
+                <!-- Phone Mockup -->
+                <div class="bg-gray-900 rounded-3xl p-4 max-w-sm mx-auto shadow-2xl">
+                    <div class="bg-[#13ec5b] rounded-2xl p-4">
+                        <div class="text-[#0d1b12] text-sm font-medium mb-1">Good Day Bend</div>
+                        <div class="text-[#0d1b12] text-base leading-relaxed">${smsContent}</div>
+                        <div class="text-[#0d1b12]/60 text-xs mt-2">Now</div>
+                    </div>
+                </div>
+
+                <div class="mt-8 text-center text-gray-500 text-sm">
+                    Character count: <span class="font-bold">${smsContent.length}</span>/160
+                </div>
+
+                <div class="mt-8 p-6 bg-yellow-50 rounded-xl border border-yellow-200">
+                    <h3 class="font-bold text-yellow-800 mb-2">⚠️ Workflow Required</h3>
+                    <p class="text-yellow-700 text-sm">To send this SMS to your list, create a workflow in GHL:</p>
+                    <ol class="text-yellow-700 text-sm mt-2 ml-4 list-decimal">
+                        <li>Go to Automation > Workflows</li>
+                        <li>Create "SMS Daily Broadcast" workflow</li>
+                        <li>Add trigger: "Manual/API Trigger"</li>
+                        <li>Add action: "Send SMS" to your subscriber list</li>
+                        <li>Copy the workflow ID to config.js</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Sticky Action Bar -->
+            <div class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-sm border-t border-slate-200 p-5 flex justify-center gap-5 z-50 shadow-[0_-4px_20px_rgba(0,0,0,0.1)]">
+                 <a href="${FUNCTION_URL}?type=review_action&action=keep&draftId=${draftId}-sms" 
+                   class="px-6 py-3 rounded-full text-sm font-bold text-gray-500 hover:text-gray-900 border border-gray-200 hover:bg-gray-50 transition">
+                   📂 Keep as Draft
+                </a>
+                <a href="${FUNCTION_URL}?type=sms_broadcast&draftId=${draftId}&message=${encodeURIComponent(smsContent)}" 
+                   class="bg-[#13ec5b] text-[#0d1b12] px-8 py-3 rounded-full text-sm font-bold hover:bg-green-400 hover:scale-105 transition shadow-lg flex items-center gap-2">
+                   🚀 Approve & Send SMS
+                </a>
+            </div>
+        </body>
+        </html>
+    `;
+
+    const smsUrl = await uploadDraft(`sms-draft-${Date.now()}.html`, 'text/html', smsDraftHtml);
+    console.log(`✅ SMS Draft: ${smsUrl}`);
+
     // B. Save Draft Data to Firestore
     await db.collection('drafts').doc(draftId).set({
         title: blogTitle,
         urlSlug: blogSlug,
         rawHTML: htmlContent,
         socialCaption: socialContent,
+        smsText: smsContent,
         imageUrl: bannerUrl,
         publishDate: isoDate,
         imageSource: imageSource,
@@ -462,10 +587,11 @@ async function runPublisherV6(targetDateInput) {
         <p><strong>Topic:</strong> ${strategyData.vibe}</p>
         <hr style="border:0; border-top:1px solid #111; margin:20px 0;">
         
-        <h2>🔎 Review Drafts (Premium 2025 Edition)</h2>
+        <h2>🔎 Review Drafts (Premium 2026 Edition)</h2>
         <ul>
-            <li><a href="${blogUrl}" style="font-size:18px; font-weight:bold; color:#0d1b12;">📄 Review Daily Update Post Draft</a></li>
+            <li><a href="${blogUrl}" style="font-size:18px; font-weight:bold; color:#0d1b12;">📄 Review Daily Update Post</a></li>
             <li><a href="${socialUrl}" style="font-size:18px; font-weight:bold; color:#0d1b12;">📱 Review Social Media Draft</a></li>
+            <li><a href="${smsUrl}" style="font-size:18px; font-weight:bold; color:#0d1b12;">📲 Review SMS Broadcast Draft</a></li>
             ${trendLinkHtml}
         </ul>
         

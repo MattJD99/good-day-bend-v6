@@ -114,6 +114,41 @@ class GHL {
             return [];
         }
     }
+
+    /**
+     * Trigger a GHL workflow (e.g., for SMS broadcasts)
+     * @param {string} workflowId - The GHL workflow ID
+     * @param {Object} data - Data to pass to the workflow
+     * @returns {Promise<Object>} Workflow trigger response
+     */
+    async triggerWorkflow(workflowId, data = {}) {
+        try {
+            const response = await axios.post(
+                `${this.baseUrl}/workflows/${workflowId}/trigger`,
+                { locationId: CONFIG.LOCATION_ID, ...data },
+                { headers: this.headers }
+            );
+            console.log(`✅ Workflow ${workflowId} triggered successfully`);
+            return response.data;
+        } catch (error) {
+            console.error("GHL Workflow Trigger Error:", error.response ? error.response.data : error.message);
+            throw error;
+        }
+    }
+
+    /**
+     * Generate a workflow trigger URL for one-click SMS broadcasts
+     * @param {string} workflowId - The GHL workflow ID
+     * @param {Object} params - Query params to include (e.g., message, draftId)
+     * @returns {string} The trigger URL
+     */
+    getWorkflowTriggerUrl(workflowId, params = {}) {
+        const queryString = new URLSearchParams({
+            locationId: CONFIG.LOCATION_ID,
+            ...params
+        }).toString();
+        return `${this.baseUrl}/workflows/${workflowId}/trigger?${queryString}`;
+    }
 }
 
 module.exports = new GHL();

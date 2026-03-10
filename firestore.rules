@@ -25,6 +25,22 @@ service cloud.firestore {
       allow read: if true;
       allow write: if false;
     }
+
+    // ARCHIVE COLLECTIONS: Public Read (for admin review page)
+    match /articles_archive_v1_2026-01-04/{document} {
+      allow read: if true;
+      allow write: if true;  // Allow rating updates
+    }
+    
+    match /daily_updates_archive_v1_2026-01-04/{document} {
+      allow read: if true;
+      allow write: if true;  // Allow rating updates
+    }
+    
+    // REPOST QUEUE: Public Read/Write (for admin)
+    match /repost_queue/{document} {
+      allow read, write: if true;
+    }
     
     // Default Deny
     match /{document=**} {

@@ -1,5 +1,5 @@
 
-const runScout = require('../functions/workflows/scout');
+const runScout = require('../functions/workflows_v2/scout_v2.js');
 
 async function main() {
     const args = process.argv.slice(2);

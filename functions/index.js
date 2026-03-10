@@ -62,8 +62,34 @@ exports.main = onRequest({ timeoutSeconds: 300 }, async (req, res) => {
             await require('./workflows/scout_deep_v3.js')(date); // V3 UPGRADE
             res.send("🧠 Scout V2 (Deep Research) Mission Complete");
         } else if (type === 'scout_trends') {
-            await require('./workflows/scout_trends.js')();
-            res.send("🧠 Trend Scout V2 (Deep Research) Mission Complete");
+            await require('./workflows/scout_trends_v2.js')();
+            res.send("🔍 Trend Scout V2 (Grounded Search) Mission Complete");
+        } else if (type === 'test_welcome') {
+            // Test welcome email - sends to admin email only
+            const ghl = require('./lib/ghl');
+            const sendWelcomeEmail = require('./workflows/welcome_email');
+
+            // Get or create test contact
+            const testContact = await ghl.upsertContact({
+                email: 'mdesautel@gmail.com',
+                firstName: 'MJ',
+                lastName: 'Test',
+                tags: ['Newsletter', 'Test']
+            });
+
+            // Send welcome email in TEST mode
+            const result = await sendWelcomeEmail(
+                testContact.contact.id,
+                'mdesautel@gmail.com',
+                'MJ',
+                true // TEST MODE
+            );
+
+            if (result.success) {
+                res.send(`✅ [TEST] Welcome email sent to ${result.email}`);
+            } else {
+                res.status(500).send(`❌ Failed: ${result.error}`);
+            }
         } else if (type === 'publisher') {
             const date = req.query.date;
             await publisher(date);
@@ -79,7 +105,8 @@ exports.main = onRequest({ timeoutSeconds: 300 }, async (req, res) => {
             await db.collection('submissions').add({
                 ...data,
                 receivedAt: new Date(),
-                status: 'pending'
+                status: 'pending',
+                isFeaturedCandidate: true // [FEATURED AGENT] Flag for upcoming events
             });
 
             // 2. Notification Pipeline
@@ -130,9 +157,56 @@ exports.main = onRequest({ timeoutSeconds: 300 }, async (req, res) => {
             }
 
             res.send("✅ Form submitted successfully");
-        } else if (type === 'subscribe') {
-            // New sub-route for lead magnet / newsletter subscription
+        } else if (type === 'sms_broadcast') {
+            /** 
+             * SMS BROADCAST HANDLER
+             * Triggers GHL Workflow to send SMS to list
+             */
+            const { draftId, message } = req.query;
+            const { db } = require('./lib/firebase');
             const ghl = require('./lib/ghl');
+            const CONFIG = require('./config');
+
+            if (!draftId || !message) return res.send("❌ Missing draftId or message");
+
+            try {
+                // 1. Trigger Workflow
+                if (CONFIG.SMS_WORKFLOW_ID && CONFIG.SMS_WORKFLOW_ID !== "REPLACE_WITH_YOUR_SMS_WORKFLOW_ID") {
+                    await ghl.triggerWorkflow(CONFIG.SMS_WORKFLOW_ID, {
+                        draftId: draftId,
+                        message: message
+                    });
+                    // 2. Mark as sent in Firestore
+                    await db.collection('drafts').doc(draftId).update({
+                        smsSentAt: new Date().toISOString(),
+                        smsStatus: 'broadcast_triggered'
+                    });
+
+                    res.send(`
+                        <body style="font-family:sans-serif; text-align:center; background:#0d1b12; color:#13ec5b; padding:50px;">
+                            <h1 style="font-size:3rem;">📲 SMS Blasted!</h1>
+                            <p style="font-size:1.5rem; color:white;">Broadcast workflow triggered for GHL.</p>
+                            <p style="opacity:0.6;">Message: "${message}"</p>
+                        </body>
+                    `);
+                } else {
+                    res.send(`
+                        <body style="font-family:sans-serif; text-align:center; background:#0d1b12; color:orange; padding:50px;">
+                            <h1 style="font-size:3rem;">⚠️ Config Missing</h1>
+                            <p style="font-size:1.5rem; color:white;">SMS_WORKFLOW_ID is not set in config.js.</p>
+                        </body>
+                    `);
+                }
+
+            } catch (e) {
+                console.error("SMS Broadcast Failed:", e);
+                res.status(500).send("Error triggering SMS workflow: " + e.message);
+            }
+
+        } else if (type === 'subscribe') {
+            // Newsletter subscription with welcome email
+            const ghl = require('./lib/ghl');
+            const sendWelcomeEmail = require('./workflows/welcome_email');
             const { email, firstName, lastName } = req.body;
 
             if (!email) {
@@ -143,13 +217,28 @@ exports.main = onRequest({ timeoutSeconds: 300 }, async (req, res) => {
                 email,
                 firstName: firstName || "",
                 lastName: lastName || "",
-                tags: ["Newsletter"]
+                tags: ["Newsletter"],
+                customFields: [
+                    { key: 'signup_date', value: new Date().toISOString() },
+                    { key: 'signup_source', value: 'website' }
+                ]
             };
 
-            await ghl.upsertContact(payload);
-            res.send("✅ Subscribed successfully");
-            await ghl.upsertContact(payload);
-            res.send("✅ Subscribed successfully");
+            try {
+                // Create/update contact in GHL
+                const contactResult = await ghl.upsertContact(payload);
+                const contactId = contactResult.contact.id;
+
+                // Send welcome email (TEST MODE = true for now)
+                const testMode = true; // Set to false when ready for production
+                await sendWelcomeEmail(contactId, email, firstName, testMode);
+
+                console.log(`✅ Newsletter signup complete for ${email}`);
+                res.send("✅ Subscribed successfully");
+            } catch (error) {
+                console.error("Newsletter signup error:", error);
+                res.status(500).send("Error processing subscription");
+            }
         } else if (type === 'review_action') {
             /**
              * REVIEW ACTION HANDLER
@@ -188,8 +277,8 @@ exports.main = onRequest({ timeoutSeconds: 300 }, async (req, res) => {
                     console.error("GHL Publish Failed", e);
                 }
 
-                // 2. Publish to Firestore (App Feed)
-                await db.collection('daily_updates').add({
+                // 2. Publish to Firestore (Route based on draft type)
+                const publishData = {
                     title: data.title || data.blog_title || data.topic_summary,
                     content: data.rawHTML || data.blog_html,
                     html: data.rawHTML || data.blog_html,
@@ -198,10 +287,41 @@ exports.main = onRequest({ timeoutSeconds: 300 }, async (req, res) => {
                     socialCaption: finalSocialCaption,
                     publishedAt: new Date(),
                     source: 'v6_approval_fixed'
-                });
+                };
+
+                // Route to correct collection based on draft type
+                let targetCollection = 'daily_updates'; // default
+                if (data.type === 'trend' || data.type === 'trend_blog') {
+                    targetCollection = 'articles';
+                } else if (data.type === 'blog') {
+                    targetCollection = 'articles';
+                }
+
+                console.log(`📦 Publishing to collection: ${targetCollection} (draft type: ${data.type})`);
+                await db.collection(targetCollection).add(publishData);
 
                 // 3. Mark as Published
                 await draftRef.update({ status: 'published', publishedAt: new Date().toISOString() });
+
+                // [FEATURED AGENT] 3b. Trigger Email Broadcast (If Configured)
+                const CONFIG = require('./config');
+                if (CONFIG.EMAIL_WORKFLOW_ID && CONFIG.EMAIL_WORKFLOW_ID !== "REPLACE_WITH_YOUR_EMAIL_WORKFLOW_ID") {
+                    try {
+                        console.log("📧 Triggering Email Broadcast Workflow...");
+                        await ghl.triggerWorkflow(CONFIG.EMAIL_WORKFLOW_ID, {
+                            draftId: draftId,
+                            title: data.title,
+                            // Assuming the new doc ID in daily_updates matches the draft ID or we need to query it? 
+                            // Actually, we just added it to a collection but didn't get the ID easily in v6 without a ref. 
+                            // The 'add' result is not captured in the original code snippet (await db.collection...).
+                            // Let's just pass the draftId for now, the email workflow might just need the content.
+                            vibe: data.vibe || "Daily Update"
+                        });
+                        console.log("✅ Email Broadcast Triggered.");
+                    } catch (err) {
+                        console.error("⚠️ Email Broadcast Trigger Failed:", err.message);
+                    }
+                }
 
                 // 4. Return Success Page
                 res.send(`
@@ -209,6 +329,7 @@ exports.main = onRequest({ timeoutSeconds: 300 }, async (req, res) => {
                         <h1 style="font-size:3rem;">🚀 Blastoff!</h1>
                         <p style="font-size:1.5rem; color:white;">Daily Update has been <strong>PUBLISHED</strong> to the website and app.</p>
                         <p style="opacity:0.6;">Draft ID: ${draftId}</p>
+                        ${CONFIG.EMAIL_WORKFLOW_ID ? '<p style="font-size:0.9rem; color:#888;">📧 Email Broadcast Triggered</p>' : ''}
                     </body>
                 `);
 
@@ -345,7 +466,7 @@ const { onSchedule } = require("firebase-functions/v2/scheduler");
 // 1. Daily Quick Scan (Mon-Sat): Look 2 Days Ahead (Today + Tomorrow)
 exports.dailyQuickScout = onSchedule({
     schedule: "every mon,tue,wed,thu,fri,sat 03:00",
-    timeoutSeconds: 3600, // 1 Hour
+    timeoutSeconds: 1800, // 30 min (max for scheduled)
     region: "us-central1",
     timeZone: "America/Los_Angeles"
 }, async (event) => {
@@ -356,7 +477,7 @@ exports.dailyQuickScout = onSchedule({
 // 2. Weekly Big Scan (Sunday): Look 14 Days Ahead
 exports.weeklyBigScout = onSchedule({
     schedule: "every sunday 03:00",
-    timeoutSeconds: 3600, // 1 Hour
+    timeoutSeconds: 1800, // 30 min (max for scheduled)
     region: "us-central1",
     timeZone: "America/Los_Angeles"
 }, async (event) => {
@@ -379,16 +500,16 @@ exports.dailyPublisher = onSchedule({
 //     await blog();
 // });
 
-// Deep Research Trend Scout (Gen 2, 60 min timeout)
+// Deep Research Trend Scout (Gen 2, Gemini Grounded Search)
 exports.dailyTrendScout = onSchedule({
     schedule: "every day 04:00",
-    timeoutSeconds: 3600,
+    timeoutSeconds: 1800, // 30 min (max for scheduled)
     memory: "2GiB",
     region: "us-central1",
     timeZone: "America/Los_Angeles"
 }, async (event) => {
-    console.log("⏰ Deep Research Trend Scout Triggered");
-    await require('./workflows/scout_trends.js')();
+    console.log("⏰ Trend Scout V2 (Grounded Search) Triggered");
+    await require('./workflows/scout_trends_v2.js')();
 });
 
 exports.debugSchema = onRequest({ timeoutSeconds: 60, region: "us-central1" }, async (req, res) => {

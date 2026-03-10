@@ -1,5 +1,8 @@
 {
     "name": "good-day-bend-functions-v6",
+    "engines": {
+        "node": "22"
+    },
     "version": "1.0.0",
     "description": "Backend functions for Good Day Bend v6 using Gemini 3 and NanoBanana Pro",
     "main": "index.js",
@@ -17,7 +20,7 @@
         "@google/generative-ai": "^0.21.0",
         "axios": "^1.6.0",
         "date-fns": "^3.0.0",
-        "firebase-admin": "^11.11.1",
+        "firebase-admin": "^12.7.0",
         "firebase-functions": "^6.0.0",
         "uuid": "^9.0.1"
     }

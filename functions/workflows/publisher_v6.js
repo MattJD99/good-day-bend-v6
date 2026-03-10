@@ -111,6 +111,45 @@ async function runPublisherV6(targetDateInput) {
         }
     }
 
+    // A.1 Smart Fallback (Library Search) - Better than generic, used if AI fails or is skipped
+    if (!bestEventImage) {
+        console.log("🎨 Checking Image Library for Smart Fallback...");
+        try {
+            // Map simple vibe keywords to library categories
+            let targetCategory = "Scenic"; // Default
+            const vibeLower = strategyData.vibe.toLowerCase();
+
+            if (vibeLower.includes("night") || vibeLower.includes("music") || vibeLower.includes("brew") || vibeLower.includes("party")) targetCategory = "Nightlife";
+            else if (vibeLower.includes("family") || vibeLower.includes("kid") || vibeLower.includes("park")) targetCategory = "Family";
+            else if (vibeLower.includes("hike") || vibeLower.includes("trail") || vibeLower.includes("mountain") || vibeLower.includes("river")) targetCategory = "Outdoors";
+            else if (vibeLower.includes("art") || vibeLower.includes("cultur") || vibeLower.includes("gallery")) targetCategory = "Arts";
+            else if (vibeLower.includes("food") || vibeLower.includes("din") || vibeLower.includes("eats")) targetCategory = "Dining";
+
+            const libRef = db.collection('image_library');
+            // Try to find by category and high quality
+            const catSnapshot = await libRef
+                .where('category', '==', targetCategory)
+                .where('quality_score', '>=', 7)
+                .limit(15) // Fetch a pool to randomize
+                .get();
+
+            if (!catSnapshot.empty) {
+                const docs = [];
+                catSnapshot.forEach(d => docs.push(d.data()));
+                const randomFallback = docs[Math.floor(Math.random() * docs.length)];
+
+                bannerUrl = randomFallback.url;
+                imageSource = `Smart Fallback: ${targetCategory} (Library)`;
+                console.log(`✅ Found Smart Fallback: ${imageSource}`);
+            } else {
+                console.log(`ℹ️ No smart library image found for category: ${targetCategory}`);
+            }
+
+        } catch (e) {
+            console.warn("⚠️ Smart Fallback lookup failed:", e.message);
+        }
+    }
+
     // B. AI Generation (If no real image found)
     if (bestEventImage) {
         bannerUrl = bestEventImage;

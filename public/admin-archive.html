@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archive Review - Good Day Bend Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0d1b12;
+        }
+
+        .card {
+            background: #1a2e23;
+            border: 1px solid #2a4035;
+            transition: all 0.2s;
+        }
+
+        .card:hover {
+            border-color: #13ec5b;
+            transform: translateY(-2px);
+        }
+
+        .star {
+            cursor: pointer;
+            transition: all 0.15s;
+            font-size: 28px;
+        }
+
+        .star:hover {
+            transform: scale(1.2);
+        }
+
+        .star.active {
+            color: #fbbf24;
+        }
+
+        .modal-content {
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .modal-content h1,
+        .modal-content h2,
+        .modal-content h3 {
+            color: #13ec5b;
+            margin-top: 1rem;
+        }
+
+        .modal-content p {
+            margin-bottom: 0.75rem;
+            line-height: 1.7;
+        }
+
+        .modal-content ul,
+        .modal-content ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen text-white p-6">
+    <div class="max-w-6xl mx-auto">
+        <header class="mb-6">
+            <h1 class="text-2xl font-bold text-[#13ec5b] mb-1">📚 Archive Review</h1>
+            <p class="text-gray-400 text-sm">Click an article to read it, then rate it. Good content (4-5★) queues for
+                repost.</p>
+        </header>
+
+        <!-- Tabs -->
+        <div class="flex gap-3 mb-4">
+            <button id="tab-articles" onclick="switchTab('articles')"
+                class="tab-btn px-4 py-2 rounded-lg bg-[#13ec5b] text-black font-bold text-sm">
+                Articles (<span id="count-articles">0</span>)
+            </button>
+            <button id="tab-daily" onclick="switchTab('daily')"
+                class="tab-btn px-4 py-2 rounded-lg bg-gray-700 text-white font-medium text-sm hover:bg-gray-600">
+                Daily Updates (<span id="count-daily">0</span>)
+            </button>
+        </div>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-4 gap-3 mb-6 text-center text-sm">
+            <div class="card p-3 rounded-lg">
+                <div id="stat-total" class="text-xl font-bold text-[#13ec5b]">0</div>
+                <div class="text-gray-400">Total</div>
+            </div>
+            <div class="card p-3 rounded-lg">
+                <div id="stat-rated" class="text-xl font-bold text-yellow-400">0</div>
+                <div class="text-gray-400">Rated</div>
+            </div>
+            <div class="card p-3 rounded-lg">
+                <div id="stat-good" class="text-xl font-bold text-green-400">0</div>
+                <div class="text-gray-400">Good (4-5★)</div>
+            </div>
+            <div class="card p-3 rounded-lg">
+                <div id="stat-unrated" class="text-xl font-bold text-gray-400">0</div>
+                <div class="text-gray-400">Unrated</div>
+            </div>
+        </div>
+
+        <!-- Grid of Cards -->
+        <div id="content-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <div class="col-span-full text-center py-12 text-gray-500">Loading...</div>
+        </div>
+
+        <!-- Load More Button -->
+        <div id="load-more-container" class="text-center mt-6 hidden">
+            <button onclick="loadMore()"
+                class="px-6 py-3 bg-[#13ec5b] text-black font-bold rounded-lg hover:bg-green-400 transition">
+                Load More
+            </button>
+            <p id="showing-count" class="text-gray-500 text-sm mt-2"></p>
+        </div>
+    </div>
+
+    <!-- Modal for Reading Article -->
+    <div id="modal" class="fixed inset-0 bg-black/80 z-50 hidden items-center justify-center p-4">
+        <div class="bg-[#1a2e23] rounded-xl max-w-3xl w-full max-h-[90vh] flex flex-col">
+            <div class="p-4 border-b border-gray-700 flex justify-between items-center shrink-0">
+                <h2 id="modal-title" class="text-lg font-bold text-white truncate"></h2>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-white text-2xl">&times;</button>
+            </div>
+            <div id="modal-body" class="modal-content p-6 text-gray-300 overflow-y-auto flex-1"></div>
+            <div class="p-4 border-t border-gray-700 shrink-0">
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-400">Rate this content:</span>
+                    <div id="modal-stars" class="flex gap-1"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, getDocs, doc, updateDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyC7oBqVbMpIxBj2gcXx8yvW3dW1oEbxPzo",
+            authDomain: "good-day-bend-v6.firebaseapp.com",
+            projectId: "good-day-bend-v6"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        let currentTab = 'articles';
+        let allData = { articles: [], daily: [] };
+        let visibleCount = 12;
+        let currentItem = null;
+
+        window.switchTab = function(tab) {
+            currentTab = tab;
+            visibleCount = 12;
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-[#13ec5b]', 'text-black');
+                btn.classList.add('bg-gray-700', 'text-white');
+            });
+            document.getElementById(`tab-${tab}`).classList.remove('bg-gray-700', 'text-white');
+            document.getElementById(`tab-${tab}`).classList.add('bg-[#13ec5b]', 'text-black');
+            renderContent();
+        };
+
+        window.loadMore = function() {
+            visibleCount += 12;
+            renderContent();
+        };
+
+        window.openArticle = function(id) {
+            const data = currentTab === 'articles' ? allData.articles : allData.daily;
+            const item = data.find(i => i.id === id);
+            if (!item) return;
+
+            currentItem = item;
+            document.getElementById('modal-title').textContent = item.title || 'Untitled';
+            document.getElementById('modal-body').innerHTML = item.content || item.html || '<p>No content available.</p>';
+            
+            // Render stars in modal
+            renderModalStars(item.userRating || 0);
+            
+            document.getElementById('modal').classList.remove('hidden');
+            document.getElementById('modal').classList.add('flex');
+        };
+
+        window.closeModal = function() {
+            document.getElementById('modal').classList.add('hidden');
+            document.getElementById('modal').classList.remove('flex');
+            currentItem = null;
+        };
+
+        function renderModalStars(currentRating) {
+            const container = document.getElementById('modal-stars');
+            container.innerHTML = '';
+            for (let i = 1; i <= 5; i++) {
+                const star = document.createElement('span');
+                star.className = `star ${i <= currentRating ? 'active text-yellow-400' : 'text-gray-600'}`;
+                star.textContent = i <= currentRating ? '★' : '☆';
+                star.onclick = () => rateCurrentItem(i);
+                container.appendChild(star);
+            }
+        }
+
+        async function rateCurrentItem(rating) {
+            if (!currentItem) return;
+            
+            const collectionName = currentTab === 'articles' 
+                ? 'articles_archive_v1_2026-01-04' 
+                : 'daily_updates_archive_v1_2026-01-04';
+            
+            try {
+                await updateDoc(doc(db, collectionName, currentItem.id), {
+                    userRating: rating,
+                    ratedAt: new Date().toISOString()
+                });
+
+                currentItem.userRating = rating;
+                renderModalStars(rating);
+
+                if (rating >= 4) {
+                    await setDoc(doc(db, 'repost_queue', currentItem.id), {
+                        title: currentItem.title,
+                        userRating: rating,
+                        queuedAt: new Date().toISOString(),
+                        sourceCollection: collectionName,
+                        status: 'pending'
+                    });
+                }
+
+                renderContent();
+                updateStats();
+            } catch (e) {
+                console.error('Rating failed:', e);
+                alert('Failed to save. Check console.');
+            }
+        }
+
+        function renderContent() {
+            const container = document.getElementById('content-grid');
+            const data = currentTab === 'articles' ? allData.articles : allData.daily;
+            const toShow = data.slice(0, visibleCount);
+
+            if (data.length === 0) {
+                container.innerHTML = '<div class="col-span-full text-center py-12 text-gray-500">No items found.</div>';
+                return;
+            }
+
+            container.innerHTML = toShow.map(item => {
+                const img = item.image || item.imageUrl || '';
+                const rating = item.userRating || 0;
+                const stars = rating > 0 ? '★'.repeat(rating) + '☆'.repeat(5 - rating) : '';
+                
+                return `
+                <div onclick="openArticle('${item.id}')" class="card rounded-xl overflow-hidden cursor-pointer">
+                    <div class="aspect-video bg-gray-800 relative">
+                        ${img 
+                            ? `<img src="${img}" class="w-full h-full object-cover" onerror="this.parentElement.innerHTML='<div class=\\'flex items-center justify-center h-full text-gray-600\\'>No Image</div>'">`
+                            : '<div class="flex items-center justify-center h-full text-gray-600">No Image</div>'
+                        }
+                        ${rating > 0 ? `<div class="absolute top-2 right-2 bg-black/70 text-yellow-400 text-xs px-2 py-1 rounded">${stars}</div>` : ''}
+                    </div>
+                    <div class="p-3">
+                        <h3 class="text-sm font-semibold text-white line-clamp-2 leading-tight">${item.title || 'Untitled'}</h3>
+                    </div>
+                </div>
+            `}).join('');
+
+            // Show/hide load more
+            const loadMoreContainer = document.getElementById('load-more-container');
+            const showingCount = document.getElementById('showing-count');
+            if (data.length > visibleCount) {
+                loadMoreContainer.classList.remove('hidden');
+                showingCount.textContent = `Showing ${toShow.length} of ${data.length}`;
+            } else {
+                loadMoreContainer.classList.add('hidden');
+            }
+
+            updateStats();
+        }
+
+        function updateStats() {
+            const data = currentTab === 'articles' ? allData.articles : allData.daily;
+            const rated = data.filter(i => i.userRating > 0);
+            const good = data.filter(i => i.userRating >= 4);
+            
+            document.getElementById('stat-total').textContent = data.length;
+            document.getElementById('stat-rated').textContent = rated.length;
+            document.getElementById('stat-good').textContent = good.length;
+            document.getElementById('stat-unrated').textContent = data.length - rated.length;
+        }
+
+        async function loadData() {
+            try {
+                const articlesSnap = await getDocs(collection(db, 'articles_archive_v1_2026-01-04'));
+                allData.articles = articlesSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+                const dailySnap = await getDocs(collection(db, 'daily_updates_archive_v1_2026-01-04'));
+                allData.daily = dailySnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+                document.getElementById('count-articles').textContent = allData.articles.length;
+                document.getElementById('count-daily').textContent = allData.daily.length;
+
+                renderContent();
+            } catch (e) {
+                console.error('Load failed:', e);
+                document.getElementById('content-grid').innerHTML = `
+                    <div class="col-span-full text-center py-12 text-red-400">
+                        <p>Failed to load. Check console.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Close modal on escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        loadData();
+    </script>
+</body>
+
+</html>

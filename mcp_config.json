@@ -1,0 +1,29 @@
+{
+    "mcpServers": {
+        "firebase": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "firebase-tools@latest",
+                "mcp"
+            ]
+        },
+        "tavily": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@tavily/mcp-server@latest"
+            ],
+            "env": {
+                "TAVILY_API_KEY": "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"
+            }
+        },
+        "fetch": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@modelcontextprotocol/server-fetch@latest"
+            ]
+        }
+    }
+}

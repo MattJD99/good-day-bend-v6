@@ -1,5 +1,5 @@
 import { db } from './firebase-config.js';
-import { collection, getDocs, query, limit, orderBy, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { collection, getDocs, query, limit, orderBy, where, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const DEFAULT_IMAGE = "https://placehold.co/600x400/102216/13ec5b?text=Good+Day+Bend&font=montserrat";
 
@@ -415,11 +415,16 @@ async function fetchEvents() {
 
     try {
         console.log("Creating Firestore query for 'events' collection...");
-        // OPTIMIZATION: Limit to 50 recent events to improve load speed.
+        // FIX: Query events from today onwards, sorted ascending (soonest first)
+        // This ensures the homepage calendar shows TODAY'S events, not just future ones
+        const today = new Date();
+        const todayStr = today.toISOString().split('T')[0]; // YYYY-MM-DD
+
         const q = query(
             collection(db, "events"),
-            orderBy("eventDate", "desc"),
-            limit(50)
+            where("eventDate", ">=", todayStr),
+            orderBy("eventDate", "asc"),
+            limit(100)  // Increased to cover 2 weeks of events
         );
 
         console.log("Executing getDocs() query...");
@@ -720,6 +725,7 @@ async function fetchDailyUpdates() {
                 // Cache logic
                 if (updates.length > 0) {
                     localStorage.setItem('cachedDailyUpdates', JSON.stringify(updates));
+                    localStorage.setItem('cachedDailyUpdatesVersion', '2');
                     localStorage.setItem('cachedDailyUpdatesTimestamp', Date.now());
                 }
                 return updates;
@@ -747,6 +753,7 @@ async function fetchDailyUpdates() {
         // Cache logic
         if (updates.length > 0) {
             localStorage.setItem('cachedDailyUpdates', JSON.stringify(updates));
+            localStorage.setItem('cachedDailyUpdatesVersion', '2');
             localStorage.setItem('cachedDailyUpdatesTimestamp', Date.now());
         }
 
@@ -799,10 +806,30 @@ function createDailyUpdateCard(update) {
     // CLEANUP: Remove "Good Day Bend:" from snippet if it appears at the start
     snippet = snippet.replace(/^Good Day Bend:\s*/i, "").trim();
 
-    // Parse Date from ID or field
+    // Parse Date from ID or field and format as "January 19th"
     let dateStr = "Recent";
     if (update.id.startsWith("daily-")) {
-        dateStr = update.id.replace("daily-", "");
+        const rawDate = update.id.replace("daily-", "");
+        // Parse the date (format: YYYY-MM-DD)
+        const dateParts = rawDate.split("-");
+        if (dateParts.length === 3) {
+            const dateObj = new Date(parseInt(dateParts[0]), parseInt(dateParts[1]) - 1, parseInt(dateParts[2]));
+            const month = dateObj.toLocaleString('default', { month: 'long' });
+            const day = dateObj.getDate();
+            // Add ordinal suffix (st, nd, rd, th)
+            const getOrdinalSuffix = (n) => {
+                if (n > 3 && n < 21) return 'th';
+                switch (n % 10) {
+                    case 1: return 'st';
+                    case 2: return 'nd';
+                    case 3: return 'rd';
+                    default: return 'th';
+                }
+            };
+            dateStr = `${month} ${day}${getOrdinalSuffix(day)}`;
+        } else {
+            dateStr = rawDate; // Fallback to raw date if parsing fails
+        }
     }
 
     if (update.content && !update.description) {
@@ -1013,8 +1040,7 @@ async function initDynamicContent() {
                 if (document.getElementById('events-container')) filterEvents('All');
                 if (document.getElementById('local-events-container')) await initLocalEventsPage();
                 if (document.getElementById('featured-page-container')) renderFeaturedPageEvents();
-                await initCalendarPage();
-                await initHomeCalendar();
+                // Note: initCalendarPage() and initHomeCalendar() will be called after fresh fetch to avoid double-init
             }
         } catch (e) {
             console.error("Cache parse error (events):", e);
@@ -1061,15 +1087,19 @@ async function initDynamicContent() {
         }
     };
 
+
     if (dailyContainer || heroDailyBtn) {
+        // Cache version - increment this when data structure or formatting changes
+        const CACHE_VERSION = '2'; // Changed from '1' to force cache refresh for date formatting update
         const cachedUpdates = localStorage.getItem('cachedDailyUpdates');
+        const cachedVersion = localStorage.getItem('cachedDailyUpdatesVersion');
         let updatesLoadedFromCache = false;
 
-        if (cachedUpdates) {
+        if (cachedUpdates && cachedVersion === CACHE_VERSION) {
             try {
                 const parsed = JSON.parse(cachedUpdates);
                 if (Array.isArray(parsed) && parsed.length > 0) {
-                    console.log(`[Cache] Loaded ${parsed.length} daily updates.`);
+                    console.log(`[Cache v${CACHE_VERSION}] Loaded ${parsed.length} daily updates.`);
                     allDailyUpdates = parsed;
                     updatesLoadedFromCache = true;
 
@@ -1082,6 +1112,12 @@ async function initDynamicContent() {
                     if (allDailyUpdates.length > 0) updateHeroDailyButton(allDailyUpdates[0]);
                 }
             } catch (e) { console.error("Cache parse error (updates):", e); }
+        } else {
+            if (cachedVersion && cachedVersion !== CACHE_VERSION) {
+                console.log(`[Cache] Version mismatch (${cachedVersion} vs ${CACHE_VERSION}), clearing old cache`);
+                localStorage.removeItem('cachedDailyUpdates');
+                localStorage.removeItem('cachedDailyUpdatesVersion');
+            }
         }
 
         // Fetch Fresh Updates
@@ -1348,6 +1384,19 @@ async function initEventDetails() {
 
         if (docSnap.exists()) {
             const data = docSnap.data();
+
+            // Update Page Title
+            const pageTitle = document.getElementById('page-title');
+            if (pageTitle && data.title) {
+                pageTitle.textContent = `${data.title} - Good Day Bend`;
+            }
+
+            // Update Breadcrumb (dynamic category instead of hardcoded "Summer Concert Series")
+            const breadcrumbEl = document.getElementById('event-breadcrumb');
+            if (breadcrumbEl) {
+                breadcrumbEl.textContent = data.category || data.title || "Event";
+            }
+
             // Populate Fields if they exist in DOM
             const titleEl = document.getElementById('event-title');
             if (titleEl) titleEl.textContent = data.title;
@@ -1357,10 +1406,8 @@ async function initEventDetails() {
 
             const descEl = document.getElementById('event-description');
             if (descEl) {
-                if (descEl) {
-                    // Use richDescription if available, else content, else description
-                    descEl.innerHTML = data.richDescription || data.content || `<p>${data.description}</p>`;
-                }
+                // Use richDescription if available, else content, else description
+                descEl.innerHTML = data.richDescription || data.content || `<p>${data.description}</p>`;
             }
 
             const dateEl = document.getElementById('event-date');
@@ -1375,12 +1422,51 @@ async function initEventDetails() {
                 dateEl.textContent = dStr;
             }
 
+            // Event Time
+            const timeEl = document.getElementById('event-time');
+            if (timeEl) {
+                timeEl.textContent = data.time || data.eventTime || "See details";
+            }
+
             const locEl = document.getElementById('event-location');
             if (locEl) locEl.textContent = data.venue || data.location || "Bend, OR";
 
             const heroBg = document.getElementById('hero-bg');
             if (heroBg && data.image) {
                 heroBg.style.backgroundImage = `url('${data.image}')`;
+            }
+
+            // CTA Button Logic
+            const ctaBtn = document.getElementById('event-cta-btn');
+            if (ctaBtn) {
+                const price = data.price || data.cost || "";
+                const isFree = !price || price.toLowerCase().includes('free') || price === '$0' || price === '0';
+                const ticketUrl = data.sourceUrl || data.ticketUrl || data.url || "#";
+
+                if (isFree && ticketUrl === "#") {
+                    // Free event with no link
+                    ctaBtn.textContent = "Free Event";
+                    ctaBtn.removeAttribute('href');
+                    ctaBtn.style.cursor = 'default';
+                    ctaBtn.classList.remove('hover:bg-green-400');
+                } else if (isFree) {
+                    // Free event but has a link
+                    ctaBtn.textContent = "More Info";
+                    ctaBtn.href = ticketUrl;
+                    ctaBtn.target = "_blank";
+                } else {
+                    // Paid event
+                    ctaBtn.textContent = "Get Tickets";
+                    ctaBtn.href = ticketUrl;
+                    ctaBtn.target = "_blank";
+                }
+            }
+
+            // Update price display
+            const priceEl = document.getElementById('event-price');
+            if (priceEl) {
+                const price = data.price || data.cost || "Free";
+                priceEl.textContent = price;
             }
         }
     } catch (e) {
@@ -1644,8 +1730,10 @@ async function initCalendarWidget(allEvents) {
         const hasEvent = allEvents.some(e => {
             const eDate = e.eventDate || e.date; // YYYY-MM-DD
             if (!eDate) return false;
-            // quick string compare if format matches, else parse
-            return eDate === d.toISOString().split('T')[0];
+            // Use timezone offset to get correct local date string (same as updateAttachedEvents)
+            const offsetD = new Date(d.getTime() - (d.getTimezoneOffset() * 60000));
+            const localDateStr = offsetD.toISOString().split('T')[0];
+            return eDate === localDateStr;
         });
 
         if (hasEvent && !isToday && !isPast) {
@@ -1858,7 +1946,7 @@ function initEventMap(events, dailyUpdates = []) {
                 const timeDisplay = loc.context ? `<span class="text-xs font-bold bg-green-100 text-green-800 px-1 rounded ml-2">${loc.context}</span>` : "";
 
                 const typeLabel = type === 'update' ? "DAILY UPDATE" : "EVENT";
-                const linkUrl = type === 'update' ? `daily-details.html?id=${item.id}` : `event-details.html?id=${item.id}`;
+                const linkUrl = type === 'update' ? `/daily-details?id=${item.id}` : `/event-details?id=${item.id}`;
 
                 marker.bindPopup(`
                     <div class="text-sm">
@@ -2106,13 +2194,13 @@ function createHorizontalEventCard(event) {
     let timeStr = event.time || "All Day";
 
     return `
-    <article class="group bg-white dark:bg-[#1a2e22] rounded-xl overflow-hidden border border-border-light dark:border-gray-800 hover:shadow-lg hover:border-primary/50 transition-all duration-300 flex flex-col sm:flex-row w-full cursor-pointer" onclick="window.location.href='/event-details.html?id=${event.id}'">
+    <article class="group bg-white dark:bg-[#1a2e22] rounded-xl overflow-hidden border border-border-light dark:border-gray-800 hover:shadow-lg hover:border-primary/50 transition-all duration-300 flex flex-col sm:flex-row w-full cursor-pointer" onclick="window.location.href='/event-details?id=${event.id}'">
         <div class="relative w-full sm:w-72 h-48 sm:h-56 flex-shrink-0 overflow-hidden">
             <div class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-1 text-center shadow-sm z-10 border border-border-light">
                 <div class="text-xs font-bold text-primary uppercase tracking-wide">${month}</div>
                 <div class="text-xl font-black text-[#0d1b12] leading-none">${day}</div>
             </div>
-            <img alt="${event.title}" 
+            <img alt="${event.title}" loading="lazy" decoding="async"
                 class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
                 src="${eventImage}" />
             <div class="absolute top-3 right-3 z-10">
@@ -2314,13 +2402,13 @@ function createHomeEventCard(event) {
     }
 
     return `
-    <article class="snap-start shrink-0 w-[85vw] sm:w-[320px] md:w-[350px] flex flex-col rounded-xl bg-white dark:bg-[#1a2e22] shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden cursor-pointer hover:shadow-lg transition-all group" onclick="window.location.href='/event-details.html?id=${event.id}'">
+    <article class="snap-start shrink-0 w-[85vw] sm:w-[320px] md:w-[350px] flex flex-col rounded-xl bg-white dark:bg-[#1a2e22] shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden cursor-pointer hover:shadow-lg transition-all group" onclick="window.location.href='/event-details?id=${event.id}'">
         <div class="relative w-full aspect-video overflow-hidden">
             <div class="absolute top-3 left-3 bg-white/90 dark:bg-[#0d1b12]/90 backdrop-blur-sm rounded-lg px-3 py-1.5 flex flex-col items-center shadow-sm z-10 border border-black/5">
                 <span class="text-xs font-bold text-text-secondary uppercase">${month}</span>
                 <span class="text-xl font-black text-[#0d1b12] dark:text-white leading-none">${day}</span>
             </div>
-            <img src="${eventImage}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="${event.title}">
+            <img src="${eventImage}" loading="lazy" decoding="async" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="${event.title}">
         </div>
         <div class="p-4 flex flex-col gap-2 flex-1">
             <h3 class="text-lg font-bold text-[#0d1b12] dark:text-white line-clamp-1 group-hover:text-primary transition-colors">${event.title}</h3>

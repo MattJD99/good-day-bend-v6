@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Summer Concert Series - Good Day Bend</title>
+    <title id="page-title">Event Details - Good Day Bend</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
@@ -72,8 +72,9 @@
                             href="/calendar">Calendar</a>
                         <a class="text-sm font-medium hover:text-primary transition-colors" href="/blog">Blog</a>
                     </div>
-                    <button
-                        class="flex items-center justify-center rounded-lg bg-primary hover:bg-green-400 px-5 py-2 text-sm font-bold text-[#0d1b12] transition-colors">SignIn</button>
+                    <a href="#" id="newsletter-trigger"
+                        class="flex items-center justify-center rounded-lg bg-primary hover:bg-green-400 px-5 py-2 text-sm font-bold text-[#0d1b12] transition-colors">Join
+                        Newsletter</a>
                 </div>
                 <!-- Mobile Menu Button -->
                 <div class="md:hidden">
@@ -115,7 +116,7 @@
         <div class="flex items-center gap-2 text-sm text-text-secondary">
             <a href="/featured" class="hover:text-primary transition-colors">Featured</a>
             <span class="material-symbols-outlined text-[14px]">chevron_right</span>
-            <span class="font-bold text-text-main dark:text-white">Summer Concert Series</span>
+            <span id="event-breadcrumb" class="font-bold text-text-main dark:text-white">Event</span>
         </div>
 
         <!-- Event Hero -->
@@ -177,10 +178,10 @@
                             <span id="event-time" class="font-medium">TBD</span>
                         </div>
                     </div>
-                    <button
+                    <a id="event-cta-btn" href="#"
                         class="flex items-center justify-center rounded-lg bg-primary hover:bg-green-400 px-5 py-3 text-sm font-bold text-[#0d1b12] transition-colors w-full mt-2">
                         Get Tickets
-                    </button>
+                    </a>
                 </div>
                 <!-- Host Info -->
                 <!-- Host Info Removed -->

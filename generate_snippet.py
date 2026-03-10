@@ -1,26 +1,31 @@
 import sys
 import re
 
-FIREBASE_URL = "https://good-day-bend-v6.web.app"
+DOMAIN_URL = "https://gooddaybend.com"
+FIREBASE_URL = "https://good-day-bend-v6.web.app"  # For static assets only
 
 REPLACEMENTS = {
-    'href="index.html"': f'href="{FIREBASE_URL}/index.html"',
-    'href="daily-updates.html"': f'href="{FIREBASE_URL}/daily-updates.html"',
-    'href="daily-details.html"': f'href="{FIREBASE_URL}/daily-details.html"',
-    'href="events.html"': f'href="{FIREBASE_URL}/events.html"',
-    'href="event-details.html"': f'href="{FIREBASE_URL}/event-details.html"',
-    'href="calendar.html"': f'href="{FIREBASE_URL}/calendar.html"',
-    'href="blog.html"': f'href="{FIREBASE_URL}/blog.html"',
-    'href="blog-post.html"': f'href="{FIREBASE_URL}/blog-post.html"',
+    # Navigation links - use clean URLs on gooddaybend.com
+    'href="index.html"': f'href="{DOMAIN_URL}/"',
+    'href="daily-updates.html"': f'href="{DOMAIN_URL}/daily-updates"',
+    'href="daily-details.html"': f'href="{DOMAIN_URL}/daily-details"',
+    'href="events.html"': f'href="{DOMAIN_URL}/events"',
+    'href="event-details.html"': f'href="{DOMAIN_URL}/event-details"',
+    'href="calendar.html"': f'href="{DOMAIN_URL}/calendar"',
+    'href="blog.html"': f'href="{DOMAIN_URL}/blog"',
+    'href="blog-post.html"': f'href="{DOMAIN_URL}/blog-post"',
+    'href="featured.html"': f'href="{DOMAIN_URL}/featured"',
+    'href="local-events.html"': f'href="{DOMAIN_URL}/local-events"',
+    # Scripts - still load from Firebase hosting
     'src="./scripts/firebase-config.js"': f'src="{FIREBASE_URL}/firebase-config.js"',
     'src="./dynamic-content.js"': f'src="{FIREBASE_URL}/dynamic-content.js"',
     # Fix the broken onclick in daily-updates.html if encountered
     'text-text-secondary onclick=': 'text-text-secondary" onclick=',
     'hover:border-primary/20 onclick=': 'hover:border-primary/20" onclick=',
-    # Replace relative onclicks
-    "onclick=\"window.location.href='daily-details.html'\"": f"onclick=\"window.location.href='{FIREBASE_URL}/daily-details.html'\"",
-    "onclick=\"window.location.href='event-details.html'\"": f"onclick=\"window.location.href='{FIREBASE_URL}/event-details.html'\"",
-    "onclick=\"window.location.href='/event-details?id='": f"onclick=\"window.location.href='{FIREBASE_URL}/event-details.html?id='", # Dynamic content often has this
+    # Replace relative onclicks - use clean URLs
+    "onclick=\"window.location.href='daily-details.html'\"": f"onclick=\"window.location.href='{DOMAIN_URL}/daily-details'\"",
+    "onclick=\"window.location.href='event-details.html'\"": f"onclick=\"window.location.href='{DOMAIN_URL}/event-details'\"",
+    "onclick=\"window.location.href='/event-details?id='": f"onclick=\"window.location.href='{DOMAIN_URL}/event-details?id='",
 }
 
 SCRIPTS_BLOCK = f"""

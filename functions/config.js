@@ -34,11 +34,13 @@ const CONFIG = {
         EVENTS: []  // [Add Category ID for Events]
     },
 
-    // Models
-    MODEL_REASONING: "gemini-2.0-flash",           // "Gemini 2.0 Flash" (Stable)
-    MODEL_FAST: "gemini-2.0-flash",                // "Gemini 2.0 Flash"
-    MODEL_IMAGE_PRO: "imagen-3.0-fast-generate-001",   // Imagen 3 Fast (Stable, On-Demand)
+    // Models - Gemini 3 (2026)
+    MODEL_REASONING: "gemini-3-flash-preview",    // Gemini 3 Flash with thinking
+    MODEL_FAST: "gemini-3-flash-preview",         // Gemini 3 Flash
+    MODEL_IMAGE_PRO: "imagen-3.0-fast-generate-001",   // Imagen 3 Fast (Stable)
     MODEL_IMAGE_FAST: "imagen-3.0-fast-generate-001",  // Fallback to same
+    MODEL_IMAGE_VISION: "gemini-3-pro-image-preview",  // Gemini 3 Vision for inspiration
+    MODEL_FALLBACK: "gemini-2.0-flash",           // Fallback if Gemini 3 unavailable
 
     // Firebase Collections
     FIREBASE_COLLECTION_EVENTS: "events",
@@ -47,9 +49,23 @@ const CONFIG = {
     FIREBASE_COLLECTION_IMAGES: "generated_images", // Optional metadata log
     FIREBASE_COLLECTION_TREND_REPORTS: "trend_reports",
 
-    // Image Fallbacks (If generation fails)
+    // Image Fallbacks (If generation fails) - Rotated for variety
     FALLBACK_IMAGES: [
-        "https://images.unsplash.com/photo-1516939884455-1445c8652f83?w=800"
+        "https://images.unsplash.com/photo-1516939884455-1445c8652f83?w=800", // Van roof sunset
+        "https://images.unsplash.com/photo-1533174072545-e8d4aa97d848?w=800", // Festival crowd
+        "https://images.unsplash.com/photo-1501612780327-45045538702b?w=800", // Concert
+        "https://images.unsplash.com/photo-1488459716781-31db52582fe9?w=800", // Outdoor event
+        "https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?w=800", // Mountain adventure
+        "https://images.unsplash.com/photo-1519331379826-f10be5486c6f?w=800", // Winter snow
+        "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=800", // Sunrise nature
+        "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=800", // Camping outdoors
+        "https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=800", // Music instruments
+        "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800", // Food dining
+        "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800", // Brewery craft beer
+        "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800", // Yoga fitness
+        "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800", // Farmers market
+        "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800", // Conference
+        "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=800"  // Community event
     ],
 
     // Trusted Sources for "Guest Link" Rotation (SEO)
@@ -68,6 +84,10 @@ const CONFIG = {
 
     // Remote Agents
     MARKETING_AGENT_URL: "https://main-350578396384.us-central1.run.app",
+
+    // GHL Workflow IDs
+    SMS_WORKFLOW_ID: "REPLACE_WITH_YOUR_SMS_WORKFLOW_ID", // Create in GHL: Automation > Workflows
+    EMAIL_WORKFLOW_ID: "REPLACE_WITH_YOUR_EMAIL_WORKFLOW_ID", // Create in GHL
 
     // Marketing Persona / System Instructions
     MARKETING_AGENT_PERSONA: `

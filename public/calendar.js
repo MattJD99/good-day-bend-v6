@@ -32,7 +32,7 @@ function showDayPopup(date, events) {
                 ${events.length === 0 ? '<p class="text-center text-gray-500 italic">No events scheduled for this day.</p>' : ''}
                 ${events.map(event => `
                     <div class="group flex gap-4 p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-white/5 transition-colors cursor-pointer border border-transparent hover:border-gray-100 dark:hover:border-white/10"
-                        onclick="window.location.href='event-details.html?id=${event.id}'">
+                        onclick="window.location.href='/event-details?id=${event.id}'">
                         <div class="size-16 rounded-lg bg-gray-200 overflow-hidden flex-shrink-0">
                             <img src="${event.image || 'https://placehold.co/100x100?text=Event'}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="${event.title}">
                         </div>

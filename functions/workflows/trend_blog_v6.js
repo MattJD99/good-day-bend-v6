@@ -32,29 +32,53 @@ async function uploadDraft(filename, contentType, content) {
 }
 
 async function runTrendBlogV6(sendEmail = true) {
-    console.log("📈 Trend Blog V6 (Restoration + SEO) Starting...");
+    console.log("📈 Trend Blog V6 (Queue System) Starting...");
 
-    // 1. RESEARCH & TOPIC
-    // Check Deep Research first, else Quick Scan (Classic V3 logic)
-    const todayStr = new Date().toISOString().split('T')[0];
-    const reportSlug = `trend-report-${todayStr}`;
+    // 1. TOPIC SELECTION - Check Queue First
     let topic = "";
     let researchContext = "";
+    let queueDocId = null;
 
+    // Try to get topic from the queue (priority order)
     try {
-        const reportDoc = await db.collection(CONFIG.FIREBASE_COLLECTION_TREND_REPORTS).doc(reportSlug).get();
-        if (reportDoc.exists && reportDoc.data().status === 'ready') {
-            const data = reportDoc.data();
-            console.log(`🧠 Found Deep Research Report: "${data.topic}"`);
+        const queueSnapshot = await db.collection('trend_queue')
+            .where('status', '==', 'queued')
+            .orderBy('priority', 'asc')
+            .limit(1)
+            .get();
+
+        if (!queueSnapshot.empty) {
+            const doc = queueSnapshot.docs[0];
+            const data = doc.data();
+            console.log(`📋 Found queued topic: "${data.topic}" (Priority: ${data.priority})`);
             topic = data.topic;
             researchContext = data.researchReport;
+            queueDocId = doc.id;
         }
     } catch (e) {
-        console.warn("Could not check for Deep Research report:", e.message);
+        console.warn("Could not check trend_queue:", e.message);
     }
 
+    // Fallback: Check legacy trend_reports collection
     if (!topic) {
-        console.log("⚡️ No Deep Research found. Falling back to Quick Scan...");
+        const todayStr = new Date().toISOString().split('T')[0];
+        const reportSlug = `trend-report-${todayStr}`;
+        try {
+            const reportDoc = await db.collection(CONFIG.FIREBASE_COLLECTION_TREND_REPORTS).doc(reportSlug).get();
+            if (reportDoc.exists && reportDoc.data().status === 'ready') {
+                const data = reportDoc.data();
+                console.log(`🧠 Found legacy report: "${data.topic}"`);
+                topic = data.topic;
+                researchContext = data.researchReport;
+            }
+        } catch (e) {
+            console.warn("Could not check legacy reports:", e.message);
+        }
+    }
+
+    // Last resort: AI-generated topic (not recommended)
+    if (!topic) {
+        console.log("⚠️ No queued topics found. Using AI fallback (consider running scout_trends_v2)...");
         const researchPrompt = `
         Find a trending or interesting topic relevant to Bend, Oregon RIGHT NOW (News, Lifestyle, Season, Viral Local Subject).
         Constraints:
@@ -229,8 +253,23 @@ async function runTrendBlogV6(sendEmail = true) {
         categories: (CONFIG.CATEGORIES.TRENDS && CONFIG.CATEGORIES.TRENDS.length > 0) ? CONFIG.CATEGORIES.TRENDS : CONFIG.CATEGORIES.DAILY_UPDATE,
         createdAt: new Date().toISOString(),
         socialCaption: "", // Prevent undefined error in index.js
-        generatedBy: 'trend_blog_v6'
+        generatedBy: 'trend_blog_v6',
+        queueDocId: queueDocId || null // Track which queue item this came from
     });
+
+    // Mark queue topic as used (if from queue)
+    if (queueDocId) {
+        try {
+            await db.collection('trend_queue').doc(queueDocId).update({
+                status: 'used',
+                usedAt: admin.firestore.FieldValue.serverTimestamp(),
+                draftId: draftId
+            });
+            console.log(`📋 Queue topic marked as used: ${queueDocId}`);
+        } catch (e) {
+            console.warn("Could not update queue status:", e.message);
+        }
+    }
 
     if (!sendEmail) {
         console.log("📧 sendEmail is false. Returning draft details for Unified Approval.");
