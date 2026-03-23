@@ -77,7 +77,7 @@ async def scout_events(date: datetime = None, days_ahead: int = 1):
             
         print(f"🧠 Extracting events with Gemini for {date_str}...")
         context = json.dumps(raw_data)
-        prompt = f"Extract all unique events from this raw search data for {date_str} in Bend, Oregon. Return as a JSON list of objects with keys: title, time, venue, description, price, category, link. Search data: {context}"
+        prompt = f"Extract all unique events from this raw search data for {date_str} in Bend, Oregon. Return as a JSON list of objects with keys: title, time, venue, description, price, category, link, imageUrl. For imageUrl, extract the thumbnail or image URL from the context if available, otherwise null. Search data: {context}"
         
         try:
             response = model.generate_content(prompt)
