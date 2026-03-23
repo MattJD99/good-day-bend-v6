@@ -1,0 +1,63 @@
+🚀 Scout script starting...
+🕵️ Scout Agent Activated
+
+🔎 Researching: Monday, March 30, 2026
+🔍 Serper search: site:towertheatre.org events Monday, March 30, 2026
+⚠️ Serper query failed (400): {"message":"Not enough credits","statusCode":400}
+🔍 Serper search: site:mcmenamins.com 'Old St. Francis School' Monday, March 30, 2026
+⚠️ Serper query failed (400): {"message":"Not enough credits","statusCode":400}
+🔍 Serper search: site:silvermoonbrewing.com events Monday, March 30, 2026
+⚠️ Serper query failed (400): {"message":"Not enough credits","statusCode":400}
+🔍 Serper search: site:midtownballroom.com Monday, March 30, 2026
+⚠️ Serper query failed (400): {"message":"Not enough credits","statusCode":400}
+🔍 Serper search: site:riversplacebend.com Monday, March 30, 2026
+⚠️ Serper query failed (400): {"message":"Not enough credits","statusCode":400}
+🔍 Serper search: site:mtbachelor.com events Monday, March 30, 2026
+⚠️ Serper query failed (400): {"message":"Not enough credits","statusCode":400}
+🔍 Serper search: site:bendwinebar.com Monday, March 30, 2026
+⚠️ Serper query failed (400): {"message":"Not enough credits","statusCode":400}
+🔍 Serper search: site:diycave.com Monday, March 30, 2026
+⚠️ Serper query failed (400): {"message":"Not enough credits","statusCode":400}
+🔍 Serper search: site:streetdoghero.org -portland events Monday, March 30, 2026
+⚠️ Serper query failed (400): {"message":"Not enough credits","statusCode":400}
+🔍 Serper search: site:bendsource.com calendar Monday, March 30, 2026
+⚠️ Serper query failed (400): {"message":"Not enough credits","statusCode":400}
+🔍 Serper search: site:ktvz.com events Monday, March 30, 2026
+⚠️ Serper query failed (400): {"message":"Not enough credits","statusCode":400}
+🔍 Serper search: site:bendmagazine.com events Monday, March 30, 2026
+⚠️ Serper query failed (400): {"message":"Not enough credits","statusCode":400}
+🔍 Serper search: site:centraloregondaily.com events Monday, March 30, 2026
+⚠️ Serper query failed (400): {"message":"Not enough credits","statusCode":400}
+🔍 Serper search: site:visitbend.com events Monday, March 30, 2026
+⚠️ Serper query failed (400): {"message":"Not enough credits","statusCode":400}
+🔍 Serper search: events in Bend Oregon on Monday, March 30, 2026
+⚠️ Serper query failed (400): {"message":"Not enough credits","statusCode":400}
+🔍 Serper search: live music Bend Oregon Monday, March 30, 2026
+⚠️ Serper query failed (400): {"message":"Not enough credits","statusCode":400}
+✅ Found 0 unique search results
+⚠️ Insufficient search results, skipping date
+
+✅ Scout Mission Complete
+Summary: {'2026-03-30': 0}
+
+📊 Results: {'2026-03-30': 0}
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/base_events.py", line 686, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/md/Documents/Good-Day-Bend-v9/backend/agent/scout.py", line 395, in <module>
+    asyncio.run(main())
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/runners.py", line 194, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt

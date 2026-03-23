@@ -13,6 +13,16 @@
                 "firebase-debug.*.log"
             ],
             "runtime": "nodejs22"
+        },
+        {
+            "source": "backend",
+            "codebase": "python_v7",
+            "ignore": [
+                "venv",
+                ".git",
+                "__pycache__"
+            ],
+            "runtime": "python311"
         }
     ],
     "hosting": {

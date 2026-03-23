@@ -1,0 +1,266 @@
+{
+  "name": "firestore",
+  "description": "Firestore MCP configuration for Good Day Bend v7",
+  "version": "1.0.0",
+  "type": "firestore",
+  "config": {
+    "project_id": "good-day-bend-v7-test",
+    "database": "(default)",
+    "credentials": {
+      "type": "service_account",
+      "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+      "note": "Service account credentials should be loaded from environment or service-account.json"
+    }
+  },
+  "collections": {
+    "events": {
+      "description": "Events collection - stores all scouted events",
+      "permissions": ["read", "write", "query"],
+      "schema": {
+        "title": "string",
+        "description": "string",
+        "eventDate": "string (ISO date)",
+        "time": "string",
+        "venue": "string",
+        "location": "string",
+        "price": "string",
+        "image": "string (URL)",
+        "imageUrl": "string (URL)",
+        "category": "string",
+        "is_featured": "boolean",
+        "is_sponsored": "boolean",
+        "coupon_code": "string",
+        "source_url": "string (URL)",
+        "createdAt": "timestamp",
+        "updatedAt": "timestamp"
+      },
+      "indexes": [
+        {
+          "fields": ["eventDate"],
+          "order": "asc"
+        },
+        {
+          "fields": ["eventDate", "is_featured"]
+        },
+        {
+          "fields": ["category", "eventDate"]
+        }
+      ]
+    },
+    "articles": {
+      "description": "Published blog articles/trend blogs",
+      "permissions": ["read", "write", "query"],
+      "schema": {
+        "title": "string",
+        "urlSlug": "string",
+        "content": "string (HTML)",
+        "excerpt": "string",
+        "imageUrl": "string (URL)",
+        "publishDate": "string (ISO date)",
+        "publishedAt": "timestamp",
+        "author": "string",
+        "categories": "array of strings",
+        "tags": "array of strings",
+        "status": "string (draft|published)",
+        "type": "string (daily_update|trend_blog|article)",
+        "ghl_blog_id": "string",
+        "seo_title": "string",
+        "seo_description": "string"
+      },
+      "indexes": [
+        {
+          "fields": ["publishDate"],
+          "order": "desc"
+        },
+        {
+          "fields": ["status", "publishDate"]
+        },
+        {
+          "fields": ["type", "publishDate"]
+        }
+      ]
+    },
+    "dailyUpdates": {
+      "description": "Published daily update posts (legacy collection)",
+      "permissions": ["read", "write", "query"],
+      "schema": {
+        "title": "string",
+        "content": "string (HTML)",
+        "publishDate": "string (ISO date)",
+        "vibe": "string",
+        "imageUrl": "string (URL)",
+        "relatedEvents": "array of strings",
+        "metrics": "object",
+        "status": "string",
+        "ghl_blog_id": "string"
+      },
+      "indexes": [
+        {
+          "fields": ["publishDate"],
+          "order": "desc"
+        }
+      ]
+    },
+    "drafts": {
+      "description": "Content drafts awaiting approval",
+      "permissions": ["read", "write", "query", "delete"],
+      "schema": {
+        "title": "string",
+        "urlSlug": "string",
+        "rawHTML": "string",
+        "socialCaption": "string",
+        "smsText": "string",
+        "imageUrl": "string (URL)",
+        "publishDate": "string (ISO date)",
+        "imageSource": "string",
+        "relatedEvents": "array of strings",
+        "status": "string (pending|approved|published|rejected)",
+        "type": "string (daily_update|trend_blog|event_article)",
+        "vibe": "string",
+        "categories": "array of strings",
+        "createdAt": "string (ISO datetime)",
+        "generatedBy": "string",
+        "approvedAt": "timestamp",
+        "approvedBy": "string"
+      },
+      "indexes": [
+        {
+          "fields": ["status", "createdAt"]
+        },
+        {
+          "fields": ["type", "publishDate"]
+        }
+      ]
+    },
+    "generated_images": {
+      "description": "Metadata log for AI-generated images",
+      "permissions": ["read", "write", "query"],
+      "schema": {
+        "url": "string (URL)",
+        "prompt": "string",
+        "model": "string",
+        "vibe": "string",
+        "context": "string",
+        "width": "number",
+        "height": "number",
+        "createdAt": "timestamp",
+        "usedIn": "array of document IDs"
+      },
+      "indexes": [
+        {
+          "fields": ["createdAt"],
+          "order": "desc"
+        },
+        {
+          "fields": ["vibe"]
+        }
+      ]
+    },
+    "trend_reports": {
+      "description": "Trend analysis reports for blog content",
+      "permissions": ["read", "write", "query"],
+      "schema": {
+        "title": "string",
+        "trend_topic": "string",
+        "sources": "array of objects",
+        "analysis": "string",
+        "key_points": "array of strings",
+        "createdAt": "timestamp",
+        "usedInArticles": "array of document IDs"
+      },
+      "indexes": [
+        {
+          "fields": ["createdAt"],
+          "order": "desc"
+        }
+      ]
+    },
+    "image_library": {
+      "description": "Curated image library for smart fallbacks",
+      "permissions": ["read", "query"],
+      "schema": {
+        "url": "string (URL)",
+        "category": "string (Scenic|Nightlife|Family|Outdoors|Arts|Dining)",
+        "quality_score": "number (1-10)",
+        "description": "string",
+        "tags": "array of strings",
+        "source": "string",
+        "license": "string"
+      },
+      "indexes": [
+        {
+          "fields": ["category", "quality_score"]
+        }
+      ]
+    }
+  },
+  "operations": {
+    "read": {
+      "description": "Read documents from collections",
+      "available_for": ["events", "articles", "dailyUpdates", "drafts", "generated_images", "trend_reports", "image_library"]
+    },
+    "write": {
+      "description": "Write/update documents in collections",
+      "available_for": ["events", "articles", "dailyUpdates", "drafts", "generated_images", "trend_reports"]
+    },
+    "query": {
+      "description": "Query collections with filters",
+      "available_for": ["events", "articles", "dailyUpdates", "drafts", "generated_images", "trend_reports", "image_library"],
+      "filters": {
+        "where": "Filter by field values",
+        "orderBy": "Sort results",
+        "limit": "Limit number of results",
+        "startAfter": "Pagination support"
+      }
+    },
+    "delete": {
+      "description": "Delete documents (use with caution)",
+      "available_for": ["drafts"]
+    }
+  },
+  "usage_examples": {
+    "fetch_todays_events": {
+      "collection": "events",
+      "operation": "query",
+      "filter": {
+        "where": ["eventDate", "==", "2026-01-22"]
+      }
+    },
+    "get_pending_drafts": {
+      "collection": "drafts",
+      "operation": "query",
+      "filter": {
+        "where": ["status", "==", "pending"],
+        "orderBy": ["createdAt", "desc"]
+      }
+    },
+    "save_new_draft": {
+      "collection": "drafts",
+      "operation": "write",
+      "document": {
+        "title": "Good Day Bend: Indie Beats & Brews",
+        "status": "pending",
+        "type": "daily_update",
+        "publishDate": "2026-01-22"
+      }
+    },
+    "get_smart_fallback_image": {
+      "collection": "image_library",
+      "operation": "query",
+      "filter": {
+        "where": [
+          ["category", "==", "Nightlife"],
+          ["quality_score", ">=", 7]
+        ],
+        "limit": 15
+      }
+    }
+  },
+  "notes": [
+    "This configuration defines Firestore access patterns for the Good Day Bend v7 agent",
+    "Service account credentials should be loaded from environment variables or service-account.json",
+    "Collections follow the schema defined in the existing v6 codebase",
+    "MCP tools should respect the permissions defined for each collection",
+    "Indexes should match those defined in firestore.indexes.json"
+  ]
+}

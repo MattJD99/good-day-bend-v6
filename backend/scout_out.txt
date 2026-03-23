@@ -1,0 +1,31 @@
+imported os
+imported json
+imported asyncio
+imported datetime
+imported typing
+imported firestore
+imported vertexai
+imported GenerativeModel
+imported retry
+imported config
+imported image_generation
+🕵️ Scout Agent Activated
+
+🔎 Researching: Tuesday, March 10, 2026
+🔍 Serper search: site:towertheatre.org events Tuesday, March 10, 2026
+❌ Serper search failed: 400 Client Error: Bad Request for url: https://google.serper.dev/search
+🧠 Extracting events with Gemini for Tuesday, March 10, 2026...
+❌ Event extraction failed: 404 Publisher Model `projects/good-day-bend-v6/locations/us-central1/publishers/google/models/gemini-3.1-flash` was not found or your project does not have access to it. Please ensure you are using a valid model version. For more information, see: https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versions
+⚠️ No events extracted
+
+🔎 Researching: Wednesday, March 11, 2026
+🔍 Serper search: site:towertheatre.org events Wednesday, March 11, 2026
+❌ Serper search failed: 400 Client Error: Bad Request for url: https://google.serper.dev/search
+🧠 Extracting events with Gemini for Wednesday, March 11, 2026...
+❌ Event extraction failed: 404 Publisher Model `projects/good-day-bend-v6/locations/us-central1/publishers/google/models/gemini-3.1-flash` was not found or your project does not have access to it. Please ensure you are using a valid model version. For more information, see: https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versions
+⚠️ No events extracted
+
+✅ Scout Mission Complete
+Summary: {'2026-03-10': 0, '2026-03-11': 0}
+
+📊 Results: {'2026-03-10': 0, '2026-03-11': 0}
