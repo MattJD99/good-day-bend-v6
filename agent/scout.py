@@ -18,6 +18,21 @@ from datetime import datetime, timedelta
 from typing import List, Dict, Optional
 from google.cloud import firestore
 import vertexai
+try:
+    import google.generativeai as genai
+    # Configure with API key instead of Vertex AI
+    _gemini_api_key = os.getenv("GEMINI_API_KEY")
+    if _gemini_api_key:
+        genai.configure(api_key=_gemini_api_key)
+        USE_GENAI_SDK = True
+        print("✅ Using google-generativeai SDK with API key")
+    else:
+        USE_GENAI_SDK = False
+        print("⚠️ No GEMINI_API_KEY found, falling back to Vertex AI")
+except ImportError:
+    USE_GENAI_SDK = False
+    print("⚠️ google-generativeai not installed, using Vertex AI")
+    
 from vertexai.generative_models import GenerativeModel
 from google.api_core import retry
 
@@ -179,7 +194,10 @@ async def extract_events_from_search(
     Returns:
         List of extracted events
     """
-    model = GenerativeModel(MODEL_VISION)
+    if USE_GENAI_SDK:
+        model = genai.GenerativeModel(MODEL_VISION)
+    else:
+        model = GenerativeModel(MODEL_VISION)
     
     prompt = f"""
 You are the Data Scout for "Good Day Bend".
@@ -215,7 +233,10 @@ Output ONLY valid JSON array. No markdown, no explanations.
     
     try:
         print(f"🧠 Extracting events with Gemini for {date_str}...")
-        result = await asyncio.to_thread(model.generate_content, prompt)
+        if USE_GENAI_SDK:
+            result = model.generate_content(prompt)
+        else:
+            result = await asyncio.to_thread(model.generate_content, prompt)
         raw_text = result.text.strip()
         
         # Extract JSON from response

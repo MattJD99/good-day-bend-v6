@@ -297,7 +297,9 @@ function createEventCard(event) {
     }
 
     // Image: Try imageUrl first (Firestore standard), then image, then default
-    const eventImage = event.imageUrl || event.image || DEFAULT_IMAGE;
+    // Handle empty strings explicitly — '' is falsy but could slip through
+    const rawImg = event.imageUrl || event.image;
+    const eventImage = (rawImg && rawImg.length > 0) ? rawImg : DEFAULT_IMAGE;
 
     // Format Date - Handle both string dates and Firestore timestamps
     let dateStr = event.eventDate || event.date;
@@ -337,7 +339,7 @@ function createEventCard(event) {
                 <span class="text-xs font-bold text-text-secondary uppercase">${month}</span>
                 <span class="text-xl font-black text-[#0d1b12] dark:text-white leading-none">${day}</span>
             </div>
-            <div class="w-full h-full bg-center bg-cover transition-transform duration-700 group-hover:scale-105" style='background-image: url("${eventImage}");'></div>
+            <div class="w-full h-full bg-center bg-cover transition-transform duration-700 group-hover:scale-105" style='background-image: url("${eventImage}");' onerror="this.style.backgroundImage='url(${DEFAULT_IMAGE})'"></div>
             <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60"></div>
         </div>
         <div class="flex flex-col flex-1 p-5 gap-3">

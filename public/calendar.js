@@ -34,7 +34,7 @@ function showDayPopup(date, events) {
                     <div class="group flex gap-4 p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-white/5 transition-colors cursor-pointer border border-transparent hover:border-gray-100 dark:hover:border-white/10"
                         onclick="window.location.href='/event-details?id=${event.id}'">
                         <div class="size-16 rounded-lg bg-gray-200 overflow-hidden flex-shrink-0">
-                            <img src="${event.image || 'https://placehold.co/100x100?text=Event'}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="${event.title}">
+                            <img src="${(event.image && event.image.length > 0) ? event.image : 'https://placehold.co/100x100/102216/13ec5b?text=Event'}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="${event.title}" onerror="this.src='https://placehold.co/100x100/102216/13ec5b?text=Event'">
                         </div>
                         <div class="flex-1">
                             <h4 class="font-bold text-[#0d1b12] dark:text-white mb-1 group-hover:text-primary transition-colors">${event.title}</h4>
@@ -97,8 +97,9 @@ async function fetchEvents() {
                 }
             }
 
-            // Image Fallback
-            const imageUrl = data.imageUrl || data.image || "https://placehold.co/600x400/102216/13ec5b?text=Good+Day+Bend";
+            // Image Fallback - handle empty strings explicitly
+            const rawImage = data.imageUrl || data.image;
+            const imageUrl = (rawImage && rawImage.length > 0) ? rawImage : "https://placehold.co/600x400/102216/13ec5b?text=Good+Day+Bend";
 
             if (eventDate) {
                 allEvents.push({
