@@ -45,10 +45,13 @@ from agent.config import (
 from agent.image_generation import generate_image_with_vision
 
 
-# Serper.dev Search integration (from v6)
+# Gemini Google Search Grounding (FREE - No API credits needed)
 def search_bend_events(date_str: str) -> str:
     """
-    Search for Bend events using Serper.dev API (from v6)
+    Search for Bend events using Gemini's built-in Google Search grounding
+    
+    This replaces Serper.dev with Gemini's native search capability.
+    No API key or credits required - uses googleSearch tool.
     
     Args:
         date_str: Date string like "Monday, January 27, 2026"
@@ -56,94 +59,89 @@ def search_bend_events(date_str: str) -> str:
     Returns:
         Combined text from search results
     """
-    SERPER_API_KEY = os.getenv("GOOGLE_SEARCH_API_KEY")  # Using this env var for Serper
-    
-    if not SERPER_API_KEY:
-        print("⚠️ Serper API not configured, using fallback")
-        return "Search API not available. Use internal knowledge if confident."
+    if not USE_GENAI_SDK:
+        print("⚠️ google-generativeai SDK not available, using fallback")
+        return "Search SDK not available. Use internal knowledge if confident."
     
     try:
-        import requests
+        # Configure Gemini with Google Search grounding
+        model = genai.GenerativeModel(
+            'gemini-1.5-flash',
+            tools=[{'googleSearch': {}}]  # Enable Google Search grounding
+        )
         
-        # Multiple targeted queries (like v6)
+        # Multiple targeted queries for comprehensive coverage
         # 1. Targeted Venue Searches (High Quality)
-        site_queries = [
-            f"site:towertheatre.org events {date_str}",
-            f"site:mcmenamins.com 'Old St. Francis School' {date_str}",  # Filter for OSF location
-            f"site:silvermoonbrewing.com events {date_str}",
-            f"site:midtownballroom.com {date_str}",
-            f"site:riversplacebend.com {date_str}",
-            f"site:mtbachelor.com events {date_str}",
-            f"site:bendwinebar.com {date_str}",
-            f"site:diycave.com {date_str}",
-            f"site:streetdoghero.org -portland events {date_str}"  # Exclude Portland
+        venue_queries = [
+            f"Bend Oregon events {date_str} tower theatre live music",
+            f"Bend Oregon events {date_str} McMenamins Old St Francis School",
+            f"Bend Oregon events {date_str} Silver Moon Brewing",
+            f"Bend Oregon events {date_str} Midtown Ballroom",
+            f"Bend Oregon events {date_str} Rivers Place",
+            f"Bend Oregon events {date_str} Mt Bachelor",
+            f"Bend Oregon events {date_str} Bend Wine Bar",
+            f"Bend Oregon events {date_str} DIY Cave",
+            f"Bend Oregon events {date_str} Street Dog Hero"
         ]
         
         # 2. Major Local Aggregators (Broad Coverage)
         aggregator_queries = [
-            f"site:bendsource.com calendar {date_str}",
-            f"site:ktvz.com events {date_str}",
-            f"site:bendmagazine.com events {date_str}",
-            f"site:centraloregondaily.com events {date_str}",
-            f"site:visitbend.com events {date_str}"
+            f"Bend Source events calendar {date_str}",
+            f"KTVZ Bend events {date_str}",
+            f"Bend Magazine events {date_str}",
+            f"Central Oregon Daily events {date_str}",
+            f"Visit Bend events {date_str}"
         ]
         
         # 3. General catch-all (Backup)
         general_queries = [
             f"events in Bend Oregon on {date_str}",
-            f"live music Bend Oregon {date_str}"
+            f"live music Bend Oregon {date_str}",
+            f"things to do Bend Oregon {date_str}"
         ]
         
-        queries = site_queries + aggregator_queries + general_queries
+        queries = venue_queries + aggregator_queries + general_queries
         
         all_results = []
         
         for query in queries:
-            print(f"🔍 Serper search: {query}")
+            print(f"🔍 Gemini Search: {query[:60]}...")
             
-            response = requests.post(
-                "https://google.serper.dev/search",
-                headers={
-                    "X-API-KEY": SERPER_API_KEY,
-                    "Content-Type": "application/json"
-                },
-                json={
-                    "q": query,
-                    "num": 10
-                },
-                timeout=15
-            )
-            
-            response.raise_for_status()
-            data = response.json()
-            
-            # Extract organic results
-            results = data.get("organic", [])
-            all_results.extend(results)
+            try:
+                # Use Gemini with Google Search grounding
+                response = model.generate_content(
+                    f"Find events happening in Bend, Oregon on {date_str}. "
+                    f"Search query: {query}. "
+                    f"Return ONLY search results with: title, URL, snippet, date. "
+                    f"Format each result as: TITLE: [title]\\nLINK: [url]\\nSNIPPET: [snippet]\\nDATE: [date]\\n---"
+                )
+                
+                # Extract results from response
+                result_text = response.text.strip()
+                if result_text and len(result_text) > 50:
+                    all_results.append(result_text)
+                    
+            except Exception as e:
+                print(f"⚠️ Query failed: {e}")
+                continue
         
-        # Deduplicate by link
-        seen_links = set()
-        unique_results = []
-        for r in all_results:
-            link = r.get("link", "")
-            if link and link not in seen_links:
-                seen_links.add(link)
-                unique_results.append(r)
+        # Combine all results
+        if not all_results:
+            print("⚠️ No search results returned")
+            return "No search results available. Use internal knowledge if confident."
         
-        # Limit to top 30
-        unique_results = unique_results[:30]
+        # Limit total output size (avoid token limits)
+        combined = "\n\n".join(all_results[:15])  # Limit to 15 query results
         
-        # Format for LLM (like v6)
-        context = "\n---\n".join([
-            f"TITLE: {r.get('title', '')}\nLINK: {r.get('link', '')}\nSNIPPET: {r.get('snippet', '')}\nDATE: {r.get('date', 'Unknown')}"
-            for r in unique_results
-        ])
+        # Truncate if too long (keep under ~15k chars)
+        if len(combined) > 15000:
+            combined = combined[:15000] + "\n\n[truncated for length]"
         
-        print(f"✅ Found {len(unique_results)} unique search results")
-        return context
+        print(f"✅ Found search results from {min(len(all_results), 15)} queries")
+        return combined
         
     except Exception as e:
-        print(f"❌ Serper search failed: {e}")
+        print(f"❌ Gemini Search failed: {e}")
         return f"Search error: {e}. Use internal knowledge if confident."
 
 
@@ -178,6 +176,9 @@ class EventSchema:
         }
 
 
+# Search cache to avoid redundant API calls
+_search_cache = {}
+
 async def extract_events_from_search(
     search_context: str,
     date_str: str,
@@ -195,7 +196,8 @@ async def extract_events_from_search(
         List of extracted events
     """
     if USE_GENAI_SDK:
-        model = genai.GenerativeModel(MODEL_VISION)
+        # Use Gemini 1.5 Pro for better extraction quality
+        model = genai.GenerativeModel('gemini-1.5-pro')
     else:
         model = GenerativeModel(MODEL_VISION)
     
@@ -213,6 +215,8 @@ CRITICAL RULES:
 1. **NO HALLUCINATIONS**: If it's not in the source material, DO NOT include it.
 2. **Date Match**: Verify the search result actually refers to {date_str}.
 3. **Data Integrity**: Exact Venue Name and Address required. Times must be specific.
+4. **Skip duplicates**: If the same event appears multiple times, include only once.
+5. **Quality over quantity**: Better to return 3 confirmed events than 10 guesses.
 
 Output ONLY valid JSON array. No markdown, no explanations.
 
@@ -263,9 +267,31 @@ Output ONLY valid JSON array. No markdown, no explanations.
         return []
 
 
+async def check_existing_events(db, iso_date: str) -> int:
+    """
+    Check if events already exist for a date in Firestore
+    
+    Args:
+        db: Firestore client
+        iso_date: Date in YYYY-MM-DD format
+        
+    Returns:
+        Count of existing events
+    """
+    try:
+        events_ref = db.collection(COLLECTION_EVENTS).where("eventDate", "==", iso_date)
+        snapshot = await asyncio.to_thread(events_ref.get)
+        count = len(list(snapshot))
+        return count
+    except Exception as e:
+        print(f"⚠️ Error checking existing events: {e}")
+        return 0
+
+
 async def scout_events(
     date: Optional[datetime] = None,
-    days_ahead: int = 2
+    days_ahead: int = 2,
+    force_refresh: bool = False
 ) -> Dict[str, int]:
     """
     Main Scout workflow: Search → Extract → Store
@@ -273,6 +299,7 @@ async def scout_events(
     Args:
         date: Target date to scout (defaults to today)
         days_ahead: Number of days to look ahead
+        force_refresh: If True, re-scout even if events exist
         
     Returns:
         Summary of events scouted per date
@@ -305,8 +332,22 @@ async def scout_events(
         
         print(f"\n🔎 Researching: {date_str}")
         
-        # Step 1: Search Google
-        search_context = search_bend_events(date_str)
+        # Check if events already exist (skip if force_refresh is False)
+        if not force_refresh:
+            existing_count = await check_existing_events(db, iso_date)
+            if existing_count > 0:
+                print(f"⏭️ Skipping {date_str} - {existing_count} events already exist")
+                summary[iso_date] = existing_count
+                continue
+        
+        # Step 1: Search Google (with caching)
+        cache_key = f"{date_str}"
+        if cache_key in _search_cache:
+            print(f"♻️ Using cached search results for {date_str}")
+            search_context = _search_cache[cache_key]
+        else:
+            search_context = search_bend_events(date_str)
+            _search_cache[cache_key] = search_context
         
         if len(search_context) < 100:
             print("⚠️ Insufficient search results, skipping date")

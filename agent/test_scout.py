@@ -23,7 +23,7 @@ async def main():
     print("=" * 60)
     
     # Check environment variables
-    required_vars = ["GOOGLE_SEARCH_API_KEY", "GOOGLE_SEARCH_ENGINE_ID", "GEMINI_API_KEY"]
+    required_vars = ["GEMINI_API_KEY"]
     missing = [var for var in required_vars if not os.getenv(var)]
     
     if missing:
@@ -32,6 +32,8 @@ async def main():
             print(f"   - {var}")
         print("\nScout may fail or use fallback behavior.")
         print("See SETUP_GUIDE.md for instructions.\n")
+    else:
+        print("✅ GEMINI_API_KEY found - Google Search grounding enabled")
     
     # Parse command line args
     target_date = None
