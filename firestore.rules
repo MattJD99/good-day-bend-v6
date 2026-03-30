@@ -42,6 +42,11 @@ service cloud.firestore {
       allow read, write: if true;
     }
     
+    // LAPINE EYECARE CONTENT: Public Read/Write for the Dashboard 
+    match /lapine_eyecare_content/{document} {
+      allow read, write: if true;
+    }
+    
     // Default Deny
     match /{document=**} {
       allow read, write: if false;

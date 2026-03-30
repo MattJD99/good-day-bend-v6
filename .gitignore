@@ -41,3 +41,9 @@ ghl_snippets.md
 scripts/*.json
 !scripts/package.json
 !scripts/package-lock.json
+
+# Firebase credentials
+service-account.json
+*.key
+.env
+

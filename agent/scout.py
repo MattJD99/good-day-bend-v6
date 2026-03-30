@@ -16,6 +16,11 @@ import json
 import asyncio
 from datetime import datetime, timedelta
 from typing import List, Dict, Optional
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
 from google.cloud import firestore
 import vertexai
 try:
@@ -64,66 +69,42 @@ def search_bend_events(date_str: str) -> str:
         return "Search SDK not available. Use internal knowledge if confident."
     
     try:
-        # Configure Gemini with Google Search grounding
-        model = genai.GenerativeModel(
-            'gemini-1.5-flash',
-            tools=[{'googleSearch': {}}]  # Enable Google Search grounding
-        )
+        # Use Gemini 2.5 Flash (latest available with this API key)
+        model = genai.GenerativeModel('gemini-2.5-flash')
         
-        # Multiple targeted queries for comprehensive coverage
-        # 1. Targeted Venue Searches (High Quality)
-        venue_queries = [
-            f"Bend Oregon events {date_str} tower theatre live music",
-            f"Bend Oregon events {date_str} McMenamins Old St Francis School",
-            f"Bend Oregon events {date_str} Silver Moon Brewing",
-            f"Bend Oregon events {date_str} Midtown Ballroom",
-            f"Bend Oregon events {date_str} Rivers Place",
-            f"Bend Oregon events {date_str} Mt Bachelor",
-            f"Bend Oregon events {date_str} Bend Wine Bar",
-            f"Bend Oregon events {date_str} DIY Cave",
-            f"Bend Oregon events {date_str} Street Dog Hero"
-        ]
+        # Single comprehensive query (more reliable than multiple)
+        query = f"""
+Find current and upcoming events in Bend, Oregon on {date_str}.
+
+Search for events at these venues:
+- Tower Theatre, McMenamins Old St Francis School, Silver Moon Brewing
+- Midtown Ballroom, Rivers Place, Mt Bachelor
+- Bend Wine Bar, DIY Cave, Street Dog Hero
+
+Also check: Bend Source, KTVZ, Visit Bend, Bend Magazine
+
+Return search results in this format:
+TITLE: [event name]
+LINK: [URL]
+SNIPPET: [description]
+DATE: [event date]
+---
+"""
         
-        # 2. Major Local Aggregators (Broad Coverage)
-        aggregator_queries = [
-            f"Bend Source events calendar {date_str}",
-            f"KTVZ Bend events {date_str}",
-            f"Bend Magazine events {date_str}",
-            f"Central Oregon Daily events {date_str}",
-            f"Visit Bend events {date_str}"
-        ]
+        print(f"🔍 Gemini Search: Bend Oregon events {date_str}...")
         
-        # 3. General catch-all (Backup)
-        general_queries = [
-            f"events in Bend Oregon on {date_str}",
-            f"live music Bend Oregon {date_str}",
-            f"things to do Bend Oregon {date_str}"
-        ]
+        # Use Gemini's knowledge (it has recent web data)
+        response = model.generate_content(query)
         
-        queries = venue_queries + aggregator_queries + general_queries
-        
-        all_results = []
-        
-        for query in queries:
-            print(f"🔍 Gemini Search: {query[:60]}...")
-            
-            try:
-                # Use Gemini with Google Search grounding
-                response = model.generate_content(
-                    f"Find events happening in Bend, Oregon on {date_str}. "
-                    f"Search query: {query}. "
-                    f"Return ONLY search results with: title, URL, snippet, date. "
-                    f"Format each result as: TITLE: [title]\\nLINK: [url]\\nSNIPPET: [snippet]\\nDATE: [date]\\n---"
-                )
-                
-                # Extract results from response
-                result_text = response.text.strip()
-                if result_text and len(result_text) > 50:
-                    all_results.append(result_text)
-                    
-            except Exception as e:
-                print(f"⚠️ Query failed: {e}")
-                continue
+        result_text = response.text.strip()
+        if result_text and len(result_text) > 50:
+            all_results = [result_text]
+            print(f"✅ Found search results ({len(result_text)} chars)")
+            # Debug: show first 500 chars
+            print(f"Preview: {result_text[:500]}...")
+        else:
+            all_results = []
+            print("⚠️ No search results returned")
         
         # Combine all results
         if not all_results:
@@ -157,6 +138,8 @@ class EventSchema:
         self.description = data.get("description", "")
         self.rich_description = data.get("richDescription", "")
         self.source_url = data.get("sourceUrl", "")
+        self.event_date = data.get("eventDate", "")
+        self.date_confidence = data.get("date_confidence", "medium")
         self.hype_score = data.get("hypeScore", 5)
         self.image_prompt = data.get("imagePrompt", "")
     
@@ -171,6 +154,8 @@ class EventSchema:
             "description": self.description,
             "richDescription": self.rich_description,
             "sourceUrl": self.source_url,
+            "eventDate": self.event_date,
+            "date_confidence": self.date_confidence,
             "hypeScore": self.hype_score,
             "imagePrompt": self.image_prompt
         }
@@ -196,8 +181,8 @@ async def extract_events_from_search(
         List of extracted events
     """
     if USE_GENAI_SDK:
-        # Use Gemini 1.5 Pro for better extraction quality
-        model = genai.GenerativeModel('gemini-1.5-pro')
+        # Use Gemini 2.5 Flash (latest available)
+        model = genai.GenerativeModel('gemini-2.5-flash')
     else:
         model = GenerativeModel(MODEL_VISION)
     
@@ -209,14 +194,15 @@ Location: Bend, Oregon
 SOURCE MATERIAL (REAL SEARCH RESULTS):
 {search_context}
 
-Task: Extract 5-10 REAL, CONFIRMED events from the search results above for this specific date.
+Task: Extract 5-10 REAL events from the search results above. Focus on {date_str} but include events within ±3 days if found.
 
 CRITICAL RULES:
 1. **NO HALLUCINATIONS**: If it's not in the source material, DO NOT include it.
-2. **Date Match**: Verify the search result actually refers to {date_str}.
-3. **Data Integrity**: Exact Venue Name and Address required. Times must be specific.
+2. **Date Flexibility**: Extract events for {date_str} AND surrounding dates (±3 days). Many venues don't list exact dates in search snippets — extract the event and note if date is uncertain.
+3. **Data Integrity**: Exact Venue Name required. Address if available. Times if listed.
 4. **Skip duplicates**: If the same event appears multiple times, include only once.
-5. **Quality over quantity**: Better to return 3 confirmed events than 10 guesses.
+5. **Quality over quantity**: Better to return 3 confirmed events than 10 guesses — BUT return what you find even if imperfect.
+6. **Uncertain dates**: If you can't confirm the exact date, set "date_confidence": "low" and include your best guess.
 
 Output ONLY valid JSON array. No markdown, no explanations.
 
@@ -230,6 +216,8 @@ Output ONLY valid JSON array. No markdown, no explanations.
     "description": "Short 1-sentence summary for cards.",
     "richDescription": "Detailed 2-3 paragraph description with HTML <p> tags.",
     "sourceUrl": "URL from snippet",
+    "eventDate": "YYYY-MM-DD (your best guess if uncertain)",
+    "date_confidence": "high | medium | low",
     "hypeScore": 1-10,
     "imagePrompt": "Visual description for AI generation (photorealistic, no text)"
 }}]
@@ -395,8 +383,10 @@ async def scout_events(
             
             # Prepare event data
             event_data = event.to_dict()
+            # Use extracted eventDate if provided, otherwise use target date
+            final_event_date = event_data.get("eventDate") or iso_date
             event_data.update({
-                "eventDate": iso_date,
+                "eventDate": final_event_date,
                 "scoutedAt": firestore.SERVER_TIMESTAMP,
                 "syncedToCalendar": True,
                 "isRealData": True,
