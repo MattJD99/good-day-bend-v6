@@ -2,7 +2,7 @@ import os
 import requests
 import json
 from typing import Optional, Dict, List
-from datetime import datetime
+from datetime import datetime, timedelta
 from agent.config import GHL_API_KEY, GHL_LOCATION_ID
 
 class GHLClient:
@@ -332,5 +332,186 @@ class GHLClient:
             return accounts
         except Exception as e:
             print(f"❌ Failed to get social accounts: {e}")
+            return []
+
+    # =====================
+    # CALENDAR EVENTS METHODS
+    # =====================
+
+    def create_calendar_event(
+        self,
+        title: str,
+        description: str,
+        start_time: datetime,
+        end_time: datetime = None,
+        location: str = "",
+        calendar_id: str = None
+    ) -> Optional[str]:
+        """
+        Create a calendar event in GHL
+        
+        Args:
+            title: Event title
+            description: Event description
+            start_time: Event start datetime
+            end_time: Event end datetime (optional, defaults to start + 1 hour)
+            location: Event location/venue
+            calendar_id: Specific calendar ID (optional, uses default if not provided)
+            
+        Returns:
+            Event ID if successful, None otherwise
+        """
+        if not self.api_key:
+            print("⚠️ GHL API key not set. Skipping calendar event creation.")
+            return None
+        
+        if end_time is None:
+            end_time = start_time + timedelta(hours=1)
+        
+        url = f"{self.base_url}/calendars/events"
+        
+        payload = {
+            "locationId": self.location_id,
+            "title": title,
+            "description": description,
+            "startTime": int(start_time.timestamp() * 1000),
+            "endTime": int(end_time.timestamp() * 1000),
+            "location": location,
+        }
+        
+        if calendar_id:
+            payload["calendarId"] = calendar_id
+        
+        try:
+            response = requests.post(url, headers=self.get_headers(), json=payload)
+            response.raise_for_status()
+            data = response.json()
+            event_id = data.get("id")
+            print(f"✅ Calendar event created: {event_id}")
+            print(f"   Title: {title}")
+            print(f"   When: {start_time.strftime('%Y-%m-%d %H:%M')}")
+            return event_id
+        except Exception as e:
+            print(f"❌ Failed to create calendar event: {e}")
+            if hasattr(e, 'response') and e.response:
+                print(e.response.text)
+            return None
+
+    def get_calendars(self) -> List[Dict]:
+        """
+        Get available calendars for the location
+        """
+        if not self.api_key:
+            return []
+        
+        url = f"{self.base_url}/calendars"
+        
+        try:
+            response = requests.get(url, headers=self.get_headers())
+            response.raise_for_status()
+            data = response.json()
+            calendars = data.get("calendars", [])
+            print(f"✅ Found {len(calendars)} calendars")
+            for cal in calendars:
+                print(f"   - {cal.get('name')} (ID: {cal.get('id')})")
+            return calendars
+        except Exception as e:
+            print(f"❌ Failed to get calendars: {e}")
+            return []
+
+    # =====================
+    # BLOG METHODS
+    # =====================
+
+    def create_blog_post(
+        self,
+        title: str,
+        content: str,
+        status: str = "draft",  # "draft" or "published"
+        slug: str = None,
+        categories: List[str] = None,
+        tags: List[str] = None,
+        featured_image_url: str = None,
+        meta_description: str = None,
+        publish_date: datetime = None
+    ) -> Optional[str]:
+        """
+        Create a blog post in GHL
+        
+        Args:
+            title: Blog post title
+            content: HTML content of the blog post
+            status: "draft" or "published"
+            slug: URL slug (auto-generated if not provided)
+            categories: List of category names
+            tags: List of tags
+            featured_image_url: URL of featured image
+            meta_description: SEO meta description
+            publish_date: When to publish (for scheduled posts)
+            
+        Returns:
+            Blog post ID if successful, None otherwise
+        """
+        if not self.api_key:
+            print("⚠️ GHL API key not set. Skipping blog post creation.")
+            return None
+        
+        url = f"{self.base_url}/blogs/posts"
+        
+        payload = {
+            "locationId": self.location_id,
+            "title": title,
+            "content": content,
+            "status": status,
+        }
+        
+        if slug:
+            payload["slug"] = slug
+        if categories:
+            payload["categories"] = categories
+        if tags:
+            payload["tags"] = tags
+        if featured_image_url:
+            payload["featuredImage"] = featured_image_url
+        if meta_description:
+            payload["metaDescription"] = meta_description
+        if publish_date:
+            payload["publishDate"] = int(publish_date.timestamp() * 1000)
+        
+        try:
+            response = requests.post(url, headers=self.get_headers(), json=payload)
+            response.raise_for_status()
+            data = response.json()
+            post_id = data.get("id")
+            print(f"✅ Blog post created: {post_id}")
+            print(f"   Title: {title}")
+            print(f"   Status: {status}")
+            return post_id
+        except Exception as e:
+            print(f"❌ Failed to create blog post: {e}")
+            if hasattr(e, 'response') and e.response:
+                print(e.response.text)
+            return None
+
+    def get_blog_sites(self) -> List[Dict]:
+        """
+        Get available blog sites for the location
+        """
+        if not self.api_key:
+            return []
+        
+        url = f"{self.base_url}/blogs/sites"
+        
+        try:
+            response = requests.get(url, headers=self.get_headers())
+            response.raise_for_status()
+            data = response.json()
+            sites = data.get("sites", [])
+            print(f"✅ Found {len(sites)} blog sites")
+            for site in sites:
+                print(f"   - {site.get('name')} (ID: {site.get('id')})")
+            return sites
+        except Exception as e:
+            print(f"❌ Failed to get blog sites: {e}")
             return []
 
